@@ -1,0 +1,4 @@
+*.csv
+__pycache__/
+apikeys.py
+logins.py
