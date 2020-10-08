@@ -1,6 +1,4 @@
-from ..classes.item import Item
 from ..classes.customer import Customer
-from ..classes.order import Order
 
 
 def customer_strategy(vendor, data):
@@ -21,8 +19,10 @@ def bandq_csv_to_customer(csv_row):
     city = csv_row[16]
     postcode = csv_row[18]
     country = csv_row[17]
+    phone = csv_row[19]
+    email = csv_row[21]
 
-    return Customer(first_name, last_name, address1, "", city, "", postcode, country)
+    return Customer(first_name, last_name, address1, "", city, "", postcode, country, phone, email)
 
 
 def range_json_to_customer(json):
