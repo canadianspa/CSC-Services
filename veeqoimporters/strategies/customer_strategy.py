@@ -10,6 +10,7 @@ def customer_strategy(vendor, data):
         return argos_csv_to_customer(data)
     elif vendor == "homebase":
         return homebase_xml_to_customer(data)
+    raise Exception("Invalid vendor.")
 
 
 def bandq_csv_to_customer(csv_row):

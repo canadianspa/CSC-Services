@@ -13,6 +13,6 @@ def check_postcode(postcode, name):
     url = f"{POSTCODER_URL}/pcw/{POSTCODER_APIKEY}/address/uk/{search_term}"
 
     response = requests.get(url)
-    json = handle_response(response)
+    response_json = handle_response(response)
 
-    return json
+    return response_json

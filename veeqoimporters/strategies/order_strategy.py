@@ -11,6 +11,7 @@ def order_strategy(vendor, data, customer, items):
         return argos_csv_to_order(data, customer, items)
     elif vendor == "homebase":
         return homebase_xml_to_order(data, customer, items)
+    raise Exception("Invalid vendor.")
 
 
 def bandq_csv_to_order(csv_row, customer, items):

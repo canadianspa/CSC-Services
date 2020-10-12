@@ -12,6 +12,7 @@ def item_strategy(vendor, data):
         return argos_csv_to_item(data)
     elif vendor == "homebase":
         return homebase_xml_to_item(data)
+    raise Exception("Invalid vendor.")
 
 
 def bandq_csv_to_item(csv_row):

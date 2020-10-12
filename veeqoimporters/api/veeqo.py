@@ -9,17 +9,9 @@ from ..api.postcoder import check_postcode
 headers = {"Content-Type": "application/json", "x-api-key": VEEQO_APIKEY}
 
 
-def upload_order(order_string):
+def upload_order(order_json):
     url = VEEQO_ORDERS_URL
-
-    # address_array = check_postcode(
-    # order.customer.postcode, order.customer.address1)
-
-    # If there is one returned address, it is a correct address
-    # if len(address_array) == 1:
-    # print(address_array)
-    # else:
-    #raise Exception("Handle wrong address")
+    order_string = json.dumps({"order": order_json})
 
     response = requests.post(url, headers=headers, data=order_string)
     response_json = handle_response(response)
@@ -38,4 +30,4 @@ def get_sellable_id(sku):
             if sellable['sku_code'] == sku:
                 return sellable['stock_entries'][0]['sellable_id']
 
-    raise Exception(f"No products found for: {sku}")
+    raise Exception(f"ERROR SEARCHING PRODUCTS: \n {response_json}")
