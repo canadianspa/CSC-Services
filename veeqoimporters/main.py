@@ -28,16 +28,3 @@ def convert_data_to_json(vendor, csv_input):
     json_string_order_list = json.dumps(
         order_list, default=lambda o: o.__dict__)
     return json.loads(json_string_order_list)
-
-
-def handle_postcode_check(order):
-    postcode = order.customer.postcode
-    address1 = order.customer.address1
-
-    address_array = check_postcode(postcode, address1)
-
-    # If there is not one returned address, checks whole postcode
-    if len(address_array) != 1:
-        address_array = check_postcode(postcode, "")
-
-    return address_array
