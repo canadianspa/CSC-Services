@@ -30,4 +30,4 @@ def get_sellable_id(sku):
             if sellable['sku_code'] == sku:
                 return sellable['stock_entries'][0]['sellable_id']
 
-    raise Exception(f"ERROR SEARCHING PRODUCTS: \n {response_json}")
+    raise Exception("ERROR SEARCHING PRODUCTS: " + response_json)
