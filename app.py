@@ -7,9 +7,19 @@ from veeqoimporters.main import handle_csv_file, handle_xml_file, handle_range
 from veeqoimporters.api.veeqo import upload_order
 from veeqoimporters.api.postcoder import check_postcode
 
-app = Flask(__name__)
-app.config["DEBUG"] = True
+app = Flask(__name__, static_folder='./build', static_url_path='/')
+app.config["DEBUG"] = False
 CORS(app)
+
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+    
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 
 @app.route('/orders', methods=['POST'])
@@ -43,7 +53,7 @@ def import_to_veeqo():
     for order in orders:
         upload_order(order)
 
-    return jsonify({ "status": "Uploaded ${orders.length} orders."})
+    return jsonify({ "status": "Uploaded ${orders.length} orders"})
 
 
 @app.route('/postcoder', methods=['GET'])
@@ -52,5 +62,5 @@ def get_addresses():
     address_array = check_postcode(query)
     return jsonify(address_array)
 
-
-app.run()
+if __name__ == "__main__":
+    app.run()

@@ -43,9 +43,11 @@ def handle_xml_file(vendor, file):
 
 
 def handle_range(vendor):
-    orders = get_range_orders()
+    #orders = get_range_orders()
     stock = get_range_stock()
 
+    orders = json.loads("""[{"page_id":null,"PRODUCTION":"true","order_details":{"order_id":11848471,"order_disp":"TESTING IGNORE","order_placed_date":"2020-10-13 01:46:10","delivery_services":"UKmail \/ XDP \/ Prestige \/ DX","customer_name":"TESTING JASPER","email":"jasper.haward@canadianspacompany.com","telephone":"07799112492","building_name_number":"10","organisation":"","street":"Priory Drive","town":"Reigate","county":"null","country":"United Kingdom","postcode":"RH2 8AF","authorised":1},"item_arr":[{"id":30813121,"despatch_date":"2020-10-13 11:21:38","tracking_reference":"41431530027430 ","quantity":1,"status":"F","title":"Hot Tub Waterproof Playing Cards","sku":315890,"delivery_service":"UKmail \/ XDP \/ Prestige \/ DX","supplier_ref":"KA-10035","earliest_delivery":"2020-10-14","latest_delivery":"2020-10-16","courier_name":"UK MAIL","replace_note":null}]}]""")
+    
     order_list = []
 
     for order in orders:
@@ -68,6 +70,6 @@ def handle_range(vendor):
     return json.loads(json_string_order_list)
 
 
-# FOR CHECKING PROPERTIES IN CLASSES
+# FOR CHECKING PROPERTIES IN CLASS
 # attrs = vars(class)
 # print(', '.join("%s: %s" % item for item in attrs.items()))
