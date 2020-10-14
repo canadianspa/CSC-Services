@@ -21,10 +21,9 @@ def get_range_orders():
 
     login(session)
 
-    ######## CHANGE history => pending IN URL ##############
-    all_orders_url = RANGE_PORTAL_ORDERS_URL+"?type=history&supplier=5778"
+    pending_orders_url = RANGE_PORTAL_ORDERS_URL+"?type=pending&supplier=5778"
 
-    orders_response = session.post(all_orders_url)
+    orders_response = session.post(pending_orders_url)
     orders = handle_response(orders_response)
 
     orders_list = []
