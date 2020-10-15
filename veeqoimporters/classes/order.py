@@ -1,5 +1,5 @@
 from veeqoimporters.classes.customer import Customer
-from veeqoimporters.config import DEFAULT_DELIVERY_METHOD_ID
+from common.config import DEFAULT_DELIVERY_METHOD_ID
 
 
 class Order:

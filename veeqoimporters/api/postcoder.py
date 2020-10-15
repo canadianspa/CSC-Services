@@ -1,9 +1,10 @@
 import requests
 from requests.utils import quote
 
-from ..config import POSTCODER_URL
-from ..credentials.apikeys import POSTCODER_APIKEY
-from ..api.utils import handle_response
+from common.config import POSTCODER_URL
+from common.credentials.apikeys import POSTCODER_APIKEY
+
+from common.utils import handle_response
 
 
 def check_postcode(postcode):

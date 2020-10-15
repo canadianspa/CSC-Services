@@ -1,7 +1,8 @@
 import csv
 from os import getcwd
 
-from ..config import ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, TAX_RATE
+from common.config import ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, TAX_RATE
+
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
@@ -12,6 +13,7 @@ def argos_csv_to_customer(csv_row):
     first_name = csv_row[70].rsplit(' ', 1)[0]
     last_name = csv_row[70].split()[-1]
     address1 = csv_row[13]
+    address2 = ""
     city = csv_row[14]
     county = csv_row[15]
     postcode = csv_row[20]
@@ -19,7 +21,7 @@ def argos_csv_to_customer(csv_row):
     phone = csv_row[26]
     email = csv_row[9]
 
-    return Customer(first_name, last_name, address1, "", city, county, postcode, country, phone, email)
+    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
 
 def argos_csv_to_item(csv_row):
@@ -45,6 +47,7 @@ def get_price(sku):
     with open(cwd + r"\veeqoimporters\vendors\argos-stock.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
+        
         for row in csv_reader:
             if row[1] == sku:
                 return row[4]

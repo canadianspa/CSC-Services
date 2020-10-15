@@ -1,8 +1,9 @@
 import requests
 
-from ..api.utils import handle_response
-from ..credentials.logins import RANGE_USERNAME, RANGE_PASSWORD
-from ..config import RANGE_PORTAL_LOGIN_URL, RANGE_PORTAL_ORDERS_URL, RANGE_PORTAL_STOCK_URL
+from common.credentials.logins import RANGE_USERNAME, RANGE_PASSWORD
+from common.config import RANGE_PORTAL_LOGIN_URL, RANGE_PORTAL_ORDERS_URL, RANGE_PORTAL_STOCK_URL
+
+from common.utils import handle_response
 
 
 def login(session):

@@ -1,4 +1,5 @@
-from ..config import RANGE_CHANNEL_ID, RANGE_BILLING_ID, TAX_RATE
+from common.config import RANGE_CHANNEL_ID, RANGE_BILLING_ID, TAX_RATE
+
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
@@ -11,6 +12,7 @@ def range_json_to_customer(json):
     first_name = order_details['customer_name'].rsplit(' ', 1)[0]
     last_name = order_details['customer_name'].split()[-1]
     address1 = order_details['building_name_number'] + " " + order_details['street']
+    address2 = ""
     city = order_details['town']
     county = ""
     postcode = order_details['postcode']
@@ -18,7 +20,7 @@ def range_json_to_customer(json):
     phone = order_details['telephone']
     email = order_details['email']
 
-    return Customer(first_name, last_name, address1, "", city, county, postcode, country, phone, email)
+    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
 
 def range_json_to_item(json_item):

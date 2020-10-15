@@ -2,7 +2,7 @@ class Customer:
     def __init__(
         self, first_name, last_name, address1, address2, city, state, zip_code, country, phone, email
     ):
-        if first_name == "" or address1 == "" or zip_code == "" or phone == "" or email == "":
+        if first_name == "" or address1 == "" or zip_code == "" or phone == "":
             raise Exception("Incomplete Customer fields.")
 
         self.id = ""

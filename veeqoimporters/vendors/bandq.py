@@ -1,4 +1,5 @@
-from ..config import TAX_RATE, BANDQ_CHANNEL_ID
+from common.config import TAX_RATE, BANDQ_CHANNEL_ID
+
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
@@ -9,13 +10,15 @@ def bandq_csv_to_customer(csv_row):
     first_name = csv_row[14].rsplit(' ', 1)[0]
     last_name = csv_row[14].split()[-1]
     address1 = csv_row[15]
+    address2 = ""
     city = csv_row[16]
+    county = ""
     postcode = csv_row[18]
     country = csv_row[17]
     phone = csv_row[19]
     email = csv_row[21]
 
-    return Customer(first_name, last_name, address1, "", city, "", postcode, country, phone, email)
+    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
     
 def bandq_csv_to_item(csv_row):
