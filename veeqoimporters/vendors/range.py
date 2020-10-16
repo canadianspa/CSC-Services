@@ -23,13 +23,20 @@ def range_json_to_customer(json):
     return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
 
-def range_json_to_item(json_item):
-    sku = json_item['supplier_ref']
-    sellable_id = get_sellable_id(sku)
-    price_per_unit = json_item['price_per_unit']
-    quantity = json_item['quantity']
+def range_json_to_items(json):
+    stock = json['stock']
+    items = []
+    
+    for item_json in json['item_arr']:
+        sku = item_json['supplier_ref']
+        sellable_id = get_sellable_id(sku)
+        price_per_unit = get_range_item_price(stock, item_json)
+        quantity = item_json['quantity']
 
-    return Item(sellable_id, quantity, price_per_unit, TAX_RATE)
+        item = Item(sellable_id, quantity, price_per_unit, TAX_RATE)
+        items.append(item)
+
+    return items
 
 
 def range_json_to_order(json, customer, items):

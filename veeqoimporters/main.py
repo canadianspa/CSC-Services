@@ -10,7 +10,6 @@ from .strategies.order_strategy import order_strategy
 from .api.veeqo import upload_order
 from .api.postcoder import check_postcode
 from .api.range_api import get_range_orders, get_range_stock
-from .vendors.range import get_range_item_price
 
 
 def handle_import_request(orders):
@@ -52,38 +51,33 @@ def handle_csv_file(vendor, file):
     next(csv_input)
     
     order_list = []
-    previous_customer = None
 
     for row in csv_input:
         customer = customer_strategy(vendor, row)
         item = item_strategy(vendor, row)
 
-        if previous_customer is not None and previous_customer == customer:
+        if len(order_list) > 0 and order_list[-1].deliver_to_attributes == customer:
             order_list[-1].line_items_attributes.append(item)
 
         else:
-            previous_customer = customer
             items = [item]
             order = order_strategy(vendor, row, customer, items)
-
             order_list.append(order)
 
-    json_string_order_list = json.dumps(
-        order_list, default=lambda o: o.__dict__)
-
-    return json.loads(json_string_order_list)
+    return classes_to_json(order_list)
 
 
 def handle_xml_file(vendor, file):
     stream = file.read()
     tree = ET.fromstring(stream)
     
+    customer = customer_strategy(vendor, tree)
+    items = item_strategy(vendor, tree)
+    order = order_strategy(vendor, tree, customer, items)
 
-    for element in address_element:
-        print(element.text)
+    orders = [order]
 
-
-    return []
+    return classes_to_json(orders)   
 
 
 def handle_range(vendor):
@@ -93,19 +87,19 @@ def handle_range(vendor):
     order_list = []
 
     for order in orders:
+        #Adding stock to order for item_strategy
+        order['stock'] = stock
+
         customer = customer_strategy(vendor, order)
-
-        items = []
-        for item in order['item_arr']:
-            item['price_per_unit'] = get_range_item_price(stock, item)
-
-            item = item_strategy(vendor, item)
-            items.append(item)
-        
+        items = item_strategy(vendor, order)
         order = order_strategy(vendor, order, customer, items)
+
         order_list.append(order)
 
-    json_string_order_list = json.dumps(
-        order_list, default=lambda o: o.__dict__)
+    return classes_to_json(order_list)
 
-    return json.loads(json_string_order_list)
+
+def classes_to_json(classes):
+    json_string = json.dumps(classes, default=lambda o: o.__dict__)
+
+    return json.loads(json_string)
