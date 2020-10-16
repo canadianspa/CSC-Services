@@ -15,6 +15,6 @@ def item_strategy(vendor, data):
         return wayfair_csv_to_item(data)
     elif vendor == "homebase":
         return homebase_xml_to_items(data)
-        
-    raise Exception("Invalid vendor.")
+    else:
+        raise ValueError(vendor)
 

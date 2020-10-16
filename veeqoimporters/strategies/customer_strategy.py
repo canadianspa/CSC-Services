@@ -15,5 +15,5 @@ def customer_strategy(vendor, data):
         return wayfair_csv_to_customer(data)
     elif vendor == "homebase":
         return homebase_xml_to_customer(data)
-
-    raise Exception("Invalid vendor.")
+    else:
+        raise ValueError(vendor)

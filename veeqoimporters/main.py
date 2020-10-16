@@ -64,7 +64,7 @@ def handle_csv_file(vendor, file):
             order = order_strategy(vendor, row, customer, items)
             order_list.append(order)
 
-    return classes_to_json(order_list)
+    return class_to_json(order_list)
 
 
 def handle_xml_file(vendor, file):
@@ -77,7 +77,7 @@ def handle_xml_file(vendor, file):
 
     orders = [order]
 
-    return classes_to_json(orders)   
+    return class_to_json(orders)   
 
 
 def handle_range(vendor):
@@ -96,10 +96,10 @@ def handle_range(vendor):
 
         order_list.append(order)
 
-    return classes_to_json(order_list)
+    return class_to_json(order_list)
 
 
-def classes_to_json(classes):
+def class_to_json(classes):
     json_string = json.dumps(classes, default=lambda o: o.__dict__)
 
     return json.loads(json_string)
