@@ -1,4 +1,11 @@
-from common.config import TAX_RATE, BANDQ_CHANNEL_ID
+from common.config import (
+    TAX_RATE, 
+    BANDQ_CHANNEL_ID,
+    BANDQ_BILLING_ID,
+    BANDQ_IRELAND_BILLING_ID,
+    BANDQ_JERSEY_BILLING_ID,
+    BANDQ_GUERNSEY_BILLING_ID,
+)
 
 from ..classes.customer import Customer
 from ..classes.item import Item
@@ -32,9 +39,11 @@ def bandq_csv_to_item(csv_row):
 
 def bandq_csv_to_order(csv_row, customer, items):
     billing_id = get_billing_id(csv_row[8])
+    
     order_no = csv_row[0]
     sales_order_no = csv_row[23]
     site_code = csv_row[13]
+
     notes = order_no + " " + sales_order_no + " " + site_code
 
     return Order(customer, BANDQ_CHANNEL_ID, billing_id, items, notes)
@@ -42,10 +51,10 @@ def bandq_csv_to_order(csv_row, customer, items):
 
 def get_billing_id(billing_name):
     if billing_name == "B&Q Limited":
-        return "23657440"
+        return BANDQ_BILLING_ID
     if billing_name == "B&Q Ireland Ltd":
-        return "23677719"
+        return BANDQ_IRELAND_BILLING_ID
     if billing_name == "B&Q (Retail) Jersey Ltd":
-        return "23677785"
+        return BANDQ_JERSEY_BILLING_ID
     if billing_name == "B&Q (Retail) Guernsey Ltd":
-        return "23677822"
+        return BANDQ_GUERNSEY_BILLING_ID

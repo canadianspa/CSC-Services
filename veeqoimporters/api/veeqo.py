@@ -12,6 +12,7 @@ headers = {"Content-Type": "application/json", "x-api-key": VEEQO_APIKEY}
 
 def upload_order(order_json):
     url = VEEQO_ORDERS_URL
+    
     order_string = json.dumps({"order": order_json})
 
     response = requests.post(url, headers=headers, data=order_string)

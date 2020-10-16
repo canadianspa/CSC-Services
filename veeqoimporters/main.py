@@ -1,42 +1,56 @@
 import csv
 import json
 import io
+import xml.etree.ElementTree as ET
 
 from .strategies.customer_strategy import customer_strategy
 from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
+from .api.veeqo import upload_order
 from .api.postcoder import check_postcode
 from .api.range_api import get_range_orders, get_range_stock
 from .vendors.range import get_range_item_price
+
+
+def handle_import_request(orders):
+    for order in orders:
+        upload_order(order)
+
+    response = { "status": "Uploaded " + str(len(orders)) + "orders"}
+
+    return response
+
+
+def handle_postcoder_request(query):
+    return check_postcode(query)
+
 
 def handle_orders_request(vendor, request):
     if 'file' in request.files:
         file = request.files['file']
         file_type = file.filename.split('.')[-1]
-        json = ""
 
         if file_type == "csv":
-            json = handle_csv_file(vendor, file)
+            return handle_csv_file(vendor, file)
         
         elif file_type == "xml":
-            json = handle_xml_file(vendor, file)
+            return handle_xml_file(vendor, file)
         
-        return json
-
     elif vendor == "range":
-        json = handle_range(vendor)
-        return json
+        return handle_range(vendor)
         
     else:
-        return "Bad request: No file supplied or incorrect vendor.", 400
+        return "No file supplied or incorrect vendor.", 400
 
+
+################ HANDLE FILES / VENDORS ####################
 
 def handle_csv_file(vendor, file):
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     csv_input = csv.reader(stream)
     next(csv_input)
-
+    
     order_list = []
     previous_customer = None
 
@@ -61,7 +75,15 @@ def handle_csv_file(vendor, file):
 
 
 def handle_xml_file(vendor, file):
-    return "HANDLE XML TODO"
+    stream = file.read()
+    tree = ET.fromstring(stream)
+    
+
+    for element in address_element:
+        print(element.text)
+
+
+    return []
 
 
 def handle_range(vendor):
@@ -75,8 +97,7 @@ def handle_range(vendor):
 
         items = []
         for item in order['item_arr']:
-            item_price = get_range_item_price(stock, item)
-            item['price_per_unit'] = item_price
+            item['price_per_unit'] = get_range_item_price(stock, item)
 
             item = item_strategy(vendor, item)
             items.append(item)
@@ -88,8 +109,3 @@ def handle_range(vendor):
         order_list, default=lambda o: o.__dict__)
 
     return json.loads(json_string_order_list)
-
-
-# FOR CHECKING PROPERTIES IN CLASS
-# attrs = vars(class)
-# print(', '.join("%s: %s" % item for item in attrs.items()))

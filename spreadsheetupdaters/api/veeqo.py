@@ -10,8 +10,8 @@ def get_orders():
     headers = {"Content-Type": "application/json", "x-api-key": VEEQO_APIKEY}
 
     now = datetime.now()
-    url = '{VEEQO_ORDERS_URL}?created_at_min=%s&page_size=100' % now.strftime("%Y-%m-%d")
-
+    url = f'{VEEQO_ORDERS_URL}?created_at_min=%s&page_size=100' % now.strftime("%Y-%m-%d")
+    
     response = requests.get(url, headers=headers)
     orders = handle_response(response)
 

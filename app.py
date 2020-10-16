@@ -3,11 +3,9 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from spreadsheetupdaters.main import update_vendor_spreadsheet
+from spreadsheetupdaters.main import handle_update_request
 
-from veeqoimporters.main import handle_orders_request
-from veeqoimporters.api.veeqo import upload_order
-from veeqoimporters.api.postcoder import check_postcode
+from veeqoimporters.main import handle_orders_request, handle_import_request, handle_postcoder_request
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
@@ -24,39 +22,40 @@ def not_found(e):
 
 
 @app.route('/update', methods=['GET'])
-def update_spreadsheet():
-    vendor = request.args.get('vendor')
-    order_array = update_vendor_spreadsheet(vendor)
-
-    return jsonify(order_array)
-
-
-@app.route('/orders', methods=['POST'])
-def get_orders_json():
+def update_request():
     vendor = request.args.get('vendor')
 
-    json = handle_orders_request(vendor, request)
-        
+    json = handle_update_request(vendor)
+
     return jsonify(json)
 
 
+@app.route('/orders', methods=['POST'])
+def orders_request():
+    vendor = request.args.get('vendor')
+
+    json = handle_orders_request(vendor, request)
+            
+    return jsonify(json)
+
 
 @app.route('/import', methods=['POST'])
-def import_to_veeqo():
+def import_request():
     orders = request.json
-    for order in orders:
-        upload_order(order)
 
-    return jsonify({ "status": "Uploaded ${orders.length} orders"})
+    json = handle_import_request(orders)
+
+    return jsonify(json)
 
 
 @app.route('/postcoder', methods=['GET'])
-def get_addresses():
+def postcoder_request():
     query = request.args.get('query')
-    address_array = check_postcode(query)
+    
+    json = handle_postcoder_request(query)
 
-    return jsonify(address_array)
+    return jsonify(json)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, threaded=True)
