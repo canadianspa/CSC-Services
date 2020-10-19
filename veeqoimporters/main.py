@@ -9,7 +9,7 @@ from .strategies.order_strategy import order_strategy
 
 from .api.veeqo import upload_order
 from .api.postcoder import check_postcode
-from .api.range_api import get_range_orders, get_range_stock
+from .api.range_service import RangeService
 
 
 def handle_import_request(orders):
@@ -81,8 +81,9 @@ def handle_xml_file(vendor, file):
 
 
 def handle_range(vendor):
-    orders = get_range_orders()
-    stock = get_range_stock()
+    range_service = RangeService()
+    orders = range_service.get_orders()
+    stock = range_service.get_stock()
     
     order_list = []
 

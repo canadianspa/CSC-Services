@@ -40,3 +40,21 @@ WAYFAIR_SPREADSHEET_NAME = "Sheet1"
 HOMEBASE_SPREADSHEET_NAME = "Statement"
 JTF_SPREADSHEET_NAME = "C559 - JTF Wholesale"
 TRAVISPERKINS_SPREADSHEET_NAME = "Sheet1"
+
+BANDQ_ORDER_NO_COLUMN = "D"
+RANGE_ORDER_NO_COLUMN = "D"
+WAYFAIR_ORDER_NO_COLUMN = "B"
+HOMEBASE_ORDER_NO_COLUMN = "E"
+JTF_ORDER_NO_COLUMN = "D"
+TRAVISPERKINS_ORDER_NO_COLUMN = "E"
+
+GOOGLE_SHEETS_SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+
+############## STATIC RESOURCES ##########
+from os import getcwd
+    
+cwd = getcwd()
+
+GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
+GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
+ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\argos-stock.csv"

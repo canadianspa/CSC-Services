@@ -1,7 +1,11 @@
 import csv
-from os import getcwd
 
-from common.config import ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, TAX_RATE
+from common.config import (
+    ARGOS_CHANNEL_ID, 
+    ARGOS_BILLING_ID, 
+    TAX_RATE, 
+    ARGOS_STOCK_PATH
+)
 
 from ..classes.customer import Customer
 from ..classes.item import Item
@@ -44,8 +48,7 @@ def argos_csv_to_order(csv_row, customer, items):
 
 
 def get_price(sku):
-    cwd = getcwd()
-    with open(cwd + r"\veeqoimporters\vendors\argos-stock.csv") as csv_file:
+    with open(ARGOS_STOCK_PATH) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
         
@@ -53,4 +56,4 @@ def get_price(sku):
             if row[1] == sku:
                 return row[4]
 
-    raise Exception("Could not find product or price in argos stock.")
+    raise Exception("Could not find product in argos stock.")
