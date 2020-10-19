@@ -1,11 +1,7 @@
 import re
 
 def format_range_order(order):
-    customer_info = order['deliver_to']
-
-    if (order['status'] == 'cancelled' or 
-        customer_info['first_name'] == 'B & Q plc' or 
-        customer_info['first_name'] == 'B&Q plc'):
+    if order['status'] == 'cancelled':
         return None
     else:
         # convert to spreadsheet items format
@@ -20,23 +16,20 @@ def format_range_order(order):
                 items[i] = sellable['sellable']['product_title'].upper()
                 i+=1            
             
-        order_date = re.findall('\d+', str(order['created_at']))
+        customer_info = order['deliver_to']
+        order_date = re.findall(r'\d+', str(order['created_at']))
 
-        order_nums = ['','']
-        note_nums = re.findall('\d+', str(order['customer_note']['text']))
-        if note_nums:
-            for num in note_nums:
-                if len(num) == 9:
-                    order_nums[0] = num                    
-                elif len(num) == 4:
-                    order_nums[1] = num
-                    
+        po_num = ''
+        note_strings = str(order['customer_note']['text']).split(' ',1)
+        if len(note_strings) > 0:
+            po_num = note_strings[0]
 
-        return ['',
+        return [
+            '',
             '',
             order['total_price'],
             order['number'],
-            order_nums[0],
+            po_num,
             '',
             '',
             '',
@@ -49,7 +42,6 @@ def format_range_order(order):
             customer_info['last_name'].upper(),
             customer_info['zip'].upper(),
             customer_info['address1'].upper(),
-            order_nums[1],
             order['subtotal_price']
         ]
                 

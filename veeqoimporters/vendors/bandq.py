@@ -44,7 +44,7 @@ def bandq_csv_to_order(csv_row, customer, items):
     sales_order_no = csv_row[23]
     site_code = csv_row[13]
 
-    notes = order_no + " " + sales_order_no + " " + site_code
+    notes = order_no + " " + sales_order_no + " " + site_code + " " + customer.email 
 
     return Order(customer, BANDQ_CHANNEL_ID, billing_id, items, notes)
 

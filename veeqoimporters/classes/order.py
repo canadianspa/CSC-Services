@@ -19,7 +19,7 @@ class Order:
         self.channel_id = channel_id
         self.delivery_method_id = DEFAULT_DELIVERY_METHOD_ID
         self.customer_id = customer_id
-        self.customer_attributes = dict({"id": customer_id})
+        self.customer_attributes = dict({ "id": customer_id })
         self.deliver_to_attributes = customer
         self.line_items_attributes = line_items_attributes
-        self.customer_note_attributes = dict({"text": notes})
+        self.customer_note_attributes = dict({ "text": notes })

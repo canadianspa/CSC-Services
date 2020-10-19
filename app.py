@@ -21,7 +21,7 @@ def not_found(e):
     return app.send_static_file('index.html')
 
 
-@app.route('/update', methods=['GET'])
+@app.route('/api/update', methods=['GET'])
 def update_request():
     vendor = request.args.get('vendor')
 
@@ -30,7 +30,7 @@ def update_request():
     return jsonify(json)
 
 
-@app.route('/orders', methods=['POST'])
+@app.route('/api/orders', methods=['POST'])
 def orders_request():
     vendor = request.args.get('vendor')
 
@@ -39,7 +39,7 @@ def orders_request():
     return jsonify(json)
 
 
-@app.route('/import', methods=['POST'])
+@app.route('/api/import', methods=['POST'])
 def import_request():
     orders = request.json
 
@@ -48,7 +48,7 @@ def import_request():
     return jsonify(json)
 
 
-@app.route('/postcoder', methods=['GET'])
+@app.route('/api/postcoder', methods=['GET'])
 def postcoder_request():
     query = request.args.get('query')
     

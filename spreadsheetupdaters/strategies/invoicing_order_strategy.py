@@ -4,7 +4,7 @@ from ..vendors.range import format_range_order
 from ..vendors.wayfair import format_wayfair_order
 from ..vendors.jtf import format_jtf_order
 from ..vendors.travisperkins import format_travisperkins_order
-
+ 
 def invoicing_order_strategy(vendor, order):
     if vendor == "bandq":
         return format_bandq_order(order)

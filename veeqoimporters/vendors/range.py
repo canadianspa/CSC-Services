@@ -45,7 +45,7 @@ def range_json_to_order(json, customer, items):
     order_disp = order_details['order_disp']
     order_id = order_details['order_id']
     
-    notes = order_disp + " " + str(order_id)
+    notes = order_disp + " " + str(order_id) + " " + customer.email 
 
     return Order(customer, RANGE_CHANNEL_ID, RANGE_BILLING_ID, items, notes)
 

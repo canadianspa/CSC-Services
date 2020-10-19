@@ -42,7 +42,7 @@ def argos_csv_to_order(csv_row, customer, items):
     order_ref = csv_row[56]
     customer_sku = csv_row[63]
     
-    notes = order_no + " " + order_ref + " " + customer_sku
+    notes = order_no + " " + order_ref + " " + customer_sku + " " + customer.email 
 
     return Order(customer, ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, items, notes)
 

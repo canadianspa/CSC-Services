@@ -72,6 +72,6 @@ def homebase_xml_to_order(xml, customer, items):
     store_ref_element = store_ref_parent.find('.//Identifier')
     store_ref = store_ref_element.text
 
-    notes = csc_order_no + " " + homebase_order_no + " " + store_ref
+    notes = csc_order_no + " " + homebase_order_no + " " + store_ref + " " + customer.email 
 
     return Order(customer, HOMEBASE_CHANNEL_ID, HOMEBASE_BILLING_ID, items, notes)

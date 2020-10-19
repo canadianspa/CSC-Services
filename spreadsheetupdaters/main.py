@@ -20,13 +20,12 @@ def handle_update_request(vendor):
     
     formatted_orders = []
     for order in orders:
-        if order['channel']['id'] == vendor_details.channel_id and str(order['id']) not in po_numbers:
+        if str(order['channel']['id']) == vendor_details.channel_id and str(order['id']) not in po_numbers:
             formatted_order = invoicing_order_strategy(vendor, order)
-
             if formatted_order is not None:
                 formatted_orders.append(formatted_order)
-    
-    append_range_str = vendor_details.spreadsheet_name + "!A" + str(len(values)) + ":V"
+
+    append_range_str = vendor_details.spreadsheet_name + "!A" + str(len(values) + 1) + ":V"
     google_service.append_values(vendor_details.spreadsheet_id, append_range_str, formatted_orders)
 
     return formatted_orders

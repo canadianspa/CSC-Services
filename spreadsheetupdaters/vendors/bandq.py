@@ -20,10 +20,10 @@ def format_bandq_order(order):
                 items[i] = sellable['sellable']['product_title'].upper()
                 i+=1            
             
-        order_date = re.findall('\d+', str(order['created_at']))
+        order_date = re.findall(r'\d+', str(order['created_at']))
 
         order_nums = ['','']
-        note_nums = re.findall('\d+', str(order['customer_note']['text']))
+        note_nums = re.findall(r'\d+', str(order['customer_note']['text']))
         if note_nums:
             for num in note_nums:
                 if len(num) == 9:
@@ -32,7 +32,8 @@ def format_bandq_order(order):
                     order_nums[1] = num
                     
 
-        return ['',
+        return [
+            '',
             '',
             order['total_price'],
             order['number'],

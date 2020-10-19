@@ -32,6 +32,6 @@ def wayfair_csv_to_item(csv_row):
 
 def wayfair_csv_to_order(csv_row, customer, items):
     order_no = csv_row[2]
-    notes = order_no 
+    notes = order_no + " " + customer.email 
 
     return Order(customer, WAYFAIR_CHANNEL_ID, WAYFAIR_BILLING_ID, items, notes)
