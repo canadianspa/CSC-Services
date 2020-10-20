@@ -10,7 +10,7 @@ from common.config import (
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
-from ..api.veeqo import get_sellable_id
+from common.api.veeqo import get_sellable_id
 
 
 def argos_csv_to_customer(csv_row):

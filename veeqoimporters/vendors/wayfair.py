@@ -3,7 +3,7 @@ from common.config import TAX_RATE, WAYFAIR_BILLING_ID, WAYFAIR_CHANNEL_ID
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
-from ..api.veeqo import get_sellable_id
+from common.api.veeqo import get_sellable_id
 
 
 def wayfair_csv_to_customer(csv_row):

@@ -3,7 +3,6 @@ from requests.utils import quote
 
 from common.config import POSTCODER_URL
 from common.credentials.apikeys import POSTCODER_APIKEY
-
 from common.utils import handle_response
 
 

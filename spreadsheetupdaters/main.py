@@ -2,9 +2,11 @@ import re
 import json
 
 from .classes.vendor_details_factory import VendorDetailsFactory
-from .api.veeqo import get_orders
-from .api.google_service import GoogleService
 from .strategies.invoicing_order_strategy import invoicing_order_strategy
+
+from common.api.google_service import GoogleService
+from common.api.veeqo import get_orders
+
 
 def handle_update_request(vendor):
     orders = get_orders()
@@ -14,7 +16,7 @@ def handle_update_request(vendor):
 
     # String determining which sheet & column contains order numbers 
     po_number_col = vendor_details.spreadsheet_order_column
-    get_range_str = vendor_details.spreadsheet_name + f"!{po_number_col}:{po_number_col}"
+    get_range_str = f"{vendor_details.spreadsheet_name}!{po_number_col}:{po_number_col}"
 
     values = google_service.get_values(vendor_details.spreadsheet_id, get_range_str)
     po_numbers = re.findall(r'\d+', str(values))

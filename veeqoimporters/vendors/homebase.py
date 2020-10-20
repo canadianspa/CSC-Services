@@ -3,7 +3,7 @@ from common.config import HOMEBASE_CHANNEL_ID, HOMEBASE_BILLING_ID, TAX_RATE
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
-from ..api.veeqo import get_sellable_id
+from common.api.veeqo import get_sellable_id
 
 
 def homebase_xml_to_customer(xml):

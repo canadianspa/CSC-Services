@@ -31,7 +31,7 @@ class GoogleService:
 
         self.service = build('sheets', 'v4', credentials=creds)
 
-
+    
     def get_values(self, spreadsheet_id, range_str):
         sheet = self.service.spreadsheets()
         result = sheet.values().get(

@@ -4,8 +4,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from spreadsheetupdaters.main import handle_update_request
+from veeqoimporters.main import handle_orders_request, handle_import_request
+from postcoder.main import handle_postcoder_request
+from turnover.main import handle_turnover_request
+from orderwell.main import handle_orderwell_request
 
-from veeqoimporters.main import handle_orders_request, handle_import_request, handle_postcoder_request
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
@@ -35,7 +38,7 @@ def orders_request():
     vendor = request.args.get('vendor')
 
     json = handle_orders_request(vendor, request)
-            
+    
     return jsonify(json)
 
 
@@ -50,9 +53,25 @@ def import_request():
 
 @app.route('/api/postcoder', methods=['GET'])
 def postcoder_request():
-    query = request.args.get('query')
+    query = request.args.get('postcode')
     
     json = handle_postcoder_request(query)
+
+    return jsonify(json)
+
+
+@app.route('/api/turnover', methods=['GET'])
+def turnover_request():
+    date = request.args.get('date')
+
+    json = handle_turnover_request(date)
+
+    return jsonify(json)
+
+    
+@app.route('/api/orderwell', methods=['GET'])
+def orderwell_request():
+    json = handle_orderwell_request()
 
     return jsonify(json)
 

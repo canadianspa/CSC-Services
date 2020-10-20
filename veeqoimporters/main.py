@@ -7,22 +7,17 @@ from .strategies.customer_strategy import customer_strategy
 from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
-from .api.veeqo import upload_order
-from .api.postcoder import check_postcode
+from common.api.veeqo import import_order
 from .api.range_service import RangeService
 
 
 def handle_import_request(orders):
+    imported_orders = []
     for order in orders:
-        upload_order(order)
+        imported_order = import_order(order)
+        imported_orders.append(imported_order)
 
-    response = { "status": "Uploaded " + str(len(orders)) + "orders"}
-
-    return response
-
-
-def handle_postcoder_request(query):
-    return check_postcode(query)
+    return imported_orders
 
 
 def handle_orders_request(vendor, request):
@@ -32,7 +27,6 @@ def handle_orders_request(vendor, request):
 
         if file_type == "csv":
             return handle_csv_file(vendor, file)
-        
         elif file_type == "xml":
             return handle_xml_file(vendor, file)
         
