@@ -1,48 +1,32 @@
 import re
+import dateutil.parser
 
 def format_homebase_order(order):
-    if order['status'] == 'cancelled':
-        return None
-    else:
-        # convert to spreadsheet items format
-        items = ['','','']
-        i = 0
-        for sellable in order['line_items']:
-            if i > 2:
-                items[2] = items[2] + ' & ' + sellable['sellable']['product_title'].upper()
-                i+=1
-            else:
-                items[i] = sellable['sellable']['product_title'].upper()
-                i+=1
-            
+    items = ['','','']
+    for index, item in enumerate(order['line_items']):
+        if index > 2:
+            items[2] = items[2] + ' & ' + item['sellable']['product_title'].upper()
+        else:
+            items[index] = item['sellable']['product_title'].upper()
 
-        customer_info = order['deliver_to']
-        order_date = re.findall(r'\d+', str(order['created_at']))
-            
-        po_num = ''
-        note_nums = re.findall(r'\d+', str(order['customer_note']['text']))
-        if note_nums:
-            for num in note_nums:
-                if len(num) == 10:
-                    po_num = num
-                    break
-
-        return [
-            '',
-            order_date[2]+'/'+order_date[1]+'/'+order_date[0],
-            '',
-            '',
-            '',
-            order['number'],
-            po_num,
-            '',
-            '',
-            order['total_price'],
-            items[0],
-            items[1],
-            items[2],
-            customer_info['first_name'].upper(),
-            customer_info['last_name'].upper(),
-            customer_info['zip'].upper(),        
-        ]
+    po_num = re.findall(r"\d{10}", order['customer_note']['text'])
+    
+    return [
+        '',
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        '',
+        '',
+        '',
+        order['number'],
+        po_num[0] if len(po_num) > 0 else 'Missing PO number',
+        '',
+        '',
+        order['total_price'],
+        items[0],
+        items[1],
+        items[2],
+        order['deliver_to']['first_name'].upper(),
+        order['deliver_to']['last_name'].upper(),
+        order['deliver_to']['zip'].upper(),        
+    ]
                 

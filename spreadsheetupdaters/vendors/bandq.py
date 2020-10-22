@@ -1,56 +1,39 @@
 import re
+import dateutil.parser
 
 def format_bandq_order(order):
-    customer_info = order['deliver_to']
-
-    if (order['status'] == 'cancelled' or 
-        customer_info['first_name'] == 'B & Q plc' or 
-        customer_info['first_name'] == 'B&Q plc'):
+    if order['deliver_to']['first_name'] == 'B & Q plc' or order['deliver_to']['first_name'] == 'B&Q plc':
         return None
     else:
-        # convert to spreadsheet items format
         items = ['','','']
-        i = 0
-        for sellable in order['line_items']:
-            if i > 2:
-                # Append items in orders of more than 3 products to items[2]
-                items[2] = items[2] + ' & ' + sellable['sellable']['product_title'].upper()
-                i+=1       
+        for index, item in enumerate(order['line_items']):
+            if index > 2:
+                items[2] = items[2] + ' & ' + item['sellable']['product_title'].upper()
             else:
-                items[i] = sellable['sellable']['product_title'].upper()
-                i+=1            
-            
-        order_date = re.findall(r'\d+', str(order['created_at']))
-
-        order_nums = ['','']
-        note_nums = re.findall(r'\d+', str(order['customer_note']['text']))
-        if note_nums:
-            for num in note_nums:
-                if len(num) == 9:
-                    order_nums[0] = num                    
-                elif len(num) == 4:
-                    order_nums[1] = num
-                    
-
+                items[index] = item['sellable']['product_title'].upper()
+        
+        po_nums1 = re.findall(r"\d{9}", order['customer_note']['text'])
+        po_nums2 = re.findall(r"\d{4}", order['customer_note']['text'])
+        
         return [
             '',
             '',
             order['total_price'],
             order['number'],
-            order_nums[0],
+            po_nums1[0] if len(po_nums1) > 0 else 'Missing PO number',
             '',
             '',
             '',
-            order_date[2]+'/'+order_date[1]+'/'+order_date[0],
+            dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
             '',
             items[0],
             items[1],
             items[2],
-            customer_info['first_name'].upper(),
-            customer_info['last_name'].upper(),
-            customer_info['zip'].upper(),
-            customer_info['address1'].upper(),
-            order_nums[1],
+            order['deliver_to']['first_name'].upper(),
+            order['deliver_to']['last_name'].upper(),
+            order['deliver_to']['zip'].upper(),
+            order['deliver_to']['address1'].upper(),
+            po_nums2[0] if len(po_nums2) > 0 else 'Missing PO number',
             order['subtotal_price']
         ]
                 

@@ -1,40 +1,30 @@
 import re
+import dateutil.parser
 
 def format_travisperkins_order(order):
-    if order['status'] == 'cancelled':
-        return None
-    else:
-        items = ''
-        for sellable in order['line_items']:
-            items += sellable['sellable']['product_title'].upper()         
-            
-        customer_info = order['deliver_to']
-        order_date = re.findall(r'\d+', str(order['created_at']))
+    items = ""
+    for sellable in order['line_items']:
+        items += sellable['sellable']['product_title'].upper() + " "  
 
-        po_num = ''
-        note_nums = re.findall(r'\d+', str(order['customer_note']['text']))
-        if note_nums:
-            for num in note_nums:
-                if len(num) == 9:
-                    po_num = num
+    po_num = re.findall(r"\d{9}", order['customer_note']['text'])
                     
-        return [
-            order['total_price'],
-            '',
-            '',
-            po_num,
-            order['number'],
-            order_date[2]+'/'+order_date[1]+'/'+order_date[0],
-            '',
-            '',
-            customer_info['first_name'].upper(),
-            customer_info['last_name'].upper(),
-            customer_info['address1'].upper(),
-            customer_info['zip'].upper(),
-            '',
-            '',
-            items,
-            '',
-            order['subtotal_price']
-        ]
+    return [
+        order['total_price'],
+        '',
+        '',
+        po_num[0] if len(po_num) > 0 else 'Missing PO number',
+        order['number'],
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        '',
+        '',
+        order['deliver_to']['first_name'].upper(),
+        order['deliver_to']['last_name'].upper(),
+        order['deliver_to']['address1'].upper(),
+        order['deliver_to']['zip'].upper(),
+        '',
+        '',
+        items,
+        '',
+        order['subtotal_price']
+    ]
                 

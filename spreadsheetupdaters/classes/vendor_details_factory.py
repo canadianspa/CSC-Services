@@ -4,7 +4,9 @@ from common.config import (
     HOMEBASE_CHANNEL_ID, 
     WAYFAIR_CHANNEL_ID, 
     JTF_CHANNEL_ID, 
-    TRAVISPERKINS_CHANNEL_ID
+    TRAVISPERKINS_CHANNEL_ID,
+    SHOPDIRECT_CHANNEL_ID,
+    HORNBACH_CHANNEL_ID
 )
 
 from common.config import ( 
@@ -13,7 +15,9 @@ from common.config import (
     HOMEBASE_SPREADSHEET_ID, 
     WAYFAIR_SPREADSHEET_ID, 
     JTF_SPREADSHEET_ID, 
-    TRAVISPERKINS_SPREADSHEET_ID
+    TRAVISPERKINS_SPREADSHEET_ID,
+    SHOPDIRECT_SPREADSHEET_ID,
+    HORNBACH_SPREADSHEET_ID
 )
 
 from common.config import ( 
@@ -22,7 +26,9 @@ from common.config import (
     HOMEBASE_SPREADSHEET_NAME, 
     WAYFAIR_SPREADSHEET_NAME, 
     JTF_SPREADSHEET_NAME, 
-    TRAVISPERKINS_SPREADSHEET_NAME
+    TRAVISPERKINS_SPREADSHEET_NAME,
+    SHOPDIRECT_SPREADSHEET_NAME,
+    HORNBACH_SPREADSHEET_NAME
 )
 
 from common.config import ( 
@@ -32,6 +38,8 @@ from common.config import (
     HOMEBASE_ORDER_NO_COLUMN,
     JTF_ORDER_NO_COLUMN,
     TRAVISPERKINS_ORDER_NO_COLUMN,
+    SHOPDIRECT_ORDER_NO_COLUMN,
+    HORNBACH_ORDER_NO_COLUMN
 )
 
 from .vendor_details import VendorDetails
@@ -79,6 +87,20 @@ class VendorDetailsFactory:
                 TRAVISPERKINS_SPREADSHEET_ID, 
                 TRAVISPERKINS_SPREADSHEET_NAME,
                 TRAVISPERKINS_ORDER_NO_COLUMN
+            )
+        elif vendor == "shopdirect":
+            return VendorDetails(
+                SHOPDIRECT_CHANNEL_ID, 
+                SHOPDIRECT_SPREADSHEET_ID, 
+                SHOPDIRECT_SPREADSHEET_NAME,
+                SHOPDIRECT_ORDER_NO_COLUMN
+            )
+        elif vendor == "hornbach":
+            return VendorDetails(
+                HORNBACH_CHANNEL_ID, 
+                HORNBACH_SPREADSHEET_ID, 
+                HORNBACH_SPREADSHEET_NAME,
+                HORNBACH_ORDER_NO_COLUMN
             )
         else:
             raise ValueError(vendor)

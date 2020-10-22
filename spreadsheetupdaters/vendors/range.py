@@ -1,47 +1,34 @@
 import re
+import dateutil.parser
 
 def format_range_order(order):
-    if order['status'] == 'cancelled':
-        return None
-    else:
-        # convert to spreadsheet items format
-        items = ['','','']
-        i = 0
-        for sellable in order['line_items']:
-            if i > 2:
-                # Append items in orders of more than 3 products to items[2]
-                items[2] = items[2] + ' & ' + sellable['sellable']['product_title'].upper()
-                i+=1       
-            else:
-                items[i] = sellable['sellable']['product_title'].upper()
-                i+=1            
-            
-        customer_info = order['deliver_to']
-        order_date = re.findall(r'\d+', str(order['created_at']))
+    items = ['','','']
+    for index, item in enumerate(order['line_items']):
+        if index > 2:
+            items[2] = items[2] + ' & ' + item['sellable']['product_title'].upper()
+        else:
+            items[index] = item['sellable']['product_title'].upper()  
 
-        po_num = ''
-        note_strings = str(order['customer_note']['text']).split(' ',1)
-        if len(note_strings) > 0:
-            po_num = note_strings[0]
-
-        return [
-            '',
-            '',
-            order['total_price'],
-            order['number'],
-            po_num,
-            '',
-            '',
-            '',
-            order_date[2]+'/'+order_date[1]+'/'+order_date[0],
-            '',
-            items[0],
-            items[1],
-            items[2],
-            customer_info['first_name'].upper(),
-            customer_info['last_name'].upper(),
-            customer_info['zip'].upper(),
-            customer_info['address1'].upper(),
-            order['subtotal_price']
-        ]
+    po_num = order['customer_note']['text'].split(' ',1)
+    
+    return [
+        '',
+        '',
+        order['total_price'],
+        order['number'],
+        po_num[0] if len(po_num) > 0 else 'Missing PO number',
+        '',
+        '',
+        '',
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        '',
+        items[0],
+        items[1],
+        items[2],
+        order['deliver_to']['first_name'].upper(),
+        order['deliver_to']['last_name'].upper(),
+        order['deliver_to']['zip'].upper(),
+        order['deliver_to']['address1'].upper(),
+        order['subtotal_price']
+    ]
                 
