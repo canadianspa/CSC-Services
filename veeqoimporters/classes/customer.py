@@ -25,10 +25,10 @@ class Customer:
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.company = ""
-        self.address1 = address1.title()
-        self.address2 = address2.title() or ""
-        self.city = city.title() or ""
-        self.state = state.title() or ""
+        self.address1 = address1.title().replace(";", "")
+        self.address2 = address2.title().replace(";", "") or ""
+        self.city = city.title().replace(";", "") or ""
+        self.state = state.title().replace(";", "") or ""
         self.zip = zip_code
         self.country = country or ""
         self.phone = phone

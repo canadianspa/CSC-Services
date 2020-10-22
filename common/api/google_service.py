@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-from common.config import (
+from ..config import (
     GOOGLE_SHEETS_SCOPES,
     GOOGLE_CREDENTIALS_PATH,
     GOOGLE_TOKEN_PATH
@@ -29,7 +29,7 @@ class GoogleService:
             with open(GOOGLE_TOKEN_PATH, 'wb') as token:
                 pickle.dump(creds, token)
 
-        self.service = build('sheets', 'v4', credentials=creds)
+        self.service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
 
     
     def get_values(self, spreadsheet_id, range_str):

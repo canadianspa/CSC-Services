@@ -34,7 +34,13 @@ def bandq_csv_to_item(csv_row):
     quantity = csv_row[31]
     price_per_unit = csv_row[35]
 
-    return Item(sellable_id, quantity, price_per_unit, TAX_RATE)
+    billing_name = csv_row[8]
+    tax_rate = TAX_RATE
+
+    if "Jersey" in billing_name or "Guernsey" in billing_name:
+        tax_rate = 0
+
+    return Item(sellable_id, quantity, price_per_unit, tax_rate)
 
 
 def bandq_csv_to_order(csv_row, customer, items):

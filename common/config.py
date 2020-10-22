@@ -1,5 +1,6 @@
-VEEQO_ORDERS_URL = "https://api.veeqo.com/orders"
-VEEQO_PRODUCTS_URL = "https://api.veeqo.com/products"
+VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
+VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
+VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
 POSTCODER_URL = "https://ws.postcoder.com"
 
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
