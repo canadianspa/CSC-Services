@@ -11,7 +11,6 @@ from orderwell.main import handle_orderwell_request
 
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
-CORS(app)
 
 
 @app.route('/')
@@ -37,9 +36,13 @@ def update_request():
 def orders_request():
     vendor = request.args.get('vendor')
 
-    json = handle_orders_request(vendor, request)
+    try:
+        json = handle_orders_request(vendor, request)
+        return jsonify(json)
+    except:
+        json = { "error": True }
+        return jsonify(json)
     
-    return jsonify(json)
 
 
 @app.route('/api/import', methods=['POST'])
@@ -77,4 +80,5 @@ def orderwell_request():
 
 
 if __name__ == "__main__":
+    CORS(app)
     app.run(debug=True, threaded=True)

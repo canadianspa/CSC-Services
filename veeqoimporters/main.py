@@ -25,6 +25,7 @@ def handle_orders_request(vendor, request):
         file = request.files['file']
         file_type = file.filename.split('.')[-1]
 
+        
         if file_type == "csv":
             return handle_csv_file(vendor, file)
         elif file_type == "xml":
@@ -32,9 +33,6 @@ def handle_orders_request(vendor, request):
         
     elif vendor == "range":
         return handle_range(vendor)
-        
-    else:
-        return "No file supplied or incorrect vendor.", 400
 
 
 ################ HANDLE FILES / VENDORS ####################

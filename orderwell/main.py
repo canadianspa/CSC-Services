@@ -20,7 +20,6 @@ def handle_orderwell_request():
                 order_obj['id'] = order[1]
                 order_obj['url'] = f"{VEEQO_APP_ORDERS_URL}/{order[1][3:]}"
                 order_obj['items'] = []
-                order_obj['price'] = f"{price:.2f}"
 
                 if order[8]:
                     order_obj['items'].append(order[8])
@@ -28,7 +27,7 @@ def handle_orderwell_request():
                     order_obj['items'].append(order[9])
                 if order[10]:
                     order_obj['items'].append(order[10])
-
+                
                 orders.append(order_obj)
         except: 
             pass

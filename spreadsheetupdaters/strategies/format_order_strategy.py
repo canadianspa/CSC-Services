@@ -6,6 +6,7 @@ from ..vendors.jtf import format_jtf_order
 from ..vendors.travisperkins import format_travisperkins_order
 from ..vendors.shopdirect import format_shopdirect_order
 from ..vendors.hornbach import format_hornbach_order
+from ..vendors.robert_dyas import format_robert_dyas_order
  
 def format_order_strategy(vendor, order):
     if vendor == "bandq":
@@ -24,5 +25,7 @@ def format_order_strategy(vendor, order):
         return format_shopdirect_order(order)
     elif vendor == "hornbach":
         return format_hornbach_order(order)
+    elif vendor == "robert_dyas":
+        return format_robert_dyas_order(order)
     else:
         raise ValueError(vendor)
