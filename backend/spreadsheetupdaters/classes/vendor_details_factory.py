@@ -53,6 +53,7 @@ class VendorDetailsFactory:
     def build(self, vendor):
         if vendor == "bandq":
             return VendorDetails(
+                vendor,
                 BANDQ_CHANNEL_ID,
                 BANDQ_SPREADSHEET_ID,
                 BANDQ_SPREADSHEET_NAME,
@@ -60,6 +61,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "range":
             return VendorDetails(
+                vendor,
                 RANGE_CHANNEL_ID,
                 RANGE_SPREADSHEET_ID,
                 RANGE_SPREADSHEET_NAME,
@@ -67,6 +69,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "homebase":
             return VendorDetails(
+                vendor,
                 HOMEBASE_CHANNEL_ID,
                 HOMEBASE_SPREADSHEET_ID,
                 HOMEBASE_SPREADSHEET_NAME,
@@ -74,6 +77,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "wayfair":
             return VendorDetails(
+                vendor,
                 WAYFAIR_CHANNEL_ID,
                 WAYFAIR_SPREADSHEET_ID,
                 WAYFAIR_SPREADSHEET_NAME,
@@ -81,6 +85,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "jtf":
             return VendorDetails(
+                vendor,
                 JTF_CHANNEL_ID,
                 JTF_SPREADSHEET_ID,
                 JTF_SPREADSHEET_NAME,
@@ -88,6 +93,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "travisperkins":
             return VendorDetails(
+                vendor,
                 TRAVISPERKINS_CHANNEL_ID,
                 TRAVISPERKINS_SPREADSHEET_ID,
                 TRAVISPERKINS_SPREADSHEET_NAME,
@@ -95,6 +101,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "shop_direct":
             return VendorDetails(
+                vendor,
                 SHOP_DIRECT_CHANNEL_ID,
                 SHOP_DIRECT_SPREADSHEET_ID,
                 SHOP_DIRECT_SPREADSHEET_NAME,
@@ -102,6 +109,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "hornbach":
             return VendorDetails(
+                vendor,
                 HORNBACH_CHANNEL_ID,
                 HORNBACH_SPREADSHEET_ID,
                 HORNBACH_SPREADSHEET_NAME,
@@ -109,6 +117,7 @@ class VendorDetailsFactory:
             )
         elif vendor == "robert_dyas":
             return VendorDetails(
+                vendor,
                 ROBERT_DYAS_CHANNEL_ID,
                 ROBERT_DYAS_SPREADSHEET_ID,
                 ROBERT_DYAS_SPREADSHEET_NAME,

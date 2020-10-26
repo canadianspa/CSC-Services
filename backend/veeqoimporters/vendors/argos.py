@@ -1,9 +1,9 @@
 import csv
 
 from common.config import (
-    ARGOS_CHANNEL_ID, 
-    ARGOS_BILLING_ID, 
-    TAX_RATE, 
+    ARGOS_CHANNEL_ID,
+    ARGOS_BILLING_ID,
+    TAX_RATE,
     ARGOS_STOCK_PATH
 )
 
@@ -41,8 +41,8 @@ def argos_csv_to_order(csv_row, customer, items):
     order_no = csv_row[0]
     order_ref = csv_row[56]
     customer_sku = csv_row[63]
-    
-    notes = order_no + " " + order_ref + " " + customer_sku + " " + customer.email 
+
+    notes = order_no + " " + order_ref + " " + customer_sku + " " + customer.email
 
     return Order(customer, ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, items, notes)
 
@@ -51,7 +51,7 @@ def get_price(sku):
     with open(ARGOS_STOCK_PATH) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
-        
+
         for row in csv_reader:
             if row[1] == sku:
                 return row[4]

@@ -1,11 +1,13 @@
 class VendorDetails:
     def __init__(
-        self, 
+        self,
+        name,
         channel_id,
-        spreadsheet_id, 
-        spreadsheet_name, 
+        spreadsheet_id,
+        spreadsheet_name,
         spreadsheet_order_column
     ):
+        self.name = name
         self.channel_id = channel_id
         self.spreadsheet_id = spreadsheet_id
         self.spreadsheet_name = spreadsheet_name

@@ -1,5 +1,5 @@
 from common.config import (
-    TAX_RATE, 
+    TAX_RATE,
     BANDQ_CHANNEL_ID,
     BANDQ_BILLING_ID,
     BANDQ_IRELAND_BILLING_ID,
@@ -27,7 +27,7 @@ def bandq_csv_to_customer(csv_row):
 
     return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
-    
+
 def bandq_csv_to_item(csv_row):
     sku = csv_row[29]
     sellable_id = get_sellable_id(sku)
@@ -45,12 +45,13 @@ def bandq_csv_to_item(csv_row):
 
 def bandq_csv_to_order(csv_row, customer, items):
     billing_id = get_billing_id(csv_row[8])
-    
+
     order_no = csv_row[0]
     sales_order_no = csv_row[23]
     site_code = csv_row[13]
 
-    notes = order_no + " " + sales_order_no + " " + site_code + " " + customer.email 
+    notes = order_no + " " + sales_order_no + \
+        " " + site_code + " " + customer.email
 
     return Order(customer, BANDQ_CHANNEL_ID, billing_id, items, notes)
 

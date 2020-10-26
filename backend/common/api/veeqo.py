@@ -40,4 +40,4 @@ def get_sellable_id(sku):
             if sellable['sku_code'] == sku:
                 return sellable['stock_entries'][0]['sellable_id']
 
-    raise ValueError(f"{sku} not found")
+    raise ValueError(f"SKU: {sku} not found")

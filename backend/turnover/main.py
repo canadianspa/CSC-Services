@@ -1,14 +1,16 @@
 from common.api.google_service import GoogleService
 from common.config import BANDQ_SPREADSHEET_ID, BANDQ_SPREADSHEET_NAME, VEEQO_APP_ORDERS_URL
 
+
 def handle_turnover_request(month_year_string):
     google_service = GoogleService()
-    
+
     range_str = f"{BANDQ_SPREADSHEET_NAME}!C100:T"
     values = google_service.get_values(BANDQ_SPREADSHEET_ID, range_str)
 
     total_ex_vat = 0
     total_with_vat = 0
+
     for order in values:
         try:
             order_date = order[6]
@@ -21,5 +23,5 @@ def handle_turnover_request(month_year_string):
 
         except:
             pass
-            
-    return { "total_with_vat": f"{total_with_vat:.2f}", "total_ex_vat": f"{total_ex_vat:.2f}" }
+
+    return {"total_with_vat": f"{total_with_vat:.2f}", "total_ex_vat": f"{total_ex_vat:.2f}"}

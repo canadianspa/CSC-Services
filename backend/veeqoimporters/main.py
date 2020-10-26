@@ -37,13 +37,11 @@ def handle_orders_request(vendor, request):
         elif vendor == "range":
             return handle_range(vendor)
 
-        else:
-            return None
-
     except Exception as e:
         print("Error: " + str(e))
         print(traceback.format_exc())
-        return None
+
+    return None
 
 
 ################ HANDLE FILES / VENDORS ####################
