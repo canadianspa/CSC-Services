@@ -34,6 +34,7 @@ class GoogleService:
             'sheets', 'v4', credentials=creds, cache_discovery=False)
 
     def get_values(self, spreadsheet_id, range_str):
+        # pylint: disable=maybe-no-member
         sheet = self.service.spreadsheets()
         result = sheet.values().get(
             spreadsheetId=spreadsheet_id,
@@ -42,6 +43,7 @@ class GoogleService:
         return result.get('values', [])
 
     def append_values(self, spreadsheet_id, range_str, values):
+        # pylint: disable=maybe-no-member
         sheet = self.service.spreadsheets()
         value_input_option = 'RAW'
 
