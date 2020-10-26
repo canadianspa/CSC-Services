@@ -26,12 +26,12 @@ def homebase_xml_to_customer(xml):
     address1 = child_content[3]
     address2 = ""
     city = child_content[4]
-    county = child_content[5]
+    county = ""
     postcode = child_content[6]
     country = "GB"
     phone = child_content[7]
     email = ""
-    
+
     return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
 
 
@@ -40,7 +40,8 @@ def homebase_xml_to_items(xml):
     products_element = xml.findall('.//Product[@xrefMode="Target"]')
 
     for product_element in products_element:
-        sku_element = product_element.find('.//Identifier[@function="ProductCode"][@owner="Company"]')
+        sku_element = product_element.find(
+            './/Identifier[@function="ProductCode"][@owner="Company"]')
         sku = sku_element.text
         sellable_id = get_sellable_id(sku)
 
@@ -52,7 +53,7 @@ def homebase_xml_to_items(xml):
 
         item = Item(sellable_id, quantity, price_per_unit, TAX_RATE)
         items.append(item)
-    
+
     return items
 
 
@@ -72,6 +73,7 @@ def homebase_xml_to_order(xml, customer, items):
     store_ref_element = store_ref_parent.find('.//Identifier')
     store_ref = store_ref_element.text
 
-    notes = csc_order_no + " " + homebase_order_no + " " + store_ref + " " + customer.email 
+    notes = csc_order_no + " " + homebase_order_no + \
+        " " + store_ref + " " + customer.email
 
     return Order(customer, HOMEBASE_CHANNEL_ID, HOMEBASE_BILLING_ID, items, notes)
