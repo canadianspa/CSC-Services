@@ -36,8 +36,8 @@ def is_new_order(order, po_numbers, vendor_details):
     if (order['status'] != 'cancelled' and 
             str(order['id']) not in po_numbers and
             str(order['channel']['id']) == vendor_details.channel_id and 
-            order['deliver_to']['first_name'] == 'B & Q plc' or 
-            order['deliver_to']['first_name'] == 'B&Q plc'):
+            order['deliver_to']['first_name'] != 'B & Q plc' and 
+            order['deliver_to']['first_name'] != 'B&Q plc'):
         return True
     else:
         return False
