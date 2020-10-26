@@ -51,6 +51,7 @@ function OrderWell() {
 				<Spinner style={{ marginTop: "120px" }} />
 			) : (
 				<>
+					<Button onClick={handleCopyClick}>Copy</Button>
 					<Table bordered striped id="orderwell-table">
 						<thead>
 							<tr>
@@ -84,7 +85,6 @@ function OrderWell() {
 							))}
 						</tbody>
 					</Table>
-					<Button onClick={handleCopyClick}>Copy</Button>
 				</>
 			)}
 		</div>
