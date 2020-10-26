@@ -2,31 +2,29 @@
 from os import getcwd
 cwd = getcwd()
 
-GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
-GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
-ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\argos-stock.csv"
-
+GOOGLE_TOKEN_PATH = cwd + r"\backend\common\credentials\token.pickle"
+GOOGLE_CREDENTIALS_PATH = cwd + r"\backend\common\credentials\credentials.json"
+ARGOS_STOCK_PATH = cwd + r"\backend\veeqoimporters\vendors\argos-stock.csv"
 
 ############# URLS ###########
 
 VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
 VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
 VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
+
 POSTCODER_URL = "https://ws.postcoder.com"
 
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
 RANGE_PORTAL_ORDERS_URL = "https://supplier.rstore.com/suppliers.mod/api/order.load.php"
 RANGE_PORTAL_STOCK_URL = "https://supplier.rstore.com/suppliers.mod/api/stock.load.php?supplier=5778"
 
-
-############# CONSTANTS ###########
+############# CONST ###########
 
 TAX_RATE = 0.2
 
 DEFAULT_DELIVERY_METHOD_ID = "153707"
 
 GOOGLE_SHEETS_SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
 
 ############# VEEQO VENDOR IDS ###########
 
@@ -52,7 +50,6 @@ WAYFAIR_BILLING_ID = "20978082"
 HOMEBASE_BILLING_ID = "12604329"
 ROBERT_DYAS_BILLING_ID = "40554088"
 SHOP_DIRECT_BILLING_ID = "13725775"
-
 
 ############# GOOGLE SHEETS VENDOR INFO ###########
 

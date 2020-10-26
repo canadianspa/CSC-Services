@@ -10,7 +10,7 @@ from turnover.main import handle_turnover_request
 from orderwell.main import handle_orderwell_request
 
 
-app = Flask(__name__, static_folder='./build', static_url_path='/')
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
 
 @app.route('/')
