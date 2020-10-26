@@ -2,9 +2,9 @@
 from os import getcwd
 cwd = getcwd()
 
-GOOGLE_TOKEN_PATH = cwd + r"\backend\common\credentials\token.pickle"
-GOOGLE_CREDENTIALS_PATH = cwd + r"\backend\common\credentials\credentials.json"
-ARGOS_STOCK_PATH = cwd + r"\backend\veeqoimporters\vendors\argos-stock.csv"
+GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
+GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
+ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\argos-stock.csv"
 
 ############# URLS ###########
 
