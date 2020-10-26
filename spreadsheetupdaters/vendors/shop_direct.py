@@ -1,11 +1,13 @@
 import re
 import dateutil.parser
 
-def format_shopdirect_order(order):
-    items = ['','','']
+
+def format_shop_direct_order(order):
+    items = ['', '', '']
     for index, item in enumerate(order['line_items']):
         if index > 2:
-            items[2] = items[2] + ' & ' + item['sellable']['product_title'].upper()
+            items[2] = items[2] + ' & ' + \
+                item['sellable']['product_title'].upper()
         else:
             items[index] = item['sellable']['product_title'].upper()
 

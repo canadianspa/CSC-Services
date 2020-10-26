@@ -1,9 +1,9 @@
 class Item:
     def __init__(
-        self, 
-        sellable_id, 
-        quantity, 
-        price_per_unit, 
+        self,
+        sellable_id,
+        quantity,
+        price_per_unit,
         tax_rate
     ):
         if sellable_id == "":
@@ -12,8 +12,8 @@ class Item:
             raise ValueError("price_per_unit: " + price_per_unit)
         if tax_rate == "":
             raise ValueError("tax_rate: " + tax_rate)
-        if quantity == "" or quantity == "0":
-            raise ValueError("Quantity: " + quantity)
+        if quantity == "":
+            raise ValueError("quantity: " + quantity)
 
         self.sellable_id = sellable_id
         self.quantity = quantity

@@ -4,6 +4,8 @@ from ..vendors.range import range_json_to_order
 from ..vendors.wayfair import wayfair_csv_to_order
 from ..vendors.homebase import homebase_xml_to_order
 from ..vendors.robert_dyas import robert_dyas_csv_to_order
+from ..vendors.shop_direct import shop_direct_csv_to_order
+
 
 def order_strategy(vendor, data, customer, items):
     if vendor == "bandq":
@@ -18,5 +20,7 @@ def order_strategy(vendor, data, customer, items):
         return homebase_xml_to_order(data, customer, items)
     elif vendor == "robert_dyas":
         return robert_dyas_csv_to_order(data, customer, items)
+    elif vendor == "shop_direct":
+        return shop_direct_csv_to_order(data, customer, items)
     else:
         raise ValueError(vendor)

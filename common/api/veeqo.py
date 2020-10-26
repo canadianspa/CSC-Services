@@ -6,12 +6,12 @@ from ..credentials.apikeys import VEEQO_APIKEY
 from ..utils import handle_response
 
 
-headers = { "Content-Type": "application/json", "x-api-key": VEEQO_APIKEY }
+headers = {"Content-Type": "application/json", "x-api-key": VEEQO_APIKEY}
 
 
 def get_orders():
     url = f"{VEEQO_API_ORDERS_URL}?page_size=100&status=awaiting_payment"
-    
+
     response = requests.get(url, headers=headers)
     orders = handle_response(response)
 
@@ -20,8 +20,8 @@ def get_orders():
 
 def import_order(order_json):
     url = VEEQO_API_ORDERS_URL
-    
-    order_string = json.dumps({ "order": order_json })
+
+    order_string = json.dumps({"order": order_json})
 
     response = requests.post(url, headers=headers, data=order_string)
     response_json = handle_response(response)

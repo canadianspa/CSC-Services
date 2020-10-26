@@ -16,7 +16,7 @@ app = Flask(__name__, static_folder='./build', static_url_path='/')
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
-    
+
 
 @app.errorhandler(404)
 def not_found(e):
@@ -36,13 +36,12 @@ def update_request():
 def orders_request():
     vendor = request.args.get('vendor')
 
-    try:
-        json = handle_orders_request(vendor, request)
-        return jsonify(json)
-    except:
-        json = { "error": True }
-        return jsonify(json)
-    
+    json = handle_orders_request(vendor, request)
+
+    if json == None:
+        json = {"error": True}
+
+    return jsonify(json)
 
 
 @app.route('/api/import', methods=['POST'])
@@ -57,7 +56,7 @@ def import_request():
 @app.route('/api/postcoder', methods=['GET'])
 def postcoder_request():
     query = request.args.get('postcode')
-    
+
     json = handle_postcoder_request(query)
 
     return jsonify(json)
@@ -71,7 +70,7 @@ def turnover_request():
 
     return jsonify(json)
 
-    
+
 @app.route('/api/orderwell', methods=['GET'])
 def orderwell_request():
     json = handle_orderwell_request()

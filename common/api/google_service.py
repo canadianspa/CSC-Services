@@ -11,6 +11,7 @@ from ..config import (
     GOOGLE_TOKEN_PATH
 )
 
+
 class GoogleService:
     def __init__(self):
         creds = None
@@ -29,28 +30,27 @@ class GoogleService:
             with open(GOOGLE_TOKEN_PATH, 'wb') as token:
                 pickle.dump(creds, token)
 
-        self.service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
+        self.service = build(
+            'sheets', 'v4', credentials=creds, cache_discovery=False)
 
-    
     def get_values(self, spreadsheet_id, range_str):
         sheet = self.service.spreadsheets()
         result = sheet.values().get(
-            spreadsheetId=spreadsheet_id, 
+            spreadsheetId=spreadsheet_id,
             range=range_str).execute()
 
         return result.get('values', [])
-
 
     def append_values(self, spreadsheet_id, range_str, values):
         sheet = self.service.spreadsheets()
         value_input_option = 'RAW'
 
         body = {
-            'values': values 
+            'values': values
         }
-    
+
         return sheet.values().update(
             spreadsheetId=spreadsheet_id,
-            range=range_str, 
+            range=range_str,
             valueInputOption=value_input_option,
             body=body).execute()
