@@ -14,10 +14,11 @@ def handle_update_request(vendor):
     vendor_details = VendorDetailsFactory().build(vendor)
     google_service = GoogleService()
 
-    # String determining which sheet & column contains order numbers 
+    # String determining which sheet & column contains order numbers
     get_range_str = f"{vendor_details.spreadsheet_name}!{vendor_details.spreadsheet_order_column}:{vendor_details.spreadsheet_order_column}"
-    
-    values = google_service.get_values(vendor_details.spreadsheet_id, get_range_str)
+
+    values = google_service.get_values(
+        vendor_details.spreadsheet_id, get_range_str)
     po_numbers = re.findall(r'\d+', str(values))
 
     formatted_orders = []
@@ -26,19 +27,22 @@ def handle_update_request(vendor):
             formatted_order = format_order_strategy(vendor, order)
             formatted_orders.append(formatted_order)
 
-    append_range_str = vendor_details.spreadsheet_name + "!A" + str(len(values) + 1) + ":V"
-    google_service.append_values(vendor_details.spreadsheet_id, append_range_str, formatted_orders)
+    append_range_str = vendor_details.spreadsheet_name + \
+        "!A" + str(len(values) + 1) + ":V"
+    google_service.append_values(
+        vendor_details.spreadsheet_id, append_range_str, formatted_orders)
 
     return formatted_orders
 
 
 def is_new_order(order, po_numbers, vendor_details):
-    if (order['status'] != 'cancelled' and 
-            str(order['id']) not in po_numbers and
-            str(order['channel']['id']) == vendor_details.channel_id and 
-            order['deliver_to']['first_name'] != 'B & Q plc' and 
-            order['deliver_to']['first_name'] != 'B&Q plc'):
-        return True
+    if str(order['id']) not in po_numbers and order['status'] != 'cancelled':
+        if (str(order['channel']['id']) == vendor_details.channel_id and
+            order['deliver_to']['first_name'] != 'B & Q plc' and
+                order['deliver_to']['first_name'] != 'B&Q plc'):
+            return True
+
+        elif vendor_details.name == "hornbach" and "Hornbach" in order['billing_address']['first_name']:
+            return True
     else:
         return False
-

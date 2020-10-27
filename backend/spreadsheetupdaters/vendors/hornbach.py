@@ -1,11 +1,12 @@
 import re
 import dateutil.parser
 
+
 def format_hornbach_order(order):
     items = ""
     for item in order['line_items']:
         items += item['sellable']['sku_code'] + " "
-            
+
     po_num = re.findall(r"\d{10}", order['customer_note']['text'])
 
     return [
@@ -15,13 +16,15 @@ def format_hornbach_order(order):
         '',
         order['number'],
         po_num[0] if len(po_num) > 0 else 'Missing PO number',
-        order['deliver_to']['first_name'] + ' ' + order['deliver_to']['last_name'],
-        order['deliver_to']['address1'],
+        order['deliver_to']['first_name'] + ' ' +
+        order['deliver_to']['last_name'],
+        order['deliver_to']['address1'] +
+        '\n' + order['deliver_to']['city'] +
+        '\n' + order['deliver_to']['country'] +
+        '\n' + order['deliver_to']['zip'],
         items,
         '',
         '',
-        order['subtotal_price'],
         '',
-        order['total_price']
+        order['subtotal_price']
     ]
-                
