@@ -1,5 +1,4 @@
 import csv
-import json
 import io
 import traceback
 import xml.etree.ElementTree as ET
@@ -8,6 +7,7 @@ from .strategies.customer_strategy import customer_strategy
 from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
+from common.utils import class_to_json
 from common.api.veeqo import import_order
 from .api.range_service import RangeService
 
@@ -28,9 +28,9 @@ def handle_orders_request(vendor, request):
             file_type = file.filename.split('.')[-1]
 
             if file_type == "csv":
-                return handle_csv_file(vendor, file)
+                return handle_limited_input(vendor, file, ",")
             elif file_type == "txt":
-                return handle_txt_file(vendor, file)
+                return handle_limited_input(vendor, file, "|")
             elif file_type == "xml":
                 return handle_xml_file(vendor, file)
 
@@ -46,30 +46,15 @@ def handle_orders_request(vendor, request):
 
 ################ HANDLE FILES / VENDORS ####################
 
-def handle_csv_file(vendor, file):
+
+def handle_limited_input(vendor, file, delimiter):
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-    csv_input = csv.reader(stream)
-    next(csv_input)
+    delimited_input = csv.reader(stream, delimiter=delimiter)
+    next(delimited_input)
 
-    order_list = handle_csv_input(vendor, csv_input)
-
-    return class_to_json(order_list)
-
-
-def handle_txt_file(vendor, file):
-    stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-    csv_input = csv.reader(stream, delimiter="|")
-    next(csv_input)
-
-    order_list = handle_csv_input(vendor, csv_input)
-
-    return class_to_json(order_list)
-
-
-def handle_csv_input(vendor, csv_input):
     order_list = []
 
-    for row in csv_input:
+    for row in delimited_input:
         if len(row) != 0:
             customer = customer_strategy(vendor, row)
             item = item_strategy(vendor, row)
@@ -82,7 +67,7 @@ def handle_csv_input(vendor, csv_input):
                 order = order_strategy(vendor, row, customer, items)
                 order_list.append(order)
 
-    return order_list
+    return class_to_json(order_list)
 
 
 def handle_xml_file(vendor, file):
@@ -116,9 +101,3 @@ def handle_range(vendor):
         order_list.append(order)
 
     return class_to_json(order_list)
-
-
-def class_to_json(classes):
-    json_string = json.dumps(classes, default=lambda o: o.__dict__)
-
-    return json.loads(json_string)
