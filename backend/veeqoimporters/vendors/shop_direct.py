@@ -33,4 +33,6 @@ def shop_direct_csv_to_item(csv_row):
 def shop_direct_csv_to_order(csv_row, customer, items):
     notes = csv_row[0] + " " + csv_row[8]
 
+    items = []
+
     return Order(customer, SHOP_DIRECT_CHANNEL_ID, SHOP_DIRECT_BILLING_ID, items, notes)
