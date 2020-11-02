@@ -5,6 +5,7 @@ from ..vendors.wayfair import wayfair_csv_to_item
 from ..vendors.homebase import homebase_xml_to_items
 from ..vendors.robert_dyas import robert_dyas_csv_to_item
 from ..vendors.shop_direct import shop_direct_csv_to_item
+from ..vendors.globus import globus_xml_to_items
 
 
 def item_strategy(vendor, data):
@@ -22,5 +23,7 @@ def item_strategy(vendor, data):
         return robert_dyas_csv_to_item(data)
     elif vendor == "shop_direct":
         return shop_direct_csv_to_item(data)
+    elif vendor == "globus":
+        return globus_xml_to_items(data)
     else:
         raise ValueError(vendor)

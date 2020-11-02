@@ -58,4 +58,10 @@ export const IMPORT_VENDORS = [
 		requires_file: true,
 		file_type: ".txt",
 	},
+	{
+		name: "globus",
+		title: "Globus XML",
+		requires_file: true,
+		file_type: ".xml",
+	},
 ];

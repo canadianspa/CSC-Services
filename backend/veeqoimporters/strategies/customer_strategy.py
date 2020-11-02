@@ -5,6 +5,7 @@ from ..vendors.wayfair import wayfair_csv_to_customer
 from ..vendors.homebase import homebase_xml_to_customer
 from ..vendors.robert_dyas import robert_dyas_csv_to_customer
 from ..vendors.shop_direct import shop_direct_csv_to_customer
+from ..vendors.globus import globus_xml_to_customer
 
 
 def customer_strategy(vendor, data):
@@ -22,5 +23,7 @@ def customer_strategy(vendor, data):
         return robert_dyas_csv_to_customer(data)
     elif vendor == "shop_direct":
         return shop_direct_csv_to_customer(data)
+    elif vendor == "globus":
+        return globus_xml_to_customer(data)
     else:
         raise ValueError(vendor)
