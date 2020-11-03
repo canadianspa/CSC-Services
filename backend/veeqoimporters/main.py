@@ -7,7 +7,7 @@ from .strategies.customer_strategy import customer_strategy
 from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
-from common.utils import class_to_json
+from common.utils import class_to_json, extract_pages
 from common.api.veeqo import import_order
 from .api.range_service import RangeService
 
@@ -33,6 +33,8 @@ def handle_orders_request(vendor, request):
                 return handle_limited_input(vendor, file, "|")
             elif file_type == "xml":
                 return handle_xml_file(vendor, file)
+            elif file_type == "pdf":
+                return handle_pdf_file(vendor, file)
 
         elif vendor == "range":
             return handle_range(vendor)
@@ -50,6 +52,8 @@ def handle_orders_request(vendor, request):
 def handle_limited_input(vendor, file, delimiter):
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     delimited_input = csv.reader(stream, delimiter=delimiter)
+
+    #Remove header row
     next(delimited_input)
 
     order_list = []
@@ -71,7 +75,8 @@ def handle_limited_input(vendor, file, delimiter):
 
 
 def handle_xml_file(vendor, file):
-    stream = file.read()
+    stream = io.StringIO(file.stream.read().decode("UTF8"))
+
     tree = ET.fromstring(stream)
 
     customer = customer_strategy(vendor, tree)
@@ -80,6 +85,23 @@ def handle_xml_file(vendor, file):
 
     orders = [order]
 
+    return class_to_json(orders)
+
+
+def handle_pdf_file(vendor, file):
+    # Calling extract_pages multiple times as the 
+    # returned generator CANNOT be iterated multiple times
+    pdf_pages = extract_pages(file.stream)
+    customer = customer_strategy(vendor, pdf_pages)
+
+    pdf_pages = extract_pages(file.stream)
+    items = item_strategy(vendor, pdf_pages)
+
+    pdf_pages = extract_pages(file.stream)
+    order = order_strategy(vendor, pdf_pages, customer, items)
+    
+    orders = [order]
+    
     return class_to_json(orders)
 
 

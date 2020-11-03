@@ -6,7 +6,7 @@ from common.config import (
     JTF_CHANNEL_ID,
     TRAVISPERKINS_CHANNEL_ID,
     SHOP_DIRECT_CHANNEL_ID,
-    HORNBACH_CHANNEL_ID,
+    CSC_GMBH_CHANNEL_ID,
     ROBERT_DYAS_CHANNEL_ID
 )
 
@@ -110,7 +110,7 @@ class VendorDetailsFactory:
         elif vendor == "hornbach":
             return VendorDetails(
                 vendor,
-                HORNBACH_CHANNEL_ID,
+                CSC_GMBH_CHANNEL_ID,
                 HORNBACH_SPREADSHEET_ID,
                 HORNBACH_SPREADSHEET_NAME,
                 HORNBACH_ORDER_NO_COLUMN

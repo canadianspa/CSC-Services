@@ -7,8 +7,11 @@ from ..classes.order import Order
 
 
 def shop_direct_csv_to_customer(csv_row):
-    first_name = csv_row[2].rsplit(' ', 1)[0]
-    last_name = csv_row[2].split()[-1]
+    # Reverse split 
+    parsed_name = csv_row[2].rsplit(' ', 1)
+
+    first_name = parsed_name[0]
+    last_name = parsed_name[1]
     address1 = csv_row[3]
     address2 = ""
     city = csv_row[5]

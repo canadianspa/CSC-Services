@@ -12,14 +12,14 @@ class Customer:
         phone = None, 
         email = None
     ):
-        if first_name == "":
-            raise ValueError("First name: " + first_name)
+        if last_name == "":
+            raise ValueError(f"Last name: {last_name}")
         if address1 == "":
-            raise ValueError("Address 1: " + address1)
+            raise ValueError(f"Address 1: {address1}")
         if zip_code == "":
-            raise ValueError("Post/zip code: " + zip_code)
+            raise ValueError(f"Post/zip code: {zip_code}")
         if phone == "":
-            raise ValueError("Phone: " + phone)
+            raise ValueError(f"Phone: {phone}")
             
         self.id = ""
         self.first_name = first_name.title()

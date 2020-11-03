@@ -6,6 +6,7 @@ from ..vendors.homebase import homebase_xml_to_order
 from ..vendors.robert_dyas import robert_dyas_csv_to_order
 from ..vendors.shop_direct import shop_direct_csv_to_order
 from ..vendors.globus import globus_xml_to_order
+from ..vendors.hornbach import hornbach_pdf_to_order
 
 
 def order_strategy(vendor, data, customer, items):
@@ -25,5 +26,7 @@ def order_strategy(vendor, data, customer, items):
         return shop_direct_csv_to_order(data, customer, items)
     elif vendor == "globus":
         return globus_xml_to_order(data, customer, items)
+    elif vendor == "hornbach":
+        return hornbach_pdf_to_order(data, customer, items)
     else:
         raise ValueError(vendor)

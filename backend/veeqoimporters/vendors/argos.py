@@ -14,8 +14,11 @@ from common.api.veeqo import get_sellable_id
 
 
 def argos_csv_to_customer(csv_row):
-    first_name = csv_row[70].rsplit(' ', 1)[0]
-    last_name = csv_row[70].split()[-1]
+    # Reverse split 
+    parsed_name = csv_row[70].rsplit(' ', 1)
+
+    first_name = parsed_name[0]
+    last_name = parsed_name[1]
     address1 = csv_row[13]
     address2 = ""
     city = csv_row[14]
@@ -56,4 +59,4 @@ def get_price(sku):
             if row[1] == sku:
                 return row[4]
 
-    raise Exception("Could not find product in argos stock.")
+    raise Exception(f"Could not find {sku} in Argos stock")

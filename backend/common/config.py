@@ -4,7 +4,8 @@ cwd = getcwd()
 
 GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
 GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
-ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\argos-stock.csv"
+ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\stock\argos_stock.csv"
+HORNBACH_STOCK_PATH = cwd + r"\veeqoimporters\vendors\stock\hornbach_stock.csv"
 
 ############# URLS ###########
 
@@ -39,8 +40,6 @@ ROBERT_DYAS_CHANNEL_ID = "58735"
 SHOP_DIRECT_CHANNEL_ID = "70067"
 CSC_GMBH_CHANNEL_ID = "53000"
 
-HORNBACH_CHANNEL_ID = "TO GET"
-
 BANDQ_BILLING_ID = "23657440"
 BANDQ_IRELAND_BILLING_ID = "23677719"
 BANDQ_JERSEY_BILLING_ID = "23677785"
@@ -52,6 +51,7 @@ HOMEBASE_BILLING_ID = "12604329"
 ROBERT_DYAS_BILLING_ID = "40554088"
 SHOP_DIRECT_BILLING_ID = "13725775"
 GLOBUS_BILLING_ID = "52540975"
+HORNBACH_BILLING_ID = "17746389"
 
 ############# GOOGLE SHEETS VENDOR INFO ###########
 

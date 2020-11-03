@@ -19,7 +19,7 @@ class Order:
         if not isinstance(customer, Customer):
             raise ValueError("Invalid customer: " + customer)
         if not isinstance(line_items_attributes, list) or not line_items_attributes:
-            raise ValueError("Invalid line_items_attributes: " + line_items_attributes)
+            raise ValueError("Invalid line_items_attributes: ", line_items_attributes)
             
         self.channel_id = channel_id
         self.delivery_method_id = DEFAULT_DELIVERY_METHOD_ID

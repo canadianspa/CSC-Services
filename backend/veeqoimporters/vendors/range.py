@@ -9,8 +9,11 @@ from common.api.veeqo import get_sellable_id
 def range_json_to_customer(json):
     order_details = json['order_details']
 
-    first_name = order_details['customer_name'].rsplit(' ', 1)[0]
-    last_name = order_details['customer_name'].split()[-1]
+    # Reverse split 
+    parsed_name = order_details['customer_name'].rsplit(' ', 1)
+
+    first_name = parsed_name[0]
+    last_name = parsed_name[1]
     address1 = order_details['building_name_number'] + \
         " " + order_details['street']
     address2 = ""

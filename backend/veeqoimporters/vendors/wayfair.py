@@ -1,5 +1,6 @@
-from common.config import TAX_RATE, WAYFAIR_BILLING_ID, WAYFAIR_CHANNEL_ID
+import re
 
+from common.config import TAX_RATE, WAYFAIR_BILLING_ID, WAYFAIR_CHANNEL_ID
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
@@ -22,7 +23,8 @@ def wayfair_csv_to_customer(csv_row):
 
     
 def wayfair_csv_to_item(csv_row):
-    sku = csv_row[7]
+    # Remove ="#sku#" formatting around sku
+    sku = re.findall(r"K[A-Z]-\d{5}", csv_row[7])[0]
     sellable_id = get_sellable_id(sku)
     quantity = csv_row[9]
     price_per_unit = csv_row[10]

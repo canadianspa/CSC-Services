@@ -14,8 +14,12 @@ from common.api.veeqo import get_sellable_id
 
 
 def bandq_csv_to_customer(csv_row):
-    first_name = csv_row[14].rsplit(' ', 1)[0]
-    last_name = csv_row[14].split()[-1]
+    # Reverse split 
+    parsed_name = csv_row[14].rsplit(' ', 1)
+
+    first_name = parsed_name[0]
+    last_name = parsed_name[1]
+
     address1 = csv_row[15]
     address2 = ""
     city = csv_row[16]

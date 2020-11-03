@@ -35,7 +35,7 @@ def update_request():
 @app.route('/api/orders', methods=['POST'])
 def orders_request():
     vendor = request.args.get('vendor')
-
+    
     json = handle_orders_request(vendor, request)
 
     if json == None:

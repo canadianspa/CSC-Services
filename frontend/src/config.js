@@ -64,4 +64,10 @@ export const IMPORT_VENDORS = [
 		requires_file: true,
 		file_type: ".xml",
 	},
+	{
+		name: "hornbach",
+		title: "Hornbach PDF",
+		requires_file: true,
+		file_type: ".pdf",
+	},
 ];
