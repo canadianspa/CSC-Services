@@ -13,11 +13,11 @@ class Order:
     ):
 
         if channel_id == "":
-            raise ValueError("channel_id: " + channel_id)
+            raise ValueError(f"channel_id: {channel_id}")
         if customer_id == "":
-            raise ValueError("customer_id: " + customer_id)
+            raise ValueError(f"customer_id: {customer_id}")
         if not isinstance(customer, Customer):
-            raise ValueError("Invalid customer: " + customer)
+            raise ValueError(f"Invalid customer: {customer}")
         if not isinstance(line_items_attributes, list) or not line_items_attributes:
             raise ValueError("Invalid line_items_attributes: ", line_items_attributes)
             

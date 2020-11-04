@@ -45,7 +45,7 @@ def extract_pages(fp, password='', page_numbers=None, maxpages=0,
                                       password=password, caching=caching):
         interpreter.process_page(page)
         layout = device.get_result()
-        yield layout
+        return layout
 
 
 def print_class_attrs(cls):

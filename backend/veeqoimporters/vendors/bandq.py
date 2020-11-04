@@ -19,7 +19,6 @@ def bandq_csv_to_customer(csv_row):
 
     first_name = parsed_name[0]
     last_name = parsed_name[1]
-
     address1 = csv_row[15]
     address2 = ""
     city = csv_row[16]

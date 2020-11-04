@@ -89,15 +89,10 @@ def handle_xml_file(vendor, file):
 
 
 def handle_pdf_file(vendor, file):
-    # Calling extract_pages multiple times as the 
-    # returned generator CANNOT be iterated multiple times
     pdf_pages = extract_pages(file.stream)
+    
     customer = customer_strategy(vendor, pdf_pages)
-
-    pdf_pages = extract_pages(file.stream)
     items = item_strategy(vendor, pdf_pages)
-
-    pdf_pages = extract_pages(file.stream)
     order = order_strategy(vendor, pdf_pages, customer, items)
     
     orders = [order]

@@ -46,7 +46,6 @@ class GoogleService:
         # pylint: disable=maybe-no-member
         sheet = self.service.spreadsheets()
         value_input_option = 'RAW'
-
         body = {
             'values': values
         }
