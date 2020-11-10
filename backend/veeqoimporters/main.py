@@ -1,5 +1,4 @@
 import csv
-import io
 import traceback
 import xml.etree.ElementTree as ET
 
@@ -50,9 +49,7 @@ def handle_orders_request(vendor, request):
 
 
 def handle_limited_input(vendor, file, delimiter):
-    stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-    delimited_input = csv.reader(stream, delimiter=delimiter)
-
+    delimited_input = csv.reader(file.stream, delimiter=delimiter)
     #Remove header row
     next(delimited_input)
 
@@ -75,9 +72,7 @@ def handle_limited_input(vendor, file, delimiter):
 
 
 def handle_xml_file(vendor, file):
-    stream = io.StringIO(file.stream.read().decode("UTF8"))
-
-    tree = ET.fromstring(stream)
+    tree = ET.fromstring(file.read())
 
     customer = customer_strategy(vendor, tree)
     items = item_strategy(vendor, tree)
