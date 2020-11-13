@@ -17,8 +17,8 @@ def bandq_csv_to_customer(csv_row):
     # Reverse split 
     parsed_name = csv_row[14].rsplit(' ', 1)
 
-    first_name = parsed_name[0]
-    last_name = parsed_name[1]
+    first_name = parsed_name[1]
+    last_name = parsed_name[0]
     address1 = csv_row[15]
     address2 = ""
     city = csv_row[16]

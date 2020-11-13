@@ -14,7 +14,7 @@ from common.api.veeqo import get_sellable_id
 
 
 def argos_csv_to_customer(csv_row):
-    # Reverse split 
+    # Reverse split
     parsed_name = csv_row[70].rsplit(' ', 1)
 
     first_name = parsed_name[0]

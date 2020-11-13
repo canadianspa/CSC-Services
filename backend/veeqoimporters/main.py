@@ -12,7 +12,7 @@ from common.api.veeqo import import_order
 from .api.range_service import RangeService
 
 
-def handle_import_request(orders):
+def handle_import_orders_request(orders):
     imported_orders = []
     for order in orders:
         imported_order = import_order(order)
@@ -21,7 +21,7 @@ def handle_import_request(orders):
     return imported_orders
 
 
-def handle_orders_request(vendor, request):
+def handle_convert_file_request(vendor, request):
     try:
         if 'file' in request.files:
             file = request.files['file']

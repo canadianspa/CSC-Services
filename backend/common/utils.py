@@ -18,7 +18,7 @@ def class_to_json(classes):
     string = json.dumps(classes, default=lambda o: o.__dict__)
     return json.loads(string)
 
-    
+
 def extract_pages(fp, password='', page_numbers=None, maxpages=0,
                   caching=True, laparams=None):
     """
@@ -42,7 +42,7 @@ def extract_pages(fp, password='', page_numbers=None, maxpages=0,
     device = PDFPageAggregator(resource_manager, laparams=laparams)
     interpreter = PDFPageInterpreter(resource_manager, device)
     for page in PDFPage.get_pages(fp, page_numbers, maxpages=maxpages,
-                                      password=password, caching=caching):
+                                  password=password, caching=caching):
         interpreter.process_page(page)
         layout = device.get_result()
         return layout

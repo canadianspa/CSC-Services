@@ -1,7 +1,13 @@
 import React from "react";
 
+import Jumbotron from "../shared/Jumbotron";
+
 function PageNotFound() {
-	return <h3>404 - Page not found</h3>;
+  return (
+    <Jumbotron>
+      <span>{"404 - Page not found"}</span>
+    </Jumbotron>
+  );
 }
 
 export default PageNotFound;

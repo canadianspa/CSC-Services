@@ -11,7 +11,7 @@ from common.api.veeqo import get_orders
 def handle_update_request(vendor):
     orders = get_orders()
 
-    vendor_details = VendorDetailsFactory().build(vendor)
+    vendor_details = VendorDetailsFactory(vendor)
     google_service = GoogleService()
 
     # String determining which sheet & column contains order numbers

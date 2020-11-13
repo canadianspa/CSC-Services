@@ -3,9 +3,9 @@ import csv
 from pdfminer.layout import LTTextContainer
 
 from common.config import (
-    CSC_GMBH_CHANNEL_ID, 
-    HORNBACH_BILLING_ID, 
-    TAX_RATE, 
+    CSC_GMBH_CHANNEL_ID,
+    HORNBACH_BILLING_ID,
+    TAX_RATE,
     HORNBACH_STOCK_PATH
 )
 from ..classes.customer import Customer
@@ -22,7 +22,7 @@ def hornbach_pdf_to_customer(pdf_pages):
             if isinstance(element, LTTextContainer):
                 text = element.get_text()
 
-                if "Lieferadresse:" in  text:
+                if "Lieferadresse:" in text:
                     delivery_info = text.split('\n')
 
     phone = ""
@@ -38,7 +38,7 @@ def hornbach_pdf_to_customer(pdf_pages):
             pass
         elif line != "":
             address.append(line)
-    
+
     last_line = address[-1].split(' ', 1)
 
     first_name = " ".join(address[:-4]).replace("Lieferadresse:", "")
@@ -55,7 +55,7 @@ def hornbach_pdf_to_customer(pdf_pages):
 
 def hornbach_pdf_to_items(pdf_pages):
     items = []
-    
+
     for page_layout in pdf_pages:
         for element in page_layout:
             if isinstance(element, LTTextContainer):
@@ -63,15 +63,15 @@ def hornbach_pdf_to_items(pdf_pages):
 
                 skus = re.findall(r"^K[A-Z]-\d{5}$", text)
                 if len(skus) > 0:
-                    sku = skus[0] 
+                    sku = skus[0]
 
                     sellable_id = get_sellable_id(sku)
                     price_per_unit = get_price(sku)
                     quantity = "1"
-                    
-                    item = Item(sellable_id, quantity, price_per_unit, TAX_RATE)
-                    items.append(item)
 
+                    item = Item(sellable_id, quantity,
+                                price_per_unit, TAX_RATE)
+                    items.append(item)
 
     return items
 
@@ -84,7 +84,7 @@ def hornbach_pdf_to_order(pdf_pages, customer, items):
         for element in page_layout:
             if isinstance(element, LTTextContainer):
                 text = element.get_text()
-                
+
                 if "Lieferanten-Nr" in text:
                     supplier_number = text.split()[-1]
 
@@ -94,6 +94,7 @@ def hornbach_pdf_to_order(pdf_pages, customer, items):
     notes = order_number + " " + supplier_number
 
     return Order(customer, CSC_GMBH_CHANNEL_ID, HORNBACH_BILLING_ID, items, notes)
+
 
 def get_price(sku):
     with open(HORNBACH_STOCK_PATH) as csv_file:
