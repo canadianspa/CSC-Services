@@ -4,8 +4,8 @@ cwd = getcwd()
 
 GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
 GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
-ARGOS_STOCK_PATH = cwd + r"\veeqoimporters\vendors\stock\argos_stock.csv"
-HORNBACH_STOCK_PATH = cwd + r"\veeqoimporters\vendors\stock\hornbach_stock.csv"
+ARGOS_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\argos_stock.csv"
+HORNBACH_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\hornbach_stock.csv"
 
 ############# URLS ###########
 

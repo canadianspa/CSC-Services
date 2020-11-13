@@ -9,6 +9,6 @@ class VendorDetails:
     ):
         self.name = name
         self.channel_id = channel_id
-        self.spreadsheet_id = spreadsheet_id
-        self.spreadsheet_name = spreadsheet_name
-        self.spreadsheet_order_column = spreadsheet_order_column
+        self.ss_id = spreadsheet_id
+        self.ss_name = spreadsheet_name
+        self.ss_order_column = spreadsheet_order_column

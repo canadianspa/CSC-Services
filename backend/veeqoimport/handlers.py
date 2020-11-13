@@ -1,6 +1,5 @@
 import csv
 import io
-import traceback
 import xml.etree.ElementTree as ET
 
 from .strategies.customer_strategy import customer_strategy
@@ -8,51 +7,13 @@ from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
 from common.utils import class_to_json, extract_pages
-from common.api.veeqo import import_order
 from .api.range_service import RangeService
-
-
-def handle_import_orders_request(orders):
-    imported_orders = []
-    for order in orders:
-        imported_order = import_order(order)
-        imported_orders.append(imported_order)
-
-    return imported_orders
-
-
-def handle_convert_file_request(vendor, request):
-    try:
-        if 'file' in request.files:
-            file = request.files['file']
-            file_type = file.filename.split('.')[-1]
-
-            if file_type == "csv":
-                return handle_limited_input(vendor, file, ",")
-            elif file_type == "txt":
-                return handle_limited_input(vendor, file, "|")
-            elif file_type == "xml":
-                return handle_xml_file(vendor, file)
-            elif file_type == "pdf":
-                return handle_pdf_file(vendor, file)
-
-        elif vendor == "range":
-            return handle_range(vendor)
-
-    except Exception as e:
-        print("Error: " + str(e))
-        print(traceback.format_exc())
-
-    return None
-
-
-################ HANDLE FILES / VENDORS ####################
 
 
 def handle_limited_input(vendor, file, delimiter):
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
     delimited_input = csv.reader(stream, delimiter=delimiter)
-    #Remove header row
+    # Remove header row
     next(delimited_input)
 
     order_list = []
@@ -87,13 +48,13 @@ def handle_xml_file(vendor, file):
 
 def handle_pdf_file(vendor, file):
     pdf_pages = extract_pages(file.stream)
-    
+
     customer = customer_strategy(vendor, pdf_pages)
     items = item_strategy(vendor, pdf_pages)
     order = order_strategy(vendor, pdf_pages, customer, items)
-    
+
     orders = [order]
-    
+
     return class_to_json(orders)
 
 

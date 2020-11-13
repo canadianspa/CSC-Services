@@ -1,8 +1,15 @@
+from flask import Blueprint, request, jsonify
+
 from common.api.google_service import GoogleService
 from common.config import BANDQ_SPREADSHEET_ID, BANDQ_SPREADSHEET_NAME, VEEQO_APP_ORDERS_URL
 
+turnover = Blueprint('turnover', __name__)
 
-def handle_turnover_request(month_year_string):
+
+@turnover.route("/turnover", methods=['GET'])
+def turnover_request():
+    month_year_string = request.args.get('date')
+
     google_service = GoogleService()
 
     range_str = f"{BANDQ_SPREADSHEET_NAME}!C100:T"
@@ -24,4 +31,9 @@ def handle_turnover_request(month_year_string):
         except:
             pass
 
-    return {"total_with_vat": f"{total_with_vat:.2f}", "total_ex_vat": f"{total_ex_vat:.2f}"}
+    response = {
+        "total_with_vat": f"{total_with_vat:.2f}",
+        "total_ex_vat": f"{total_ex_vat:.2f}"
+    }
+
+    return jsonify(response)
