@@ -1,34 +1,23 @@
-.modal-header,
-.modal-header > *,
-.modal-header > * > * {
-	color: white;
-	background-color: #343a40;
-}
-
-.select {
-	height: 200px !important;
-}
-
 .vendor-button {
-	margin: 0 5px 10px 5px;
+  margin: 0 5px 10px 5px;
 }
 
 .button-parent {
-	margin-top: 20px;
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 tr > td {
-	text-align: center;
-	min-width: 40px;
+  text-align: center;
+  min-width: 40px;
 }
 
 td > input[type="checkbox"] {
-	margin: 0;
-	position: relative;
-	margin-top: 7px;
-	margin-bottom: 7px;
-	width: 100%;
+  margin: 0;
+  position: relative;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  width: 100%;
 }

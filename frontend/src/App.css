@@ -1,38 +1,46 @@
 .app {
-	width: 100%;
-	min-height: 100vh;
-	text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
 }
 
 .logo {
-	height: 40px;
-	width: 40px;
-}
-
-.link,
-.link:hover {
-	text-decoration: none;
-	color: black;
-}
-
-.link:hover {
-	color: #999999;
+  height: 40px;
+  width: 40px;
 }
 
 .wrapper {
-	margin-top: 20px;
-	width: 70%;
-	display: inline-block;
+  margin-top: 20px;
+  width: 70%;
+  display: inline-block;
 }
 
 .container {
-	width: 100%;
+  width: 100%;
 }
 
 .container > * {
-	margin: 0 auto 20px auto;
+  margin: 0 auto 20px auto;
+}
+
+.container > h3,
+h4,
+h5 {
+  margin-bottom: 10px !important;
 }
 
 .select {
-	height: 200px !important;
+  width: 200px !important;
+}
+
+.modal-header,
+.modal-header > *,
+.modal-header > * > * {
+  color: white;
+  background-color: #343a40;
+}
+
+.centered-parent {
+  display: flex;
+  justify-content: space-between;
 }

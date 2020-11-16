@@ -12,8 +12,8 @@ class Customer:
         phone = None, 
         email = None
     ):
-        if last_name == "":
-            raise ValueError(f"Last name: {last_name}")
+        if last_name == "" and first_name == "":
+            raise ValueError(f"first_name: {first_name}, last_name: {last_name}")
         if address1 == "":
             raise ValueError(f"Address 1: {address1}")
         if zip_code == "":

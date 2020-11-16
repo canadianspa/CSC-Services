@@ -1,5 +1,6 @@
 import csv
 import io
+import json
 import xml.etree.ElementTree as ET
 
 from .strategies.customer_strategy import customer_strategy
@@ -68,7 +69,7 @@ def handle_range(vendor):
     for order in orders:
         # Adding stock to order for item_strategy
         order['stock'] = stock
-
+        
         customer = customer_strategy(vendor, order)
         items = item_strategy(vendor, order)
         order = order_strategy(vendor, order, customer, items)

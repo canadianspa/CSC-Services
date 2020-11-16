@@ -1,7 +1,9 @@
 import { handleResponse } from "./ApiUtils";
 import { API_BASE_URL } from "../config";
 
-export function convertFile(vendor, file) {
+export function convertFile(params) {
+  const { vendor, file } = params;
+
   let url = `${API_BASE_URL}/import/convert/${vendor}`;
 
   let options = {
@@ -19,7 +21,9 @@ export function convertFile(vendor, file) {
     .catch((error) => console.error(error));
 }
 
-export function importOrders(orders) {
+export function importOrders(params) {
+  const { orders } = params;
+
   let url = `${API_BASE_URL}/import/orders`;
 
   let options = {
@@ -35,7 +39,9 @@ export function importOrders(orders) {
     .catch((error) => console.error(error));
 }
 
-export function getPostcodeAddresses(postcode) {
+export function getPostcodeAddresses(params) {
+  const { postcode } = params;
+
   let url = `${API_BASE_URL}/postcoder?postcode=${postcode}`;
 
   return fetch(url)
@@ -43,7 +49,9 @@ export function getPostcodeAddresses(postcode) {
     .catch((error) => console.error(error));
 }
 
-export function updateSpreadsheet(vendor) {
+export function updateSpreadsheet(params) {
+  const { vendor } = params;
+
   let url = `${API_BASE_URL}/update/${vendor}`;
 
   return fetch(url)
@@ -51,7 +59,9 @@ export function updateSpreadsheet(vendor) {
     .catch((error) => console.error(error));
 }
 
-export function getTurnover(date) {
+export function getTurnover(params) {
+  const { date } = params;
+
   let url = `${API_BASE_URL}/turnover?date=${date}`;
 
   return fetch(url)

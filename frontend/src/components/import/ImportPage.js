@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./ImportPage.css";
 
-import { Button } from "reactstrap";
-import { toast } from "react-toastify";
-
 import { IMPORT_VENDORS } from "../../config";
 import * as api from "../../api/BackendApi";
 
@@ -11,6 +8,8 @@ import OrdersView from "./OrdersView";
 import FileUploadArea from "./FileUploadArea";
 import Spinner from "../shared/Spinner";
 import Jumbotron from "../shared/Jumbotron";
+import { Input } from "reactstrap";
+import { toast } from "react-toastify";
 
 function ImportPage() {
   const [selectedVendor, setSelectedVendor] = useState(IMPORT_VENDORS[0]);
@@ -19,7 +18,11 @@ function ImportPage() {
   const [loading, setLoading] = useState(false);
   const [showInitialView, setShowInitialView] = useState(true);
 
-  function handleVendorClick(vendor) {
+  function handleVendorChange(event) {
+    const { value } = event.target;
+
+    var vendor = IMPORT_VENDORS.find((_vendor) => _vendor.title === value);
+
     setSelectedVendor(vendor);
 
     if (!vendor.requires_file) {
@@ -29,7 +32,13 @@ function ImportPage() {
 
   function getOrders(vendorName, file) {
     setLoading(true);
-    api.convertFile(vendorName, file).then((json) => {
+
+    var params = {
+      vendor: vendorName,
+      file: file,
+    };
+
+    api.convertFile(params).then((json) => {
       setLoading(false);
 
       if (json.error) {
@@ -62,7 +71,11 @@ function ImportPage() {
   function handleImport(orders) {
     toast.dark("Importing...");
 
-    api.importOrders(orders).then((json) => {
+    var params = {
+      orders: orders,
+    };
+
+    api.importOrders(params).then((json) => {
       toast.dark(`Imported ${json.length} orders`);
       setInitialState();
     });
@@ -74,19 +87,6 @@ function ImportPage() {
     setShowInitialView(true);
   }
 
-  const VendorMenu = () => {
-    return IMPORT_VENDORS.map((vendor, index) => (
-      <Button
-        key={index}
-        className="vendor-button"
-        color={selectedVendor === vendor ? "primary" : "secondary"}
-        onClick={() => handleVendorClick(vendor)}
-      >
-        {vendor.title}
-      </Button>
-    ));
-  };
-
   return (
     <div className="container">
       <Jumbotron>
@@ -94,12 +94,14 @@ function ImportPage() {
       </Jumbotron>
       {showInitialView ? (
         <>
-          <h4>Choose data source</h4>
-          <div>
-            <VendorMenu />
-          </div>
+          <h5>Select data source</h5>
+          <Input type="select" className="select" onChange={handleVendorChange}>
+            {IMPORT_VENDORS.map((vendor, index) => (
+              <option key={index}>{vendor.title}</option>
+            ))}
+          </Input>
           {loading ? (
-            <Spinner style={{ marginTop: "120px" }} />
+            <Spinner style={{ marginTop: "60px" }} />
           ) : (
             <FileUploadArea
               selectedVendor={selectedVendor}

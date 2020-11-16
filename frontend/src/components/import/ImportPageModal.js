@@ -15,7 +15,7 @@ function ImportPageModal({
     header = "Select address";
     body = (
       <Form onSubmit={handleAddressSelection}>
-        <Input name="address" type="select" multiple className="select">
+        <Input name="address" type="select" multiple>
           {addresses.map((address, index) => (
             <option key={index}>{address.summaryline}</option>
           ))}

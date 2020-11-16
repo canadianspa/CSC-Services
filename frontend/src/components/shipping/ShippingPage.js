@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import "./ShippingPage.css";
 
 import * as api from "../../api/BackendApi";
@@ -6,56 +6,100 @@ import * as api from "../../api/BackendApi";
 import Spinner from "../shared/Spinner";
 import Jumbotron from "../shared/Jumbotron";
 import ShippingPageModal from "./ShippingPageModal";
+import ItemsTable from "./ItemsTable";
 
-import { Button } from "reactstrap";
+import { Button, Input } from "reactstrap";
+
+const intialFormState = {
+  name: "",
+  height: "",
+  width: "",
+  weight: "",
+};
+
+function reducer(state, { name, value, newState }) {
+  if (newState) {
+    return newState;
+  } else {
+    return {
+      ...state,
+      [name]: value,
+    };
+  }
+}
 
 function ShippingPage() {
   const [loading, setLoading] = useState(true);
   const [carriers, setCarriers] = useState([]);
   const [items, setItems] = useState([]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [formState, setFormState] = useReducer(reducer, intialFormState);
+  const [shipmentState, setShipmentState] = useReducer(reducer, {});
 
   useEffect(() => {
-    async function fetchData() {
-      await api.getCarriers().then((carriers) => setCarriers(carriers));
-      await api.getItems().then((items) => setItems(JSON.parse(items)));
-      setLoading(false);
-    }
-
     fetchData();
   }, []);
 
-  const toggle = () => setIsOpen(!isOpen);
+  async function fetchData() {
+    await api.getItems().then((data) => {
+      var items = JSON.parse(data);
+      setItems(items);
+    });
+    await api.getCarriers().then((carriers) => {
+      setCarriers(carriers);
+      setShipmentState({ name: "carrier", value: carriers[0] });
+      setShipmentState({ name: "accounts", value: carriers[0].accounts });
+    });
 
-  function handleAddItem(event) {
-    event.preventDefault();
+    setLoading(false);
+  }
 
-    const { value } = event.target.elements.item;
+  const toggle = () => setModalOpen(!modalOpen);
 
-    var item = items.find((item) => item.name === value);
-    console.log(item);
+  function onFormChange(event) {
+    const { name, value } = event.target;
+    setFormState({ name: name, value: value });
+  }
+
+  function handleNewItem() {
     toggle();
   }
 
-  function handleNewItem(event) {
-    const { name, height, width, weight } = event.target.elements;
-    console.log(name, height, width, weight);
-    event.preventDefault();
+  function handleEditItem() {
+    console.log("edit");
     toggle();
   }
 
-  function handleEditItem(event) {
-    const { name, height, width, weight } = event.target.elements;
-    console.log(name.value, height.value, width.value, weight.value);
-    event.preventDefault();
-    toggle();
+  function handleCarrierChange(event) {
+    const { value } = event.target;
+    console.log(value);
+
+    var carrier = carriers.find((_carrier) => _carrier.title === value);
+    setShipmentState({ name: "carrier", value: carrier });
+    setShipmentState({ name: "accounts", value: carrier.accounts });
   }
 
   function onButtonClick(event) {
     const { name } = event.target;
+
     setModalType(name);
+
+    if (name === "newItem") {
+      setFormState({ newState: intialFormState });
+    } else if (name === "editItem") {
+      // TODO USE CLICKED ITEM
+      setFormState({
+        newState: {
+          name: "test1",
+          height: "12",
+          width: "12",
+          weight: "12",
+        },
+      });
+    }
+
     toggle();
   }
 
@@ -67,27 +111,50 @@ function ShippingPage() {
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
       ) : (
-        <>
-          <h4>Choose carrier</h4>
-          <h4>Items</h4>
-          <Button name="addItem" onClick={onButtonClick}>
-            Add item
-          </Button>
-          <Button name="newItem" onClick={onButtonClick}>
+        <div className="container">
+          <h5>Select Carrier</h5>
+          <Input
+            type="select"
+            className="select"
+            name="carrier"
+            onChange={handleCarrierChange}
+          >
+            {carriers.map((carrier, index) => (
+              <option key={index}>{carrier.title}</option>
+            ))}
+          </Input>
+          {shipmentState.accounts && (
+            <>
+              <h5>Select Account</h5>
+              <Input
+                type="select"
+                className="select"
+                name="account"
+                onChange={handleCarrierChange}
+              >
+                {shipmentState.accounts.map((account, index) => (
+                  <option key={index}>{account.number}</option>
+                ))}
+              </Input>
+            </>
+          )}
+          <h5>Items</h5>
+          <ItemsTable items={items} />
+          <Button color="primary" name="newItem" onClick={onButtonClick}>
             New item
           </Button>
           <Button name="editItem" onClick={onButtonClick}>
             Edit item
           </Button>
-        </>
+        </div>
       )}
       <ShippingPageModal
-        isOpen={isOpen}
+        isOpen={modalOpen}
         toggle={toggle}
         modalType={modalType}
-        items={items}
+        formState={formState}
+        onFormChange={onFormChange}
         handleNewItem={handleNewItem}
-        handleAddItem={handleAddItem}
         handleEditItem={handleEditItem}
       />
     </div>

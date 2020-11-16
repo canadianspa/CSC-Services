@@ -19,11 +19,11 @@ items_collection = database.items
 
 @shipping.route("/shipping/carriers", methods=['GET'])
 def carriers_request():
-    carriers_json = [
+    carriers_arr = [
         CarrierFactory("xdp"),
         CarrierFactory("dx_freight"),
     ]
-    carriers = class_to_json(carriers_json)
+    carriers = class_to_json(carriers_arr)
 
     return jsonify(carriers)
 

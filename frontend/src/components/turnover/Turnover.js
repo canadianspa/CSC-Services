@@ -23,7 +23,12 @@ function Turnover() {
 
     setTurnover(null);
     setLoading(true);
-    api.getTurnover(monthYearString).then((json) => {
+
+    var params = {
+      data: monthYearString,
+    };
+
+    api.getTurnover(params).then((json) => {
       setTurnover(json);
       setLoading(false);
     });
@@ -34,6 +39,7 @@ function Turnover() {
       <Jumbotron>
         <span>{"Turnover for B&Q"}</span>
       </Jumbotron>
+      <h5>Select Month</h5>
       <form onSubmit={handleDateSelect} className="date-form">
         <input
           type="month"

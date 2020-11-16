@@ -1,45 +1,44 @@
 import React, { useState } from "react";
-import "./UpdatePage.css";
 
 import { UPDATE_VENDORS } from "../../config";
 import * as api from "../../api/BackendApi";
+
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
-
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-} from "reactstrap";
+import { Button, Input } from "reactstrap";
 import { toast } from "react-toastify";
+
+const vendors = UPDATE_VENDORS;
+const initialVendor = vendors[0];
 
 function UpdatePage() {
   const [loading, setLoading] = useState(false);
-  const [selectedVendor, setSelectedVendor] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [selectedVendor, setSelectedVendor] = useState(initialVendor);
 
   function handleUpdateClick() {
     setLoading(true);
-    api.updateSpreadsheet(selectedVendor.name).then((orders) => {
+
+    var params = {
+      vendor: selectedVendor.name,
+    };
+
+    api.updateSpreadsheet(params).then((orders) => {
       if (orders.length > 0) {
         toast.dark(`Added ${orders.length} order(s)`);
       } else {
         toast.dark("No orders added");
       }
+
       setLoading(false);
+      setSelectedVendor(initialVendor);
     });
   }
 
-  function getDropDownText() {
-    if (selectedVendor) {
-      return selectedVendor.title;
-    } else {
-      return "Select vendor";
-    }
+  function handleVendorChange(event) {
+    const { value } = event.target;
+
+    var vendor = vendors.find((_vendor) => _vendor.title === value);
+    setSelectedVendor(vendor);
   }
 
   return (
@@ -47,28 +46,20 @@ function UpdatePage() {
       <Jumbotron>
         <span>Update Google Spreadsheet</span>
       </Jumbotron>
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret className="vendor-dropdown">
-          {getDropDownText()}
-        </DropdownToggle>
-        <DropdownMenu>
-          {UPDATE_VENDORS.map((vendor, index) => (
-            <DropdownItem key={index} onClick={() => setSelectedVendor(vendor)}>
-              {vendor.title}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
       {loading ? (
-        <Spinner style={{ width: "70px", height: "70px", marginTop: "5px" }} />
+        <Spinner style={{ width: "70px", height: "70px", marginTop: "50px" }} />
       ) : (
-        <Button
-          color="primary"
-          disabled={selectedVendor ? false : true}
-          onClick={handleUpdateClick}
-        >
-          Update
-        </Button>
+        <>
+          <h5>Select Spreadsheet</h5>
+          <Input type="select" className="select" onChange={handleVendorChange}>
+            {vendors.map((vendor, index) => (
+              <option key={index}>{vendor.title}</option>
+            ))}
+          </Input>
+          <Button color="primary" onClick={handleUpdateClick}>
+            Update
+          </Button>
+        </>
       )}
     </div>
   );

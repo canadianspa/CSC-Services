@@ -7,17 +7,12 @@ import * as api from "../../api/BackendApi";
 import OrdersTable from "./OrdersTable";
 import ImportPageModal from "./ImportPageModal";
 
-function OrdersView({
-  orders,
-  file,
-  updateAddress,
-  handleImport,
-  setInitialState,
-}) {
-  const [activeOrderIndex, setActiveOrderIndex] = useState([]);
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
+function OrdersView({ orders, file, updateAddress, handleImport, setInitialState }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [addresses, setAddresses] = useState([]);
+
+  const [activeOrderIndex, setActiveOrderIndex] = useState([]);
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
 
   useEffect(() => {
     setSelectedIndexes(orders.map((x, idx) => idx));
@@ -29,6 +24,7 @@ function OrdersView({
   function handleCheckboxClick(event) {
     const { id, checked } = event.target;
     let index = parseInt(id);
+
     if (checked) {
       setSelectedIndexes([...selectedIndexes, index]);
     } else {
@@ -37,9 +33,10 @@ function OrdersView({
   }
 
   function handleAddressSelection(event) {
+    event.preventDefault();
+
     const { value } = event.target.elements.address;
 
-    event.preventDefault();
     setModalOpen(false);
 
     // Find selected address from dropdown
@@ -53,8 +50,11 @@ function OrdersView({
 
     setActiveOrderIndex(index);
 
-    let postcode = orders[index].deliver_to_attributes.zip;
-    api.getPostcodeAddresses(postcode).then((json) => {
+    var params = {
+      postcode: orders[index].deliver_to_attributes.zip,
+    };
+
+    api.getPostcodeAddresses(params).then((json) => {
       setAddresses(json);
       setModalOpen(true);
     });
@@ -83,7 +83,7 @@ function OrdersView({
         handleCheckboxClick={handleCheckboxClick}
         handleEditClick={handleEditAddressClick}
       />
-      <div className="button-parent">
+      <div className="centered-parent">
         <Button color="danger" onClick={setInitialState}>
           Cancel
         </Button>

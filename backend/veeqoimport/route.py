@@ -12,7 +12,7 @@ from .handlers import (
 veeqoimport = Blueprint('veeqoimport', __name__)
 
 
-@veeqoimport.route('/import/orders', methods=['GET'])
+@veeqoimport.route('/import/orders', methods=['POST'])
 def handle_import_orders_request():
     orders = request.json
     imported_orders = []
