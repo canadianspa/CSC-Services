@@ -1,6 +1,6 @@
 import React from "react";
 
-import Jumbotron from "../shared/Jumbotron";
+import Jumbotron from "./shared/Jumbotron";
 
 function PageNotFound() {
   return (

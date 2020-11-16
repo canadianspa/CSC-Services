@@ -1,17 +1,18 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./OrderWell.css";
 
-import { getOrderWell } from "../../api/BackendApi";
+import * as api from "../../api/BackendApi";
+import OrderWellTable from "./OrderWellTable";
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
-import { Button, Table } from "reactstrap";
+import { Button } from "reactstrap";
 
 function OrderWell() {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState(false);
 
   useEffect(() => {
-    getOrderWell().then((orders) => {
+    api.getOrderWell().then((orders) => {
       setOrders(orders);
       setLoading(false);
     });
@@ -52,39 +53,7 @@ function OrderWell() {
       ) : (
         <>
           <Button onClick={handleCopyClick}>Copy</Button>
-          <Table bordered striped id="orderwell-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Order Number</th>
-                <th>Items</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <tr key={index}>
-                  <td>{order.date}</td>
-                  <td>
-                    <a
-                      target="_blank"
-                      href={order.url}
-                      rel="noopener noreferrer"
-                    >
-                      {order.id}
-                    </a>
-                  </td>
-                  <td>
-                    {order.items.map((item, index) => (
-                      <Fragment key={index}>
-                        {index > 0 && <br />}
-                        {item}
-                      </Fragment>
-                    ))}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <OrderWellTable orders={orders} />
         </>
       )}
     </div>

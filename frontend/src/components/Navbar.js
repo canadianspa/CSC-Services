@@ -26,6 +26,7 @@ function Navbar() {
           <NavLink href="/import">Import</NavLink>
           <NavLink href="/turnover">Turnover</NavLink>
           <NavLink href="/orderwell">Order Well</NavLink>
+          <NavLink href="/shipping">Shipping</NavLink>
         </Nav>
       </Collapse>
     </NavigationBar>

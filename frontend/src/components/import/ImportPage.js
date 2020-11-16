@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./ImportPage.css";
 
+import { Button } from "reactstrap";
+import { toast } from "react-toastify";
+
 import { IMPORT_VENDORS } from "../../config";
-import { getOrdersJson, importOrders } from "../../api/BackendApi";
+import * as api from "../../api/BackendApi";
 
 import OrdersView from "./OrdersView";
 import FileUploadArea from "./FileUploadArea";
 import Spinner from "../shared/Spinner";
 import Jumbotron from "../shared/Jumbotron";
-
-import { Button } from "reactstrap";
-import { toast } from "react-toastify";
 
 function ImportPage() {
   const [selectedVendor, setSelectedVendor] = useState(IMPORT_VENDORS[0]);
@@ -29,16 +29,16 @@ function ImportPage() {
 
   function getOrders(vendorName, file) {
     setLoading(true);
-    getOrdersJson(vendorName, file).then((json) => {
+    api.convertFile(vendorName, file).then((json) => {
+      setLoading(false);
+
       if (json.error) {
-        setLoading(false);
         toast.dark(
           "Error getting orders, ensure you are uploading the correct file."
         );
       } else {
         setOrders(json);
         setFile(file);
-        setLoading(false);
         setShowInitialView(false);
       }
     });
@@ -62,7 +62,7 @@ function ImportPage() {
   function handleImport(orders) {
     toast.dark("Importing...");
 
-    importOrders(orders).then((json) => {
+    api.importOrders(orders).then((json) => {
       toast.dark(`Imported ${json.length} orders`);
       setInitialState();
     });

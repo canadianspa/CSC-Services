@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Turnover.css";
 
-import { getTurnover } from "../../api/BackendApi";
+import * as api from "../../api/BackendApi";
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
 
@@ -23,7 +23,7 @@ function Turnover() {
 
     setTurnover(null);
     setLoading(true);
-    getTurnover(monthYearString).then((json) => {
+    api.getTurnover(monthYearString).then((json) => {
       setTurnover(json);
       setLoading(false);
     });

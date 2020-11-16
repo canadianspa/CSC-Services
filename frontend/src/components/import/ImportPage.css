@@ -5,6 +5,10 @@
 	background-color: #343a40;
 }
 
+.select {
+	height: 200px !important;
+}
+
 .vendor-button {
 	margin: 0 5px 10px 5px;
 }

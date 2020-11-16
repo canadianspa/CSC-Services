@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./UpdatePage.css";
 
 import { UPDATE_VENDORS } from "../../config";
-import { updateSpreadsheet } from "../../api/BackendApi";
+import * as api from "../../api/BackendApi";
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
 
@@ -24,7 +24,7 @@ function UpdatePage() {
 
   function handleUpdateClick() {
     setLoading(true);
-    updateSpreadsheet(selectedVendor.name).then((orders) => {
+    api.updateSpreadsheet(selectedVendor.name).then((orders) => {
       if (orders.length > 0) {
         toast.dark(`Added ${orders.length} order(s)`);
       } else {
