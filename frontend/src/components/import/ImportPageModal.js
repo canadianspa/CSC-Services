@@ -8,13 +8,13 @@ function ImportPageModal({
   toggle,
   modalType,
   addresses,
-  handleAddressSelection,
+  handleUpdateAddress,
 }) {
   let header, body;
   if (modalType === "editAddress") {
     header = "Select address";
     body = (
-      <Form onSubmit={handleAddressSelection}>
+      <Form onSubmit={handleUpdateAddress}>
         <Input name="address" type="select" multiple>
           {addresses.map((address, index) => (
             <option key={index}>{address.summaryline}</option>

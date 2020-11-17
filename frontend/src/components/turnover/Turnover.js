@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./Turnover.css";
 
 import * as api from "../../api/BackendApi";
-import Jumbotron from "../shared/Jumbotron";
-import Spinner from "../shared/Spinner";
 
 import moment from "moment";
 import { Button } from "reactstrap";
+import Jumbotron from "../shared/Jumbotron";
+import Spinner from "../shared/Spinner";
 
 function Turnover() {
   const [loading, setLoading] = useState(false);

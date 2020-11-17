@@ -1,29 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import "./ImportPage.css";
 
 import { IMPORT_VENDORS } from "../../config";
 import * as api from "../../api/BackendApi";
 
-import OrdersView from "./OrdersView";
-import FileUploadArea from "./FileUploadArea";
+import { toast } from "react-toastify";
 import Spinner from "../shared/Spinner";
 import Jumbotron from "../shared/Jumbotron";
-import { Input } from "reactstrap";
-import { toast } from "react-toastify";
+import Select from "../shared/Select";
+import OrdersView from "./OrdersView";
+import FileUploadArea from "./FileUploadArea";
+import ImportPageModal from "./ImportPageModal";
+
+var intialState = {
+  activeOrderIndex: null,
+  selectedVendor: IMPORT_VENDORS[0],
+  selectedIndexes: null,
+};
+
+const reducer = (state, newState) => {
+  return { ...state, ...newState };
+};
 
 function ImportPage() {
-  const [selectedVendor, setSelectedVendor] = useState(IMPORT_VENDORS[0]);
-  const [orders, setOrders] = useState([]);
-  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [file, setFile] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
   const [showInitialView, setShowInitialView] = useState(true);
+  const [pageVariables, setPageVariables] = useReducer(reducer, intialState);
 
-  function handleVendorChange(event) {
-    const { value } = event.target;
+  const toggle = () => setModalOpen(!modalOpen);
 
-    var vendor = IMPORT_VENDORS.find((_vendor) => _vendor.title === value);
-
-    setSelectedVendor(vendor);
+  function handleVendorChange(vendor) {
+    setPageVariables({ selectedVendor: vendor });
 
     if (!vendor.requires_file) {
       getOrders(vendor.name);
@@ -48,16 +61,39 @@ function ImportPage() {
       } else {
         setOrders(json);
         setFile(file);
+        setPageVariables({ selectedIndexes: json.map((x, idx) => idx) });
         setShowInitialView(false);
       }
     });
   }
 
-  function updateAddress(index, address) {
-    const { premise, street, posttown, county, postcode } = address;
+  function handleEditAddressClick(event) {
+    const { id } = event.target;
+    let index = parseInt(id);
+
+    var params = {
+      postcode: orders[index].deliver_to_attributes.zip,
+    };
+
+    api.getPostcodeAddresses(params).then((json) => {
+      setPageVariables({ activeOrderIndex: index });
+      setAddresses(json);
+      setModalOpen(true);
+    });
+  }
+
+  function handleUpdateAddress(event) {
+    event.preventDefault();
+    toggle();
+
+    const { value } = event.target.elements.address;
+
+    const { premise, street, posttown, county, postcode } = addresses.find(
+      (address) => address.summaryline === value
+    );
 
     let tempOrders = orders.map((order, idx) => {
-      if (idx === index) {
+      if (idx === pageVariables.activeOrderIndex) {
         order.deliver_to_attributes.address1 = premise + " " + street;
         order.deliver_to_attributes.city = posttown;
         order.deliver_to_attributes.state = county;
@@ -65,14 +101,32 @@ function ImportPage() {
       }
       return order;
     });
+
     setOrders(tempOrders);
   }
 
-  function handleImport(orders) {
+  function handleCheckboxClick(event) {
+    const { id, checked } = event.target;
+
+    let index = parseInt(id);
+    var indexes = pageVariables.selectedIndexes;
+
+    setPageVariables({
+      selectedIndexes: checked
+        ? [...indexes, index]
+        : indexes.filter((idx) => idx !== index),
+    });
+  }
+
+  function handleImportClick() {
     toast.dark("Importing...");
 
+    var selectedOrders = orders.filter((order, idx) =>
+      pageVariables.selectedIndexes.includes(idx)
+    );
+
     var params = {
-      orders: orders,
+      orders: selectedOrders,
     };
 
     api.importOrders(params).then((json) => {
@@ -82,7 +136,7 @@ function ImportPage() {
   }
 
   function setInitialState() {
-    setSelectedVendor(IMPORT_VENDORS[0]);
+    setPageVariables(intialState);
     setOrders([]);
     setShowInitialView(true);
   }
@@ -95,16 +149,17 @@ function ImportPage() {
       {showInitialView ? (
         <>
           <h5>Select data source</h5>
-          <Input type="select" className="select" onChange={handleVendorChange}>
-            {IMPORT_VENDORS.map((vendor, index) => (
-              <option key={index}>{vendor.title}</option>
-            ))}
-          </Input>
+          <Select
+            options={IMPORT_VENDORS}
+            objectTitleKey="title"
+            onChange={handleVendorChange}
+            useObjects={true}
+          />
           {loading ? (
             <Spinner style={{ marginTop: "60px" }} />
           ) : (
             <FileUploadArea
-              selectedVendor={selectedVendor}
+              selectedVendor={pageVariables.selectedVendor}
               handleFileSubmit={getOrders}
             />
           )}
@@ -113,11 +168,19 @@ function ImportPage() {
         <OrdersView
           orders={orders}
           file={file}
-          updateAddress={updateAddress}
-          handleImport={handleImport}
+          handleEditAddressClick={handleEditAddressClick}
+          handleCheckboxClick={handleCheckboxClick}
+          handleImportClick={handleImportClick}
           setInitialState={setInitialState}
         />
       )}
+      <ImportPageModal
+        isOpen={modalOpen}
+        toggle={toggle}
+        modalType={"editAddress"}
+        addresses={addresses}
+        handleUpdateAddress={handleUpdateAddress}
+      />
     </div>
   );
 }

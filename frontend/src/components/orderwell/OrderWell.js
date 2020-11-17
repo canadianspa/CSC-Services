@@ -2,21 +2,26 @@ import React, { useState, useEffect } from "react";
 import "./OrderWell.css";
 
 import * as api from "../../api/BackendApi";
-import OrderWellTable from "./OrderWellTable";
+
+import { Button } from "reactstrap";
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
-import { Button } from "reactstrap";
+import OrderWellTable from "./OrderWellTable";
 
 function OrderWell() {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState(false);
 
   useEffect(() => {
-    api.getOrderWell().then((orders) => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    await api.getOrderWell().then((orders) => {
       setOrders(orders);
       setLoading(false);
     });
-  }, []);
+  }
 
   function handleCopyClick() {
     var el = document.getElementById("orderwell-table");
