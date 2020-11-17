@@ -28,9 +28,7 @@ export function importOrders(params) {
 
   let options = {
     method: "POST",
-    headers: new Headers({
-      "content-type": "application/json",
-    }),
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(orders),
   };
 
@@ -92,9 +90,7 @@ export function createItem(params) {
 
   let options = {
     method: "POST",
-    headers: new Headers({
-      "content-type": "application/json",
-    }),
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(item),
   };
 
@@ -110,9 +106,7 @@ export function updateItem(params) {
 
   let options = {
     method: "POST",
-    headers: new Headers({
-      "content-type": "application/json",
-    }),
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(item),
   };
 
@@ -144,15 +138,13 @@ export function getCarriers() {
 }
 
 export function createShipment(params) {
-  const { carrier, shipment } = params;
+  const { shipment } = params;
 
-  let url = `${API_BASE_URL}/shipping/create/${carrier}`;
+  let url = `${API_BASE_URL}/shipping/create/`;
 
   let options = {
     method: "POST",
-    headers: new Headers({
-      "content-type": "application/json",
-    }),
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(shipment),
   };
 

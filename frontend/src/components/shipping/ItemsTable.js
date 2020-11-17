@@ -1,16 +1,18 @@
 import React from "react";
 import "./ShippingPage.css";
 
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 
-function ItemsTable({ items, onEditClick, onDelete }) {
+function ItemsTable({ items, handleDeleteItem }) {
   return (
-    <Table bordered striped id="orderwell-table">
+    <Table bordered striped>
       <thead>
         <tr>
           <th>Item</th>
-          <th>Volume</th>
-          <th>Weight</th>
+          <th>
+            Volume (cm<sup>3</sup>)
+          </th>
+          <th>Weight (kg)</th>
           <th>Quantity</th>
           <th></th>
         </tr>
@@ -19,9 +21,19 @@ function ItemsTable({ items, onEditClick, onDelete }) {
         {items.map((item, index) => (
           <tr key={index}>
             <td>{item.name}</td>
-            <td>{item.width * item.height} CM^3</td>
+            <td>{item.width * item.height}</td>
             <td>{item.weight}</td>
-            <td>x</td>
+            <td>{item.quantity}</td>
+            <td>
+              <Button
+                color="secondary"
+                size="sm"
+                id={index}
+                onClick={handleDeleteItem}
+              >
+                x
+              </Button>
+            </td>
           </tr>
         ))}
       </tbody>

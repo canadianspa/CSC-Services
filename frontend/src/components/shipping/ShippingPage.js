@@ -3,67 +3,72 @@ import "./ShippingPage.css";
 
 import * as api from "../../api/BackendApi";
 
+import { Button, Input } from "reactstrap";
 import Spinner from "../shared/Spinner";
 import Jumbotron from "../shared/Jumbotron";
+import Select from "../shared/Select";
 import ShippingPageModal from "./ShippingPageModal";
 import ItemsTable from "./ItemsTable";
-
-import { Button, Input } from "reactstrap";
 
 const intialFormState = {
   name: "",
   height: "",
   width: "",
   weight: "",
+  orderUrl: "",
+  carrier: null,
+  account: null,
+  items: [],
 };
 
-function reducer(state, { name, value, newState }) {
-  if (newState) {
-    return newState;
-  } else {
-    return {
-      ...state,
-      [name]: value,
-    };
-  }
-}
+const reducer = (state, newState) => {
+  return { ...state, ...newState };
+};
 
 function ShippingPage() {
   const [loading, setLoading] = useState(true);
   const [carriers, setCarriers] = useState([]);
   const [items, setItems] = useState([]);
+  const [formState, setFormState] = useReducer(reducer, intialFormState);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
-  const [formState, setFormState] = useReducer(reducer, intialFormState);
-  const [shipmentState, setShipmentState] = useReducer(reducer, {});
+
+  const toggle = () => setModalOpen(!modalOpen);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-    await api.getItems().then((data) => {
-      var items = JSON.parse(data);
+    await api.getItems().then((items) => {
       setItems(items);
     });
+
     await api.getCarriers().then((carriers) => {
       setCarriers(carriers);
-      setShipmentState({ name: "carrier", value: carriers[0] });
-      setShipmentState({ name: "accounts", value: carriers[0].accounts });
+      updateFormState(carriers[0], "carrier");
     });
 
     setLoading(false);
   }
 
-  const toggle = () => setModalOpen(!modalOpen);
-
   function onFormChange(event) {
     const { name, value } = event.target;
-    setFormState({ name: name, value: value });
+    setFormState({ [name]: value });
+  }
+
+  function updateFormState(data, name) {
+    if (name === "carrier") {
+      setFormState({
+        carrier: data,
+        account: data.accounts ? data.accounts[0] : null,
+      });
+    }
   }
 
   function handleNewItem() {
+    console.log("new");
     toggle();
   }
 
@@ -72,13 +77,12 @@ function ShippingPage() {
     toggle();
   }
 
-  function handleCarrierChange(event) {
-    const { value } = event.target;
-    console.log(value);
+  function handleDeleteItem(event) {
+    const { id } = event.target;
+    var index = parseInt(id);
 
-    var carrier = carriers.find((_carrier) => _carrier.title === value);
-    setShipmentState({ name: "carrier", value: carrier });
-    setShipmentState({ name: "accounts", value: carrier.accounts });
+    var updatedItems = formState.items.filter((item, idx) => idx !== index);
+    setFormState({ items: updatedItems });
   }
 
   function onButtonClick(event) {
@@ -87,20 +91,33 @@ function ShippingPage() {
     setModalType(name);
 
     if (name === "newItem") {
-      setFormState({ newState: intialFormState });
+      setFormState({ intialFormState });
     } else if (name === "editItem") {
       // TODO USE CLICKED ITEM
       setFormState({
-        newState: {
-          name: "test1",
-          height: "12",
-          width: "12",
-          weight: "12",
-        },
+        name: "test1",
+        height: "12",
+        width: "14",
+        weight: "12",
       });
     }
 
     toggle();
+  }
+
+  function handleCreateShipment() {
+    var params = {
+      shipment: {
+        orderUrl: formState.orderUrl,
+        carrier: formState.carrier.name,
+        account: formState.account,
+        items: formState.items,
+      },
+    };
+
+    api.createShipment(params).then((json) => {
+      console.log(json);
+    });
   }
 
   return (
@@ -112,39 +129,42 @@ function ShippingPage() {
         <Spinner style={{ marginTop: "120px" }} />
       ) : (
         <div className="container">
-          <h5>Select Carrier</h5>
+          <h5>Enter Veeqo order URL</h5>
           <Input
-            type="select"
-            className="select"
+            type="text"
+            name="orderUrl"
+            style={{ width: "400px" }}
+            value={formState.orderUrl}
+            onChange={onFormChange}
+          />
+          <h5>Select Carrier</h5>
+          <Select
             name="carrier"
-            onChange={handleCarrierChange}
-          >
-            {carriers.map((carrier, index) => (
-              <option key={index}>{carrier.title}</option>
-            ))}
-          </Input>
-          {shipmentState.accounts && (
+            useObjects={true}
+            options={carriers}
+            objectTitleKey="title"
+            onChange={updateFormState}
+          />
+          {formState.carrier.accounts && (
             <>
               <h5>Select Account</h5>
-              <Input
-                type="select"
-                className="select"
+              <Select
                 name="account"
-                onChange={handleCarrierChange}
-              >
-                {shipmentState.accounts.map((account, index) => (
-                  <option key={index}>{account.number}</option>
-                ))}
-              </Input>
+                options={formState.carrier.accounts}
+                onChange={onFormChange}
+              />
             </>
           )}
           <h5>Items</h5>
-          <ItemsTable items={items} />
+          <ItemsTable items={formState.items} handleDeleteItem={handleDeleteItem} />
           <Button color="primary" name="newItem" onClick={onButtonClick}>
             New item
           </Button>
           <Button name="editItem" onClick={onButtonClick}>
             Edit item
+          </Button>
+          <Button name="createShipment" onClick={handleCreateShipment}>
+            Create Shipment
           </Button>
         </div>
       )}
