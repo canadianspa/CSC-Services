@@ -1,3 +1,6 @@
+import json
+from bson.json_util import dumps
+
 class MongoCollectionWrapper:
     def __init__(self, collection):
         self.collection = collection
@@ -6,7 +9,9 @@ class MongoCollectionWrapper:
         return self.collection.insert_one(doc)
 
     def read(self, query={}):
-        return self.collection.find(query)
+        result_bson = self.collection.find(query)
+        result_json = dumps(result_bson)
+        return json.loads(result_json)
 
     def update(self, _id, doc):
         query = {"_id": _id}

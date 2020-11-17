@@ -1,8 +1,6 @@
 from flask import Blueprint, request, jsonify
-
 from pymongo import MongoClient
 from jsonschema import validate
-from bson.json_util import dumps, loads
 
 from common.utils import class_to_json
 from .config import MONGO_CLIENT_URL
@@ -35,8 +33,7 @@ def items_request():
 
     if request.method == 'GET':
         items = collection.read()
-        response = dumps(items)
-        return jsonify(response)
+        return jsonify(items)
 
     elif request.method == 'POST':
         item = request.json
@@ -57,9 +54,9 @@ def items_request():
     return jsonify([])
 
 
-@shipping.route('/shipping/create/<carrier>', methods=['POST'])
-def create_shipment_request(carrier):
+@shipping.route('/shipping/create/', methods=['POST'])
+def create_shipment_request():
     shipment = request.json
-    print(carrier, shipment)
+    print(shipment)
 
     return jsonify([])
