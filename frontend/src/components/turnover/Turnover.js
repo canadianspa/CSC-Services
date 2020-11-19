@@ -48,9 +48,7 @@ function Turnover() {
           max={currentMonth}
           defaultValue={currentMonth}
         />
-        <Button type="submit" color="primary">
-          Search
-        </Button>
+        <Button type="submit">Calculate</Button>
       </form>
       {loading && <Spinner style={{ marginTop: "50px" }} />}
       {turnover && (

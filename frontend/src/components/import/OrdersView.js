@@ -31,9 +31,7 @@ function OrdersView({
         <Button color="danger" onClick={setInitialState}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleImportClick}>
-          Import
-        </Button>
+        <Button onClick={handleImportClick}>Import</Button>
       </div>
     </>
   );

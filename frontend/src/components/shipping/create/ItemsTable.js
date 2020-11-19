@@ -1,17 +1,18 @@
 import React from "react";
-import "./ShippingPage.css";
+import "./ShippingCreatePage.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Table } from "reactstrap";
 
 function ItemsTable({ items, handleDeleteItem }) {
   return (
-    <Table bordered striped>
+    <Table striped size="sm">
       <thead>
         <tr>
           <th>Item</th>
-          <th>
-            Volume (cm<sup>3</sup>)
-          </th>
+          <th>Height (cm)</th>
+          <th>Width (cm)</th>
+          <th>Length (cm)</th>
           <th>Weight (kg)</th>
           <th>Quantity</th>
           <th></th>
@@ -21,17 +22,19 @@ function ItemsTable({ items, handleDeleteItem }) {
         {items.map((item, index) => (
           <tr key={index}>
             <td>{item.name}</td>
-            <td>{item.width * item.height}</td>
+            <td>{item.height}</td>
+            <td>{item.width}</td>
+            <td>{item.length}</td>
             <td>{item.weight}</td>
             <td>{item.quantity}</td>
             <td>
               <Button
-                color="secondary"
                 size="sm"
-                id={index}
-                onClick={handleDeleteItem}
+                color="secondary"
+                className="times-button"
+                onClick={() => handleDeleteItem(index)}
               >
-                x
+                <FontAwesomeIcon icon="times" />
               </Button>
             </td>
           </tr>

@@ -5,7 +5,7 @@ import { Table, Button, Input } from "reactstrap";
 
 function OrdersTable({ orders, handleEditClick, handleCheckboxClick }) {
   return (
-    <Table bordered striped responsive>
+    <Table bordered striped responsive size="sm">
       <thead>
         <tr>
           <th></th>

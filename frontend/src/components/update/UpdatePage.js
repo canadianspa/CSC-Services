@@ -50,9 +50,7 @@ function UpdatePage() {
             onChange={setSelectedVendor}
             useObjects={true}
           />
-          <Button color="primary" onClick={handleUpdateClick}>
-            Update
-          </Button>
+          <Button onClick={handleUpdateClick}>Update</Button>
         </>
       )}
     </div>

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
 import {
   Navbar as NavigationBar,
   Collapse,
@@ -6,6 +8,10 @@ import {
   NavbarBrand,
   Nav,
   NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 
 function Navbar() {
@@ -26,7 +32,19 @@ function Navbar() {
           <NavLink href="/import">Import</NavLink>
           <NavLink href="/turnover">Turnover</NavLink>
           <NavLink href="/orderwell">Order Well</NavLink>
-          <NavLink href="/shipping">Shipping</NavLink>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              Shipping
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem>
+                <NavLink href="/shipping/create">Create</NavLink>
+              </DropdownItem>
+              <DropdownItem>
+                <NavLink href="/shipping/items">Items</NavLink>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
         </Nav>
       </Collapse>
     </NavigationBar>

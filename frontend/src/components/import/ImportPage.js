@@ -15,7 +15,6 @@ import ImportPageModal from "./ImportPageModal";
 var intialState = {
   activeOrderIndex: null,
   selectedVendor: IMPORT_VENDORS[0],
-  selectedIndexes: null,
 };
 
 const reducer = (state, newState) => {
@@ -31,6 +30,7 @@ function ImportPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [showInitialView, setShowInitialView] = useState(true);
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [pageVariables, setPageVariables] = useReducer(reducer, intialState);
 
   const toggle = () => setModalOpen(!modalOpen);
@@ -61,7 +61,7 @@ function ImportPage() {
       } else {
         setOrders(json);
         setFile(file);
-        setPageVariables({ selectedIndexes: json.map((x, idx) => idx) });
+        setSelectedIndexes(json.map((x, idx) => idx));
         setShowInitialView(false);
       }
     });
@@ -82,15 +82,8 @@ function ImportPage() {
     });
   }
 
-  function handleUpdateAddress(event) {
-    event.preventDefault();
-    toggle();
-
-    const { value } = event.target.elements.address;
-
-    const { premise, street, posttown, county, postcode } = addresses.find(
-      (address) => address.summaryline === value
-    );
+  function handleUpdateAddress(address) {
+    const { premise, street, posttown, county, postcode } = address;
 
     let tempOrders = orders.map((order, idx) => {
       if (idx === pageVariables.activeOrderIndex) {
@@ -102,6 +95,7 @@ function ImportPage() {
       return order;
     });
 
+    toggle();
     setOrders(tempOrders);
   }
 
@@ -109,20 +103,19 @@ function ImportPage() {
     const { id, checked } = event.target;
 
     let index = parseInt(id);
-    var indexes = pageVariables.selectedIndexes;
 
-    setPageVariables({
-      selectedIndexes: checked
-        ? [...indexes, index]
-        : indexes.filter((idx) => idx !== index),
-    });
+    setSelectedIndexes(
+      checked
+        ? [...selectedIndexes, index]
+        : selectedIndexes.filter((idx) => idx !== index)
+    );
   }
 
   function handleImportClick() {
     toast.dark("Importing...");
 
     var selectedOrders = orders.filter((order, idx) =>
-      pageVariables.selectedIndexes.includes(idx)
+      selectedIndexes.includes(idx)
     );
 
     var params = {

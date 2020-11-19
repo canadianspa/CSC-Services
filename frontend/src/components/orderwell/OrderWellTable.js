@@ -5,7 +5,7 @@ import { Table } from "reactstrap";
 
 function OrderWellTable({ orders }) {
   return (
-    <Table bordered striped id="orderwell-table">
+    <Table bordered striped size="sm" id="orderwell-table">
       <thead>
         <tr>
           <th>Date</th>

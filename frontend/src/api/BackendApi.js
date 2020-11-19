@@ -83,26 +83,14 @@ export function getItems() {
     .catch((error) => console.error(error));
 }
 
-export function createItem(params) {
-  const { item } = params;
-
-  let url = `${API_BASE_URL}/shipping/items`;
-
-  let options = {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(item),
-  };
-
-  return fetch(url, options)
-    .then(handleResponse)
-    .catch((error) => console.error(error));
-}
-
 export function updateItem(params) {
   const { id, item } = params;
 
-  let url = `${API_BASE_URL}/shipping/items?id=${id}`;
+  let url = `${API_BASE_URL}/shipping/items`;
+
+  if (id) {
+    url += `?id=${id}`;
+  }
 
   let options = {
     method: "POST",

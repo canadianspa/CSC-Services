@@ -9,6 +9,15 @@
   width: 40px;
 }
 
+.dropdown-menu,
+.dropdown-item:hover {
+  background-color: #343a40 !important;
+}
+
+.nav-link {
+  padding: 0;
+}
+
 .wrapper {
   margin-top: 20px;
   width: 70%;

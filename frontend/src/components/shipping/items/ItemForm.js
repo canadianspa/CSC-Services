@@ -3,7 +3,7 @@ import React from "react";
 import { Input, FormGroup, Label } from "reactstrap";
 
 function ItemForm({ formState, onFormChange }) {
-  const { name, height, width, weight } = formState;
+  const { name, height, width, length, weight } = formState;
 
   return (
     <>
@@ -28,6 +28,16 @@ function ItemForm({ formState, onFormChange }) {
           type="number"
           min={0}
           value={width}
+          onChange={onFormChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label>Length (cm)</Label>
+        <Input
+          name="length"
+          type="number"
+          min={0}
+          value={length}
           onChange={onFormChange}
         />
       </FormGroup>
