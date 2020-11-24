@@ -4,6 +4,7 @@ import "./Turnover.css";
 import * as api from "../../api/BackendApi";
 
 import moment from "moment";
+import { toast } from "react-toastify";
 import { Button } from "reactstrap";
 import Jumbotron from "../shared/Jumbotron";
 import Spinner from "../shared/Spinner";
@@ -19,19 +20,23 @@ function Turnover() {
 
     const { value } = event.target.elements.date;
 
-    let monthYearString = moment(value).format("MM/YYYY");
+    if (value) {
+      let monthYearString = moment(value).format("MM/YYYY");
 
-    setTurnover(null);
-    setLoading(true);
+      setTurnover(null);
+      setLoading(true);
 
-    var params = {
-      data: monthYearString,
-    };
+      var params = {
+        date: monthYearString,
+      };
 
-    api.getTurnover(params).then((json) => {
-      setTurnover(json);
-      setLoading(false);
-    });
+      api.getTurnover(params).then((json) => {
+        setTurnover(json);
+        setLoading(false);
+      });
+    } else {
+      toast.dark("Please select a date");
+    }
   }
 
   return (
@@ -41,13 +46,7 @@ function Turnover() {
       </Jumbotron>
       <h5>Select Month</h5>
       <form onSubmit={handleDateSelect} className="date-form">
-        <input
-          type="month"
-          name="date"
-          min="2017-04"
-          max={currentMonth}
-          defaultValue={currentMonth}
-        />
+        <input type="month" name="date" min="2017-04" max={currentMonth} />
         <Button type="submit">Calculate</Button>
       </form>
       {loading && <Spinner style={{ marginTop: "50px" }} />}
