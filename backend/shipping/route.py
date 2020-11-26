@@ -31,32 +31,46 @@ def items_request():
     collection = MongoCollectionWrapper(items_collection)
     id = request.args.get('id')
 
-    if request.method == 'GET':
-        items = collection.read()
-        return jsonify(items)
+    try:
+        response = None
+        if request.method == 'GET':
+            response = collection.read()
 
-    elif request.method == 'POST':
-        item = request.json
-        try:
+        elif request.method == 'POST':
+            item = request.json
             validate(instance=item, schema=item_schema)
 
-            if id is None:
-                collection.create(item)
-            else:
-                collection.update(id, item)
-        except Exception as e:
-            print(str(e))
-            return {"error": True}
+            result = collection.upsert(id, item)
+            response = { 
+                    "status": "updated" if id else "created",
+                    "item": result
+            }
 
-    elif request.method == 'DELETE':
-        collection.delete(id)
+        elif request.method == 'DELETE':
+            _id = collection.delete(id)
+            response = { 
+                "status": "deleted",
+                "_id": _id
+            }
 
-    return jsonify([])
+    except Exception as e:
+        print(str(e))
+        response = {
+            "error": True,
+            "message": str(e)
+        }
+        
+    return jsonify(response)
+
 
 
 @shipping.route('/shipping/create/', methods=['POST'])
 def create_shipment_request():
     shipment = request.json
     print(shipment)
+
+
+    
+
 
     return jsonify([])

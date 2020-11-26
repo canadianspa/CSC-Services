@@ -17,11 +17,11 @@ def homebase_xml_to_customer(xml):
     last_name = ""
 
     if len(child_content) == 9:
-        first_name = child_content[2]
-        last_name = child_content[1]
-    if len(child_content) == 8:
         first_name = child_content[1]
         last_name = child_content[2]
+    if len(child_content) == 8:
+        first_name = child_content[2]
+        last_name = child_content[1]
 
     address1 = child_content[3]
     address2 = ""
