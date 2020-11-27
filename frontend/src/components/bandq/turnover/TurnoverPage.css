@@ -1,0 +1,16 @@
+.date-form {
+  width: 200px !important;
+}
+
+.date-form > * {
+  margin-bottom: 15px;
+}
+
+.totals-wrapper {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  gap: 30px;
+  grid-auto-flow: column;
+}

@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import "./Turnover.css";
+import "./TurnoverPage.css";
 
-import * as api from "../../api/BackendApi";
+import * as api from "../../../api/BackendApi";
 
 import moment from "moment";
 import { toast } from "react-toastify";
-import { Button } from "reactstrap";
-import Jumbotron from "../shared/Jumbotron";
-import Spinner from "../shared/Spinner";
+import { Button, Form, Input } from "reactstrap";
+import { Jumbotron, Spinner, Card, Header } from "../../Shared";
 
-function Turnover() {
+function TurnoverPage() {
   const [loading, setLoading] = useState(false);
   const [turnover, setTurnover] = useState(null);
 
   let currentMonth = moment().format("YYYY-MM");
 
-  function handleDateSelect(event) {
+  function onSubmit(event) {
     event.preventDefault();
 
     const { value } = event.target.elements.date;
@@ -41,29 +40,23 @@ function Turnover() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>{"Turnover for B&Q"}</span>
-      </Jumbotron>
-      <h5>Select Month</h5>
-      <form onSubmit={handleDateSelect} className="date-form">
-        <input type="month" name="date" min="2017-04" max={currentMonth} />
+      <Jumbotron>Turnover</Jumbotron>
+
+      <Form onSubmit={onSubmit} className="date-form">
+        <Header>Select Month</Header>
+        <Input type="month" name="date" min="2017-04" max={currentMonth} />
         <Button type="submit">Calculate</Button>
-      </form>
+      </Form>
+
       {loading && <Spinner style={{ marginTop: "50px" }} />}
       {turnover && (
         <div className="totals-wrapper">
-          <div className="info-card">
-            <label>Total excluding VAT</label>
-            <span>£{turnover.total_ex_vat}</span>
-          </div>
-          <div className="info-card">
-            <label>Total including VAT</label>
-            <span>£{turnover.total_with_vat}</span>
-          </div>
+          <Card header="Total excluding VAT" text={`£${turnover.total_ex_vat}`} />
+          <Card header="Total including VAT" text={`£${turnover.total_with_vat}`} />
         </div>
       )}
     </div>
   );
 }
 
-export default Turnover;
+export default TurnoverPage;

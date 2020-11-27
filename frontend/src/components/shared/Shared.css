@@ -16,3 +16,33 @@
 .select {
   width: 180px;
 }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px 0px rgba(0, 0, 0, 0.6);
+}
+
+.card > label {
+  font-size: 18px;
+  line-height: 40px;
+  height: 40px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #dddddd;
+  background-color: #343a40;
+}
+
+.card > span {
+  font-size: 30px;
+  line-height: 135px;
+}
+
+.header {
+  font-size: 20px;
+  font-weight: 450;
+  margin-bottom: 10px !important;
+}

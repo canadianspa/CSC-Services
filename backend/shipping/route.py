@@ -42,10 +42,10 @@ def items_request():
 
             result = collection.upsert(id, item)
             response = { 
-                    "status": "updated" if id else "created",
-                    "item": result
+                "status": "updated" if id else "created",
+                "item": result
             }
-
+        
         elif request.method == 'DELETE':
             _id = collection.delete(id)
             response = { 

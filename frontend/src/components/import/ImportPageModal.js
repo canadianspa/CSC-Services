@@ -2,7 +2,7 @@ import React from "react";
 import "./ImportPage.css";
 
 import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
-import SelectForm from "../shared/SelectForm";
+import { SelectForm } from "../Shared";
 
 function ImportPageModal({
   isOpen,

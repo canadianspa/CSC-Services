@@ -3,11 +3,10 @@ import "./ImportPage.css";
 
 import { IMPORT_VENDORS } from "../../config";
 import * as api from "../../api/BackendApi";
+import { reducer } from "../utils";
 
 import { toast } from "react-toastify";
-import Spinner from "../shared/Spinner";
-import Jumbotron from "../shared/Jumbotron";
-import Select from "../shared/Select";
+import { Jumbotron, Spinner, Select, Header } from "../Shared";
 import OrdersView from "./OrdersView";
 import FileUploadArea from "./FileUploadArea";
 import ImportPageModal from "./ImportPageModal";
@@ -15,10 +14,6 @@ import ImportPageModal from "./ImportPageModal";
 var intialState = {
   activeOrderIndex: null,
   selectedVendor: IMPORT_VENDORS[0],
-};
-
-const reducer = (state, newState) => {
-  return { ...state, ...newState };
 };
 
 function ImportPage() {
@@ -136,12 +131,10 @@ function ImportPage() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>Import to Veeqo</span>
-      </Jumbotron>
+      <Jumbotron>Import to Veeqo</Jumbotron>
       {showInitialView ? (
         <>
-          <h5>Select data source</h5>
+          <Header>Select data source</Header>
           <Select
             options={IMPORT_VENDORS}
             objectTitleKey="title"

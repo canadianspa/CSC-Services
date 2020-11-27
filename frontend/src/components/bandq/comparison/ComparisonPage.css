@@ -1,0 +1,11 @@
+.calc-button {
+  display: block;
+}
+
+.totals-wrapper {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 30px;
+  grid-auto-flow: column;
+}

@@ -2,8 +2,8 @@ import React from "react";
 import "./ShippingCreatePage.css";
 
 import { Button } from "reactstrap";
+import { SelectForm, Header } from "../../Shared";
 import ItemsTable from "./ItemsTable";
-import SelectForm from "../../shared/SelectForm";
 
 function ItemsView({ items, formState, updateFormState }) {
   function handleAddItem(newItem) {
@@ -41,7 +41,7 @@ function ItemsView({ items, formState, updateFormState }) {
 
   return (
     <>
-      <h5>Items</h5>
+      <Header>Items</Header>
       <div className="items-container">
         <div>
           <ItemsTable items={formState.items} handleDeleteItem={handleDeleteItem} />
@@ -50,7 +50,7 @@ function ItemsView({ items, formState, updateFormState }) {
           )}
         </div>
         <div className="items-menu">
-          <h6>Select Item</h6>
+          <Header>Select Item</Header>
           <SelectForm
             options={items}
             onSubmit={handleAddItem}

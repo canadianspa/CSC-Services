@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
-import Select from "../../shared/Select";
+import { Select, Header } from "../../Shared";
 
 function IntialView({ carriers, formState, onFormChange, updateFormState }) {
   const { carrier, orderUrl } = formState;
@@ -20,7 +20,7 @@ function IntialView({ carriers, formState, onFormChange, updateFormState }) {
           onChange={onFormChange}
         />
       </InputGroup>
-      <h5>Select Carrier</h5>
+      <Header>Select Carrier</Header>
       <Select
         name="carrier"
         useObjects={true}
@@ -30,7 +30,7 @@ function IntialView({ carriers, formState, onFormChange, updateFormState }) {
       />
       {carrier.accounts && (
         <>
-          <h5>Select Account</h5>
+          <Header>Select Account</Header>
           <Select
             name="account"
             options={carrier.accounts}

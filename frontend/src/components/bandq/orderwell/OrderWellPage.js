@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./OrderWell.css";
 
-import * as api from "../../api/BackendApi";
+import * as api from "../../../api/BackendApi";
 
 import { Button } from "reactstrap";
-import Jumbotron from "../shared/Jumbotron";
-import Spinner from "../shared/Spinner";
+import { Jumbotron, Spinner } from "../../Shared";
 import OrderWellTable from "./OrderWellTable";
 
 function OrderWell() {
@@ -50,9 +49,7 @@ function OrderWell() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>{"Order Well for B&Q"}</span>
-      </Jumbotron>
+      <Jumbotron>Order Well</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
       ) : (

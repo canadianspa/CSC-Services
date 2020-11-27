@@ -2,11 +2,11 @@ import React, { useState, useReducer, useEffect } from "react";
 import "./ShippingItemsPage.css";
 
 import * as api from "../../../api/BackendApi";
+import { reducer } from "../../utils";
 
 import { toast } from "react-toastify";
 import { Button } from "reactstrap";
-import Spinner from "../../shared/Spinner";
-import Jumbotron from "../../shared/Jumbotron";
+import { Jumbotron, Spinner, Header } from "../../Shared";
 import Item from "./Item";
 import ItemForm from "./ItemForm";
 
@@ -17,10 +17,6 @@ const intialFormState = {
   width: "",
   length: "",
   weight: "",
-};
-
-const reducer = (state, newState) => {
-  return { ...state, ...newState };
 };
 
 function ShippingItemsPage() {
@@ -101,8 +97,6 @@ function ShippingItemsPage() {
       updatedItems = items.filter((item) => item._id.$oid !== response._id);
       setFormState(intialFormState);
     }
-    console.log(updatedItems);
-
     setItems(updatedItems);
   }
 
@@ -125,9 +119,7 @@ function ShippingItemsPage() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>Edit Items</span>
-      </Jumbotron>
+      <Jumbotron>Edit Items</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
       ) : (
@@ -137,7 +129,7 @@ function ShippingItemsPage() {
           </Button>
           <div className="items-menu-container">
             <div className="items-menu">
-              <h5>Items</h5>
+              <Header>Items</Header>
               {items.map((item, index) => (
                 <Item
                   key={index}
@@ -150,7 +142,7 @@ function ShippingItemsPage() {
             <div className="items-form">
               {formState._id ? (
                 <>
-                  <h5>Edit Item</h5>
+                  <Header>Edit Item</Header>
                   <ItemForm formState={formState} onFormChange={onFormChange} />
                   <div className="centered-parent">
                     <Button name="delete" color="danger" onClick={onButtonClick}>
@@ -163,7 +155,7 @@ function ShippingItemsPage() {
                 </>
               ) : (
                 <>
-                  <h5>Create Item</h5>
+                  <Header>Create Item</Header>
                   <ItemForm formState={formState} onFormChange={onFormChange} />
                   <Button name="create" onClick={onButtonClick}>
                     Create

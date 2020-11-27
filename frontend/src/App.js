@@ -17,17 +17,20 @@ import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
 import ImportPage from "./components/import/ImportPage";
 import UpdatePage from "./components/update/UpdatePage";
-import Turnover from "./components/turnover/Turnover";
-import OrderWell from "./components/orderwell/OrderWell";
+import TurnoverPage from "./components/bandq/turnover/TurnoverPage";
+import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
+import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
 import ShippingCreatePage from "./components/shipping/create/ShippingCreatePage";
 import ShippingItemsPage from "./components/shipping/items/ShippingItemsPage";
 import PageNotFound from "./components/PageNotFound";
 
-library.add(faUpload);
-library.add(faPlus);
-library.add(faPencilAlt);
-library.add(faTrashAlt);
-library.add(faTimes);
+library.add({
+  faUpload,
+  faPlus,
+  faPencilAlt,
+  faTrashAlt,
+  faTimes,
+});
 
 function App() {
   return (
@@ -41,8 +44,11 @@ function App() {
             <Route exact path="/" component={Homepage} />
             <Route path="/update" component={UpdatePage} />
             <Route path="/import/" component={ImportPage} />
-            <Route path="/turnover" component={Turnover} />
-            <Route path="/orderwell/" component={OrderWell} />
+
+            <Route path="/bandq/turnover" component={TurnoverPage} />
+            <Route path="/bandq/orderwell" component={OrderWellPage} />
+            <Route path="/bandq/comparison" component={ComparisonPage} />
+
             <Route path="/shipping/create" component={ShippingCreatePage} />
             <Route path="/shipping/items" component={ShippingItemsPage} />
             <Route component={PageNotFound} />

@@ -10,8 +10,8 @@ class MongoCollectionWrapper:
         result = self.collection.insert_one(doc)
         return str(result.inserted_id)
 
-    def read(self, query={}):
-        result_bson = self.collection.find(query)
+    def read(self):
+        result_bson = self.collection.find()
         result_json = dumps(result_bson)
         return json.loads(result_json)
 
@@ -32,6 +32,12 @@ class MongoCollectionWrapper:
         query = {"_id": ObjectId(id)}
         values = {"$set": doc}
 
-        result_bson = self.collection.find_one_and_update(query, values, upsert=True, return_document=True)
+        result_bson = self.collection.find_one_and_update(
+            query, 
+            values, 
+            upsert=True, 
+            return_document=True
+        )
+        
         result_json = dumps(result_bson)
         return json.loads(result_json)

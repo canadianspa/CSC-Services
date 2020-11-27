@@ -29,8 +29,22 @@ function Navbar() {
         <Nav className="mr-auto" navbar>
           <NavLink href="/update">Update</NavLink>
           <NavLink href="/import">Import</NavLink>
-          <NavLink href="/turnover">Turnover</NavLink>
-          <NavLink href="/orderwell">Order Well</NavLink>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              {"B & Q"}
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem>
+                <NavLink href="/bandq/turnover">Turnover</NavLink>
+              </DropdownItem>
+              <DropdownItem>
+                <NavLink href="/bandq/orderwell">Order Well</NavLink>
+              </DropdownItem>
+              <DropdownItem>
+                <NavLink href="/bandq/comparison">Sales Comparison</NavLink>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Shipping
