@@ -58,9 +58,9 @@ export function updateSpreadsheet(params) {
 }
 
 export function getTurnover(params) {
-  const { date } = params;
+  const { start, end } = params;
 
-  let url = `${API_BASE_URL}/bandq/turnover?date=${date}`;
+  let url = `${API_BASE_URL}/bandq/turnover?start=${start}&end=${end}`;
 
   return fetch(url)
     .then(handleResponse)

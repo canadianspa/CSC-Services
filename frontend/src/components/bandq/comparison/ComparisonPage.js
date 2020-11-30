@@ -32,14 +32,17 @@ function ComparisonPage() {
       setSales(null);
       setLoading(true);
 
+      // previousDateFrom: startDate.subtract(1, "years").format("DD/MM/YYYY"),
+      // previousDateTo: endDate.subtract(1, "years").format("DD/MM/YYYY"),
+
       var params = {
-        dateFrom: startDate.format("DD/MM/YYYY"),
-        dateTo: endDate.format("DD/MM/YYYY"),
-        previousDateFrom: startDate.subtract(1, "years").format("DD/MM/YYYY"),
-        previousDateTo: endDate.subtract(1, "years").format("DD/MM/YYYY"),
+        start: startDate.format("YYYY/MM/DD"),
+        end: endDate.format("YYYY/MM/DD"),
       };
 
-      console.log(params);
+      api.getTurnover(params).then((json) => {
+        console.log(json);
+      });
       setLoading(false);
     } else {
       toast.dark("Please select both dates");

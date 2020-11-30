@@ -20,13 +20,12 @@ function TurnoverPage() {
     const { value } = event.target.elements.date;
 
     if (value) {
-      let monthYearString = moment(value).format("MM/YYYY");
-
       setTurnover(null);
       setLoading(true);
 
       var params = {
-        date: monthYearString,
+        start: moment(value).startOf("month").format("YYYY/MM/DD"),
+        end: moment(value).endOf("month").format("YYYY/MM/DD"),
       };
 
       api.getTurnover(params).then((json) => {
