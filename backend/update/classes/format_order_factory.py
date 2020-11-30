@@ -9,7 +9,7 @@ from ..vendors.hornbach import format_hornbach_order
 from ..vendors.robert_dyas import format_robert_dyas_order
 
 
-def format_order_strategy(vendor, order):
+def FormatOrderFactory(vendor, order):
     if vendor == "bandq":
         return format_bandq_order(order)
     elif vendor == "homebase":

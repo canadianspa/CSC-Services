@@ -18,7 +18,7 @@ def get_orders():
     return orders
 
 
-def import_order(order_json):
+def create_order(order_json):
     url = VEEQO_API_ORDERS_URL
 
     order_string = json.dumps({"order": order_json})

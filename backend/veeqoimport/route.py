@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import traceback
 
-from common.api.veeqo import import_order
+from common.api.veeqo import create_order
 from .handlers import (
     handle_limited_input,
     handle_pdf_file,
@@ -18,7 +18,7 @@ def handle_import_orders_request():
     imported_orders = []
 
     for order in orders:
-        imported_order = import_order(order)
+        imported_order = create_order(order)
         imported_orders.append(imported_order)
 
     return jsonify(imported_orders)
