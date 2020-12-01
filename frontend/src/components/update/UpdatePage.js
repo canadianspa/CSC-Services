@@ -5,9 +5,7 @@ import * as api from "../../api/BackendApi";
 
 import { Button } from "reactstrap";
 import { toast } from "react-toastify";
-import Jumbotron from "../shared/Jumbotron";
-import Spinner from "../shared/Spinner";
-import Select from "../shared/Select";
+import { Jumbotron, Spinner, Select, Header } from "../Shared";
 
 function UpdatePage() {
   const initialVendor = UPDATE_VENDORS[0];
@@ -36,14 +34,12 @@ function UpdatePage() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>Update Google Spreadsheet</span>
-      </Jumbotron>
+      <Jumbotron>Update Google Spreadsheet</Jumbotron>
       {loading ? (
         <Spinner style={{ width: "70px", height: "70px", marginTop: "50px" }} />
       ) : (
         <>
-          <h5>Select Spreadsheet</h5>
+          <Header>Select Spreadsheet</Header>
           <Select
             options={UPDATE_VENDORS}
             objectTitleKey="title"

@@ -2,6 +2,7 @@ import React from "react";
 import "./ImportPage.css";
 
 import { Button } from "reactstrap";
+import { Header } from "../Shared";
 import OrdersTable from "./OrdersTable";
 
 function OrdersView({
@@ -14,14 +15,14 @@ function OrdersView({
 }) {
   return orders.length === 0 ? (
     <>
-      <h5>No orders found.</h5>
+      <Header>No orders found</Header>
       <Button color="danger" onClick={setInitialState}>
         Back
       </Button>
     </>
   ) : (
     <>
-      {file && <h5>File: {file.name}</h5>}
+      {file && <Header>File: {file.name}</Header>}
       <OrdersTable
         orders={orders}
         handleCheckboxClick={handleCheckboxClick}

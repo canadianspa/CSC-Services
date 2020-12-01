@@ -1,12 +1,13 @@
 from flask import Blueprint, jsonify
 import re
-import json
-
-from .classes.vendor_details_factory import VendorDetailsFactory
-from .strategies.format_order_strategy import format_order_strategy
 
 from common.api.google_service import GoogleService
 from common.api.veeqo import get_orders
+
+from .classes.vendor_details_factory import VendorDetailsFactory
+from .classes.format_order_factory import FormatOrderFactory
+from .utils import get_values_wrapper, append_values_wrapper
+
 
 update = Blueprint('update', __name__)
 
@@ -16,33 +17,21 @@ def update_request(vendor):
     orders = get_orders()
 
     vendor_details = VendorDetailsFactory(vendor)
+
     google_service = GoogleService()
 
-    values = get_values(google_service, vendor_details)
+    values = get_values_wrapper(google_service, vendor_details)
     po_numbers = re.findall(r'\d+', str(values))
 
     formatted_orders = []
     for order in orders:
         if is_new_order(order, po_numbers, vendor_details):
-            formatted_order = format_order_strategy(vendor, order)
+            formatted_order = FormatOrderFactory(vendor, order)
             formatted_orders.append(formatted_order)
 
-    append_values(google_service, vendor_details, values, formatted_orders)
+    append_values_wrapper(google_service, vendor_details, values, formatted_orders)
 
     return jsonify(formatted_orders)
-
-
-def get_values(google_service, vendor_details):
-    # String determining which sheet & column contains order numbers
-    range_str = f"{vendor_details.ss_name}!{vendor_details.ss_order_column}:{vendor_details.ss_order_column}"
-    values = google_service.get_values(vendor_details.ss_id, range_str)
-    return values
-
-
-def append_values(google_service, vendor_details, values, orders):
-    range_str = f"{vendor_details.ss_name}!A{str(len(values) + 1)}:V"
-
-    google_service.append_values(vendor_details.ss_id, range_str, orders)
 
 
 def is_new_order(order, po_numbers, vendor_details):

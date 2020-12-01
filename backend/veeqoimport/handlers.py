@@ -61,6 +61,7 @@ def handle_pdf_file(vendor, file):
 
 def handle_range(vendor):
     range_service = RangeService()
+    
     orders = range_service.get_orders()
     stock = range_service.get_stock()
 

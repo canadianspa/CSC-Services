@@ -4,8 +4,7 @@ from flask_cors import CORS
 from veeqoimport.route import veeqoimport
 from update.route import update
 from postcoder.route import postcoder
-from turnover.route import turnover
-from orderwell.route import orderwell
+from bandq.route import bandq
 from shipping.route import shipping
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -24,8 +23,7 @@ def not_found(e):
 app.register_blueprint(veeqoimport, url_prefix='/api')
 app.register_blueprint(update, url_prefix='/api')
 app.register_blueprint(postcoder, url_prefix='/api')
-app.register_blueprint(turnover, url_prefix='/api')
-app.register_blueprint(orderwell, url_prefix='/api')
+app.register_blueprint(bandq, url_prefix='/api')
 app.register_blueprint(shipping, url_prefix='/api')
 
 

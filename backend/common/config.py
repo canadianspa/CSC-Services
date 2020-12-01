@@ -1,4 +1,4 @@
-############# STATIC RESOURCES ###########
+############# STATIC ###########
 from os import getcwd
 cwd = getcwd()
 

@@ -28,11 +28,12 @@ def carriers_request():
 
 @shipping.route('/shipping/items', methods=['GET', 'POST', 'DELETE'])
 def items_request():
-    collection = MongoCollectionWrapper(items_collection)
     id = request.args.get('id')
+    
+    collection = MongoCollectionWrapper(items_collection)
+    response = None
 
     try:
-        response = None
         if request.method == 'GET':
             response = collection.read()
 
@@ -42,10 +43,10 @@ def items_request():
 
             result = collection.upsert(id, item)
             response = { 
-                    "status": "updated" if id else "created",
-                    "item": result
+                "status": "updated" if id else "created",
+                "item": result
             }
-
+        
         elif request.method == 'DELETE':
             _id = collection.delete(id)
             response = { 

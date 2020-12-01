@@ -1,13 +1,9 @@
 import React from "react";
 
-import Jumbotron from "./shared/Jumbotron";
+import { Jumbotron } from "./Shared";
 
 function Homepage() {
-  return (
-    <Jumbotron>
-      <span>Welcome to Canadian Spa Services</span>
-    </Jumbotron>
-  );
+  return <Jumbotron>Welcome to Canadian Spa Services</Jumbotron>;
 }
 
 export default Homepage;

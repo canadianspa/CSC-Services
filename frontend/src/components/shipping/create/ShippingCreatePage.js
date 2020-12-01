@@ -2,23 +2,19 @@ import React, { useState, useReducer, useEffect } from "react";
 import "./ShippingCreatePage.css";
 
 import * as api from "../../../api/BackendApi";
+import { reducer } from "../../utils";
 
+import { toast } from "react-toastify";
 import { Button } from "reactstrap";
-import Spinner from "../../shared/Spinner";
-import Jumbotron from "../../shared/Jumbotron";
+import { Jumbotron, Spinner } from "../../Shared";
 import InitialView from "./InitialView";
 import ItemsView from "./ItemsView";
-import { toast } from "react-toastify";
 
 const intialFormState = {
   orderUrl: "",
   carrier: null,
   account: null,
   items: [],
-};
-
-const reducer = (state, newState) => {
-  return { ...state, ...newState };
 };
 
 function ShippingCreatePage() {
@@ -80,8 +76,6 @@ function ShippingCreatePage() {
       if (reponse.error) {
         toast.dark(reponse.message);
       } else {
-        console.log(reponse);
-
         toast.dark("Created");
 
         setInitialView(true);
@@ -100,9 +94,7 @@ function ShippingCreatePage() {
 
   return (
     <div className="container">
-      <Jumbotron>
-        <span>Create Shipment</span>
-      </Jumbotron>
+      <Jumbotron>Create Shipment</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
       ) : initialView ? (
