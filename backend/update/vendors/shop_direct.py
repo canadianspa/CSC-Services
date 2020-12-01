@@ -22,7 +22,7 @@ def format_shop_direct_order(order):
         '',
         '',
         '',
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         items[0],
         items[1],

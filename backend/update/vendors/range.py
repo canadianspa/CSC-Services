@@ -20,7 +20,7 @@ def format_range_order(order):
         '',
         '',
         '',
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         items[0],
         items[1],

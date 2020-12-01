@@ -10,7 +10,7 @@ def format_hornbach_order(order):
     po_num = re.findall(r"\d{10}", order['customer_note']['text'])
 
     return [
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         '',
         '',

@@ -29,4 +29,4 @@ app.register_blueprint(shipping, url_prefix='/api')
 
 if __name__ == "__main__":
     CORS(app)
-    app.run(debug=True, threaded=True)
+    app.run(port=4000, debug=True, threaded=True)

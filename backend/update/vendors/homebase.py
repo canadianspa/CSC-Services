@@ -13,7 +13,7 @@ def format_homebase_order(order):
     
     return [
         '',
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         '',
         '',

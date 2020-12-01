@@ -21,7 +21,7 @@ def format_robert_dyas_order(order):
         '',
         '',
         '',
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%yyyy"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         items[0],
         items[1],

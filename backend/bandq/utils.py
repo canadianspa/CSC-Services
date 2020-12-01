@@ -36,3 +36,11 @@ def format_orders(orders):
             pass
 
     return formatted_orders
+
+
+def matching_element(element, array):
+    for var in array:
+        if element in var:
+            return True
+
+    return False

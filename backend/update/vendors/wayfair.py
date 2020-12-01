@@ -14,7 +14,7 @@ def format_wayfair_order(order):
     return [
         po_num[0] if len(po_num) > 0 else 'Missing PO number',
         order['number'],
-        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%y"),
+        dateutil.parser.parse(order['created_at']).strftime(r"%d/%m/%Y"),
         '',
         '',
         order['deliver_to']['first_name'].upper(),

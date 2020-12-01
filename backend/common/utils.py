@@ -48,6 +48,6 @@ def extract_pages(fp, password='', page_numbers=None, maxpages=0,
         return layout
 
 
-def print_class_attrs(cls):
-    attrs = vars(cls)
+def print_class_attrs(_class):
+    attrs = vars(_class)
     print(', '.join("%s: %s" % item for item in attrs.items()))
