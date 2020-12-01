@@ -21,28 +21,42 @@ const intialDatesState = {
 
 function ComparisonPage() {
   const [loading, setLoading] = useState(false);
-  const [sales, setSales] = useState(null);
-
   const [dates, setDates] = useReducer(reducer, intialDatesState);
 
-  function onSubmit() {
+  const [sales, setSales] = useState(null);
+  const [previousSales, setPreviousSales] = useState(null);
+
+  const setFocusedInput = (focusedInput) => setDates({ focusedInput: focusedInput });
+
+  async function fetchData(params, previousParams) {
+    await api.getTurnover(params).then((json) => {
+      setSales(json);
+    });
+    await api.getTurnover(previousParams).then((json) => {
+      setPreviousSales(json);
+    });
+  }
+
+  async function onSubmit() {
     const { startDate, endDate } = dates;
 
     if (startDate && endDate) {
       setSales(null);
+      setPreviousSales(null);
       setLoading(true);
-
-      // previousDateFrom: startDate.subtract(1, "years").format("DD/MM/YYYY"),
-      // previousDateTo: endDate.subtract(1, "years").format("DD/MM/YYYY"),
 
       var params = {
         start: startDate.format("YYYY/MM/DD"),
         end: endDate.format("YYYY/MM/DD"),
       };
 
-      api.getTurnover(params).then((json) => {
-        console.log(json);
-      });
+      var previousParams = {
+        start: startDate.clone().subtract(1, "years").format("YYYY/MM/DD"),
+        end: endDate.clone().subtract(1, "years").format("YYYY/MM/DD"),
+      };
+
+      await fetchData(params, previousParams);
+
       setLoading(false);
     } else {
       toast.dark("Please select both dates");
@@ -60,7 +74,7 @@ function ComparisonPage() {
         endDateId="2"
         onDatesChange={setDates}
         focusedInput={dates.focusedInput}
-        onFocusChange={(focusedInput) => setDates({ focusedInput: focusedInput })}
+        onFocusChange={setFocusedInput}
         isOutsideRange={(day) =>
           day.isBefore(moment("04/2018", "MM/YYYY")) || day.isAfter(moment())
         }
@@ -71,10 +85,18 @@ function ComparisonPage() {
       </Button>
 
       {loading && <Spinner style={{ marginTop: "50px" }} />}
-      {sales && (
+      {sales && previousSales && (
         <div className="totals-wrapper">
-          <Card header="Previous Year" text="PREVIOUS" />
-          <Card header="Selected Year" text="CURRENT" />
+          <Card
+            header={"Previous Year"}
+            text={previousSales.total_with_vat}
+            description={"*With VAT"}
+          />
+          <Card
+            header={"Selected Year"}
+            text={sales.total_with_vat}
+            description={"*With VAT"}
+          />
         </div>
       )}
     </div>

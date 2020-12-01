@@ -3,7 +3,7 @@ import "./DeliveriesPage.css";
 
 import * as api from "../../api/BackendApi";
 
-import Jumbotron from "../shared/Jumbotron";
+import { Jumbotron } from "../Shared";
 import moment from "moment";
 
 function DeliveriesPage() {

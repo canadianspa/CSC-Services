@@ -41,6 +41,16 @@
   line-height: 135px;
 }
 
+.card > p {
+  font-size: 16px;
+  color: #616a72;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: auto;
+}
+
 .header {
   font-size: 20px;
   font-weight: 450;
