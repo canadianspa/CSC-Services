@@ -21,6 +21,7 @@ import Turnover from "./components/turnover/Turnover";
 import OrderWell from "./components/orderwell/OrderWell";
 import ShippingCreatePage from "./components/shipping/create/ShippingCreatePage";
 import ShippingItemsPage from "./components/shipping/items/ShippingItemsPage";
+import DeliveriesPage from "./components/deliveries/DeliveriesPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add(faUpload);
@@ -45,6 +46,7 @@ function App() {
             <Route path="/orderwell/" component={OrderWell} />
             <Route path="/shipping/create" component={ShippingCreatePage} />
             <Route path="/shipping/items" component={ShippingItemsPage} />
+            <Route path="/deliveries" component={DeliveriesPage} />
             <Route component={PageNotFound} />
           </Switch>
         </div>

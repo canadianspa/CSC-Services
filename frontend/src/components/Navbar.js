@@ -44,6 +44,7 @@ function Navbar() {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
+          <NavLink href="/deliveries">Deliveries</NavLink>
         </Nav>
       </Collapse>
     </NavigationBar>

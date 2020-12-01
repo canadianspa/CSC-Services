@@ -1,0 +1,14 @@
+.month-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.month-wrapper > * {
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.month-wrapper > div {
+  height: 120px;
+  border-right: 1px solid #aaaaaa;
+}
