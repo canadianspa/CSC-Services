@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect } from "react";
-import "./ShippingCreatePage.css";
 
 import * as api from "../../../api/BackendApi";
 import { reducer } from "../../utils";
@@ -7,19 +6,18 @@ import { reducer } from "../../utils";
 import { toast } from "react-toastify";
 import { Button } from "reactstrap";
 import { Jumbotron, Spinner } from "../../Shared";
-import InitialView from "./InitialView";
-import ItemsView from "./ItemsView";
+import ParcelsSelect from "./ParcelsSelect";
+import CreateShipmentForm from "./CreateShipmentForm";
 
 const intialFormState = {
   orderUrl: "",
   carrier: null,
-  account: null,
-  items: [],
+  service: null,
+  parcels: [],
 };
 
 function ShippingCreatePage() {
   const [loading, setLoading] = useState(true);
-  const [initialView, setInitialView] = useState(true);
   const [formState, setFormState] = useReducer(reducer, intialFormState);
 
   const [carriers, setCarriers] = useState([]);
@@ -36,7 +34,7 @@ function ShippingCreatePage() {
 
     await api.getCarriers().then((carriers) => {
       setCarriers(carriers);
-      updateFormState(carriers[0], "carrier");
+      setInitialState(carriers);
     });
 
     setLoading(false);
@@ -47,49 +45,76 @@ function ShippingCreatePage() {
     setFormState({ [name]: value });
   }
 
-  function updateFormState(data, name) {
-    if (name === "carrier") {
-      setFormState({
-        carrier: data,
-        account: data.accounts ? data.accounts[0] : null,
-      });
-    } else if (name === "items") {
-      setFormState({
-        items: data,
-      });
-    }
+  function updateFormState(value, name) {
+    setFormState({ [name]: value });
   }
 
   function handleCreateShipment() {
-    toast.dark("Creating shipment...");
-
     var params = {
       shipment: {
-        orderUrl: formState.orderUrl,
-        carrier: formState.carrier.name,
-        account: formState.account,
-        items: formState.items,
+        order_url: formState.orderUrl,
+        carrier: formState.carrier.code,
+        service: formState.service.code,
+        parcels: formState.parcels,
       },
     };
 
-    api.createShipment(params).then((reponse) => {
-      if (reponse.error) {
-        toast.dark(reponse.message);
-      } else {
-        toast.dark("Created");
+    var valid = validateShipment();
 
-        setInitialView(true);
-        setFormState({
-          ...intialFormState,
-          carrier: carriers[0],
-          account: carriers[0].accounts,
-        });
-      }
-    });
+    if (valid) {
+      toast.dark("Creating shipment...");
+
+      api.createShipment(params).then((reponse) => {
+        if (reponse.error) {
+          toast.dark(reponse.message);
+        } else {
+          toast.dark("Created shipment");
+
+          setInitialState();
+          buildLabelWindow(reponse.label);
+        }
+      });
+    } else {
+      toast.dark("Parcels & Veeqo URL cannot be empty");
+    }
   }
 
-  function updateView() {
-    setInitialView(!initialView);
+  function validateShipment() {
+    const { parcels, orderUrl } = formState;
+
+    return parcels.length > 0 && orderUrl !== "" ? true : false;
+  }
+
+  function setInitialState(carriers) {
+    setFormState(
+      carriers
+        ? {
+            ...intialFormState,
+            carrier: carriers[0],
+            service: carriers[0].services[0],
+          }
+        : {
+            orderUrl: "",
+            parcels: [],
+          }
+    );
+  }
+
+  // prettier-ignore
+  function calculateWeight() {
+    return formState.parcels.reduce(
+      (a, b) => a + b.quantity * b.weight, 0
+    );
+  }
+
+  function buildLabelWindow(label) {
+    let pdfWindow = window.open("");
+
+    pdfWindow.document.write(
+      "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+        encodeURI(label) +
+        "'></iframe>"
+    );
   }
 
   return (
@@ -97,29 +122,21 @@ function ShippingCreatePage() {
       <Jumbotron>Create Shipment</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
-      ) : initialView ? (
+      ) : (
         <>
-          <InitialView
+          <CreateShipmentForm
             carriers={carriers}
             formState={formState}
             updateFormState={updateFormState}
             onFormChange={onFormChange}
           />
-          <Button onClick={updateView}>Next</Button>
-        </>
-      ) : (
-        <>
-          <ItemsView
+          <ParcelsSelect
             items={items}
-            formState={formState}
+            parcels={formState.parcels}
             updateFormState={updateFormState}
           />
-          <div className="centered-parent">
-            <Button color="danger" onClick={updateView}>
-              Back
-            </Button>
-            <Button onClick={handleCreateShipment}>Create</Button>
-          </div>
+          <h6>Total weight: {calculateWeight()} kg</h6>
+          <Button onClick={handleCreateShipment}>Create</Button>
         </>
       )}
     </div>

@@ -7,7 +7,7 @@ function Select({
   options,
   onChange,
   useObjects,
-  objectTitleKey,
+  objectTitleKey = "name",
   multiple,
   name,
   style,

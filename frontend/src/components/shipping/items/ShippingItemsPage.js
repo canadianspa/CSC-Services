@@ -64,40 +64,53 @@ function ShippingItemsPage() {
     if (valid) {
       if (name === "delete") {
         api.deleteItem(params).then((response) => {
-          if (response.error) {
-            toast.dark(response.message);
-          } else {
-            updateItems(response);
-          }
+          handleResponse(response);
         });
       } else {
         api.updateItem(params).then((response) => {
-          if (response.error) {
-            toast.dark(response.message);
-          } else {
-            updateItems(response);
-          }
+          handleResponse(response);
         });
       }
     }
   }
 
-  function updateItems(response) {
-    var updatedItems = [...items];
+  function handleResponse(response) {
+    if (response.error) {
+      toast.dark(response.message);
+    } else {
+      var updatedItems = [...items];
 
-    if (response.status === "created") {
-      setFormState(response.item);
-      updatedItems.push(response.item);
-    } else if (response.status === "updated") {
-      var index = items.findIndex(
-        (item) => item._id.$oid === response.item._id.$oid
-      );
-      updatedItems[index] = response.item;
-    } else if (response.status === "deleted") {
-      updatedItems = items.filter((item) => item._id.$oid !== response._id);
-      setFormState(intialFormState);
+      if (response.status === "created") {
+        toast.dark("Created item");
+        updatedItems = handleCreated(updatedItems, response);
+      } else if (response.status === "updated") {
+        toast.dark("Updated item");
+        updatedItems = handleUpdated(updatedItems, response);
+      } else if (response.status === "deleted") {
+        toast.dark("Deleted item");
+        updatedItems = handleDeleted(updatedItems, response);
+      }
+
+      setItems(updatedItems);
     }
-    setItems(updatedItems);
+  }
+
+  function handleCreated(updatedItems, response) {
+    setFormState(response.item);
+    updatedItems.push(response.item);
+    return updatedItems;
+  }
+
+  function handleUpdated(updatedItems, response) {
+    var i = items.findIndex((item) => item._id.$oid === response.item._id.$oid);
+    updatedItems[i] = response.item;
+    return updatedItems;
+  }
+
+  function handleDeleted(updatedItems, response) {
+    updatedItems = items.filter((item) => item._id.$oid !== response._id);
+    setFormState(intialFormState);
+    return updatedItems;
   }
 
   function validateForm() {

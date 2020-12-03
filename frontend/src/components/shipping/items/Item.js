@@ -2,11 +2,11 @@ import React from "react";
 import "./ShippingItemsPage.css";
 
 function Item({ item, onClick, formState }) {
-  const { name } = item;
+  const { name, _id } = item;
 
   return (
     <span
-      className={item._id === formState._id ? "item-selected item" : "item"}
+      className={_id === formState._id ? "item-selected item" : "item"}
       onClick={() => onClick(item)}
     >
       {name}

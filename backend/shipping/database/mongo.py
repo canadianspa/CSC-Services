@@ -1,43 +1,72 @@
 import json
+from pymongo import MongoClient
+from jsonschema import validate
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 
+from common.config import MONGO_CLIENT_URL
+from .schema.item import item_schema
+
+
+def ItemsCollectionBuilder():
+    client = MongoClient(MONGO_CLIENT_URL)
+    database = client.shipping
+    items = database.items
+
+    return MongoCollectionWrapper(items, item_schema)
+
+
 class MongoCollectionWrapper:
-    def __init__(self, collection):
+    def __init__(self, collection, schema):
         self.collection = collection
+        self.schema = schema
 
     def create(self, doc):
+        self.validate_doc(doc)
+
         result = self.collection.insert_one(doc)
         return str(result.inserted_id)
 
     def read(self):
-        result_bson = self.collection.find()
-        result_json = dumps(result_bson)
-        return json.loads(result_json)
+        result = self.collection.find()
+        return self.bson_to_json(result)
 
-    def update(self, id, doc):
-        query = {"_id": ObjectId(id)}
+    def update(self, _id, doc):
+        self.validate_doc(doc)
+
+        query = {"_id": ObjectId(_id)}
         values = {"$set": doc}
 
         self.collection.update_one(query, values)
-        return id
+        return _id
 
-    def delete(self, id):
-        query = {"_id": ObjectId(id)}
+    def delete(self, _id):
+        query = {"_id": ObjectId(_id)}
 
         self.collection.delete_one(query)
-        return id
+        return _id
 
-    def upsert(self, id, doc):
-        query = {"_id": ObjectId(id)}
+    def upsert(self, _id, doc):
+        self.validate_doc(doc)
+
+        query = {"_id": ObjectId(_id)}
         values = {"$set": doc}
 
-        result_bson = self.collection.find_one_and_update(
+        result = self.collection.find_one_and_update(
             query, 
             values, 
             upsert=True, 
             return_document=True
         )
         
-        result_json = dumps(result_bson)
+        return self.bson_to_json(result)
+
+    def validate_doc(self, instance):
+        try:
+            validate(instance=instance, schema=self.schema)
+        except Exception as e:
+            print(str(e))
+    
+    def bson_to_json(self, bson):
+        result_json = dumps(bson)
         return json.loads(result_json)

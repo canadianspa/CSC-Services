@@ -1,12 +1,18 @@
 import requests
 import json
 
-from ..config import VEEQO_API_ORDERS_URL, VEEQO_API_PRODUCTS_URL
 from ..credentials.apikeys import VEEQO_APIKEY
 from ..utils import handle_response
+from ..config import (
+    VEEQO_API_ORDERS_URL,
+    VEEQO_API_PRODUCTS_URL,
+    VEEQO_API_SHIPMENTS_URL
+)
 
-
-headers = {"Content-Type": "application/json", "x-api-key": VEEQO_APIKEY}
+headers = {
+    "Content-Type": "application/json",
+    "x-api-key": VEEQO_APIKEY
+}
 
 
 def get_orders():
@@ -18,6 +24,15 @@ def get_orders():
     return orders
 
 
+def get_order_details(order_id):
+    url = f"{VEEQO_API_ORDERS_URL}/{order_id}"
+
+    response = requests.get(url, headers=headers)
+    order = handle_response(response)
+
+    return order
+
+
 def create_order(order_json):
     url = VEEQO_API_ORDERS_URL
 
@@ -27,6 +42,28 @@ def create_order(order_json):
     response_json = handle_response(response)
 
     return response_json['number']
+
+
+def create_shipment(order_id, allocation_id, tracking_number):
+    url = VEEQO_API_SHIPMENTS_URL
+
+    body = json.dumps({
+        "shipment": {
+            "tracking_number_attributes": {
+                "tracking_number": tracking_number
+            },
+            "carrier_id": 3,
+            "notify_customer": False,
+            "update_remote_order": False,
+        },
+        "allocation_id": allocation_id,
+        "order_id": order_id
+    })
+
+    response = requests.post(url, headers=headers, data=body)
+    response_json = handle_response(response)
+
+    return response_json["order_id"]
 
 
 def get_sellable_id(sku):

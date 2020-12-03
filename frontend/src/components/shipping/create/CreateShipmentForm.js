@@ -1,11 +1,9 @@
 import React from "react";
 
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
-import { Select, Header } from "../../Shared";
+import { Header, Select } from "../../Shared";
 
-function IntialView({ carriers, formState, onFormChange, updateFormState }) {
-  const { carrier, orderUrl } = formState;
-
+function CreateShipmentForm({ formState, carriers, onFormChange, updateFormState }) {
   return (
     <>
       <InputGroup style={{ width: "400px" }}>
@@ -16,7 +14,7 @@ function IntialView({ carriers, formState, onFormChange, updateFormState }) {
           name="orderUrl"
           type="text"
           placeholder="Veeqo Order URL"
-          value={orderUrl}
+          value={formState.orderUrl}
           onChange={onFormChange}
         />
       </InputGroup>
@@ -25,21 +23,18 @@ function IntialView({ carriers, formState, onFormChange, updateFormState }) {
         name="carrier"
         useObjects={true}
         options={carriers}
-        objectTitleKey="title"
         onChange={updateFormState}
       />
-      {carrier.accounts && (
-        <>
-          <Header>Select Account</Header>
-          <Select
-            name="account"
-            options={carrier.accounts}
-            onChange={onFormChange}
-          />
-        </>
-      )}
+      <Header>Select Service</Header>
+      <Select
+        name="service"
+        useObjects={true}
+        options={formState.carrier.services}
+        onChange={updateFormState}
+      />
+      <Header>Parcels</Header>
     </>
   );
 }
 
-export default IntialView;
+export default CreateShipmentForm;

@@ -11,6 +11,7 @@ HORNBACH_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\hornbach_stock.csv"
 
 VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
 VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
+VEEQO_API_SHIPMENTS_URL = "https://api.veeqo.com/shipments"
 VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
 
 POSTCODER_URL = "https://ws.postcoder.com"
@@ -18,6 +19,10 @@ POSTCODER_URL = "https://ws.postcoder.com"
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
 RANGE_PORTAL_ORDERS_URL = "https://supplier.rstore.com/suppliers.mod/api/order.load.php"
 RANGE_PORTAL_STOCK_URL = "https://supplier.rstore.com/suppliers.mod/api/stock.load.php?supplier=5778"
+
+MONGO_CLIENT_URL = "mongodb://localhost:27017/"
+
+SHIPPING_API_URL = "http://localhost:33/"
 
 ############# CONST ###########
 

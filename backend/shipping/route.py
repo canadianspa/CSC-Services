@@ -1,26 +1,29 @@
 from flask import Blueprint, request, jsonify
-from pymongo import MongoClient
-from jsonschema import validate
+import re
 
 from common.utils import class_to_json
-from .config import MONGO_CLIENT_URL
-from .schema.item import item_schema
-from .classes.carrier_factory import CarrierFactory
-from .database.mongo import MongoCollectionWrapper
+from common.api.veeqo import get_order_details, create_shipment
+
+from .api.shipping_api import get_quotes, create_consignment
+from .classes.carrier import Carrier
+from .database.mongo import ItemsCollectionBuilder
+from .builder.shipping_request_builder import build_shipping_request
 
 shipping = Blueprint('shipping', __name__)
 
-client = MongoClient(MONGO_CLIENT_URL)
-database = client.shipping
-items_collection = database.items
+collection = ItemsCollectionBuilder()
 
 
 @shipping.route("/shipping/carriers", methods=['GET'])
 def carriers_request():
+    services = get_quotes("xdpa")
+
     carriers_arr = [
-        CarrierFactory("xdp"),
-        CarrierFactory("dx_freight"),
+        Carrier("xdpa", "XDP A Account", services),
+        Carrier("xdpb", "XDP B Account", services),
+        Carrier("xdpc", "XDP C Account", services),
     ]
+
     carriers = class_to_json(carriers_arr)
 
     return jsonify(carriers)
@@ -28,9 +31,7 @@ def carriers_request():
 
 @shipping.route('/shipping/items', methods=['GET', 'POST', 'DELETE'])
 def items_request():
-    id = request.args.get('id')
-    
-    collection = MongoCollectionWrapper(items_collection)
+    _id = request.args.get('id')
     response = None
 
     try:
@@ -39,39 +40,80 @@ def items_request():
 
         elif request.method == 'POST':
             item = request.json
-            validate(instance=item, schema=item_schema)
 
-            result = collection.upsert(id, item)
-            response = { 
-                "status": "updated" if id else "created",
+            result = collection.upsert(_id, item)
+            response = {
+                "status": "updated" if _id else "created",
                 "item": result
             }
-        
+
         elif request.method == 'DELETE':
-            _id = collection.delete(id)
-            response = { 
+            _id = collection.delete(_id)
+            response = {
                 "status": "deleted",
                 "_id": _id
             }
 
     except Exception as e:
-        print(str(e))
         response = {
             "error": True,
-            "message": str(e)
+            "message": str(e),
         }
-        
-    return jsonify(response)
 
+    return jsonify(response)
 
 
 @shipping.route('/shipping/create/', methods=['POST'])
 def create_shipment_request():
     shipment = request.json
-    print(shipment)
+    response = None
 
+    order_ids = re.findall(r"\d{8}", shipment["order_url"])
 
-    
+    if len(order_ids) > 0:
+        order_id = order_ids[0]
 
+        order = get_order_details(order_id)
 
-    return jsonify([])
+        allocation = order["allocations"][0]
+
+        if allocation["shipment"] == None:
+            consignment = build_shipping_request(order, shipment)
+
+            try:
+                carrier = shipment["carrier"]
+                response = create_consignment(carrier, consignment)
+
+                try:
+                    tracking_number = response["tracking_number"]
+
+                    create_shipment(
+                        order_id,
+                        allocation["id"],
+                        tracking_number
+                    )
+                except Exception as e:
+                    print(str(e))
+                    response = {
+                        "error": True,
+                        "message": "Error adding tracking to Veeqo"
+                    }
+
+            except Exception as e:
+                print(str(e))
+                response = {
+                    "error": True,
+                    "message": "Error creating consignment"
+                }
+        else:
+            response = {
+                "error": True,
+                "message": "Veeqo Order already shipped"
+            }
+    else:
+        response = {
+            "error": True,
+            "message": "Invalid order URL"
+        }
+
+    return jsonify(response)

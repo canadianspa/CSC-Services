@@ -9,6 +9,7 @@ import {
   faPencilAlt,
   faTrashAlt,
   faTimes,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +23,6 @@ import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
 import ShippingCreatePage from "./components/shipping/create/ShippingCreatePage";
 import ShippingItemsPage from "./components/shipping/items/ShippingItemsPage";
-import DeliveriesPage from "./components/deliveries/DeliveriesPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add({
@@ -31,6 +31,7 @@ library.add({
   faPencilAlt,
   faTrashAlt,
   faTimes,
+  faChevronDown,
 });
 
 function App() {
@@ -52,7 +53,6 @@ function App() {
 
             <Route path="/shipping/create" component={ShippingCreatePage} />
             <Route path="/shipping/items" component={ShippingItemsPage} />
-            <Route path="/deliveries" component={DeliveriesPage} />
             <Route component={PageNotFound} />
           </Switch>
         </div>
