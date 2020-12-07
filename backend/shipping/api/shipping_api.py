@@ -7,7 +7,7 @@ from common.config import SHIPPING_API_URL
 
 headers = {
     "Authentication": SHIPPING_API_TOKEN,
-    "content_type": "application/json"
+    "Content-Type": "application/json"
 }
 
 
