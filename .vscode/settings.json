@@ -2,4 +2,5 @@
     "editor.formatOnSave": true,
     "prettier.printWidth": 85,
     "editor.defaultFormatter": "ms-python.python",
+    "editor.wordWrap": "on",
 }

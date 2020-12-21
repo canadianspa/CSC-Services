@@ -37,19 +37,15 @@ def homebase_xml_to_customer(xml):
 
 def homebase_xml_to_items(xml):
     items = []
-    products_element = xml.findall('.//Product[@xrefMode="Target"]')
+    products = xml.findall('.//Product[@xrefMode="Target"]')
 
-    for product_element in products_element:
-        sku_element = product_element.find(
-            './/Identifier[@function="ProductCode"][@owner="Company"]')
-        sku = sku_element.text
+    for product in products:
+        sku = product.find(
+            './/Identifier[@function="ProductCode"][@owner="Company"]').text
         sellable_id = get_sellable_id(sku)
 
-        quantity_element = product_element.find('.//UnitQuantity')
-        quantity = quantity_element.text
-
-        price_element = product_element.find('.//Value')
-        price_per_unit = price_element.text
+        quantity = product.find('.//UnitQuantity').text
+        price_per_unit = product.find('.//Value').text
 
         item = Item(sellable_id, quantity, price_per_unit, TAX_RATE)
         items.append(item)
@@ -58,20 +54,15 @@ def homebase_xml_to_items(xml):
 
 
 def homebase_xml_to_order(xml, customer, items):
-    references_element = xml.findall('.//Reference[@function="OrderNumber"]')
+    csc_order_no = xml.find(
+        './/Reference[@function="OrderNumber"][@owner="Company"]').text
+    homebase_order_no = xml.find(
+        './/Reference[@function="OrderNumber"][@owner="Partner"]').text
 
-    csc_order_no = ""
-    homebase_order_no = ""
-
-    for ref_element in references_element:
-        if ref_element.attrib["owner"] == "Company":
-            csc_order_no = ref_element.text
-        if ref_element.attrib["owner"] == "Partner":
-            homebase_order_no = ref_element.text
-
-    store_ref_parent = xml.find('.//Entity[@function="ShipTo"]')
-    store_ref_element = store_ref_parent.find('.//Identifier')
-    store_ref = store_ref_element.text
+    store_ref_parent = xml.find(
+        './/Entity[@function="ShipTo"][@xrefMode="Target"]')
+    store_ref = store_ref_parent.find(
+        './/Identifier[@function="AccountCode"]').text
 
     notes = csc_order_no + " " + homebase_order_no + \
         " " + store_ref + " " + customer.email
