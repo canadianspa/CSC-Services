@@ -9,10 +9,10 @@ from .classes.format_order_factory import FormatOrderFactory
 from .utils import get_values_wrapper, append_values_wrapper
 
 
-update = Blueprint('update', __name__)
+update = Blueprint("update", __name__)
 
 
-@update.route('/update/<vendor>', methods=['GET'])
+@update.route("/update/<vendor>", methods=["GET"])
 def update_request(vendor):
     orders = get_orders()
 
@@ -21,8 +21,8 @@ def update_request(vendor):
     google_service = GoogleService()
 
     values = get_values_wrapper(google_service, vendor_details)
-    po_numbers = re.findall(r'\d+', str(values))
-    
+    po_numbers = re.findall(r"\d+", str(values))
+
     formatted_orders = []
 
     for order in orders:
@@ -41,13 +41,21 @@ def update_request(vendor):
 
 
 def is_new_order(order, po_numbers, vendor_details):
-    if str(order['id']) not in po_numbers and order['status'] != 'cancelled':
-        if (str(order['channel']['id']) == vendor_details.channel_id
-                and order['deliver_to']['first_name'] != 'B & Q plc'
-                and order['deliver_to']['first_name'] != 'B&Q plc'):
+    if str(order["id"]) not in po_numbers and order["status"] != "cancelled":
+        if (
+            str(order["channel"]["id"]) == vendor_details.channel_id
+            and order["deliver_to"]["first_name"] != "B & Q plc"
+            and order["deliver_to"]["first_name"] != "B&Q plc"
+        ):
             return True
 
-        elif vendor_details.name == "hornbach" and "Hornbach" in order['billing_address']['first_name']:
+        elif (
+            vendor_details.name == "hornbach"
+            and "Hornbach" in order["billing_address"]["first_name"]
+        ):
             return True
+
+        else:
+            return False
     else:
         return False
