@@ -22,14 +22,20 @@ def update_request(vendor):
 
     values = get_values_wrapper(google_service, vendor_details)
     po_numbers = re.findall(r'\d+', str(values))
-
+    
     formatted_orders = []
+
     for order in orders:
         if is_new_order(order, po_numbers, vendor_details):
             formatted_order = FormatOrderFactory(vendor, order)
             formatted_orders.append(formatted_order)
 
-    append_values_wrapper(google_service, vendor_details, values, formatted_orders)
+    append_values_wrapper(
+        google_service,
+        vendor_details,
+        values,
+        formatted_orders,
+    )
 
     return jsonify(formatted_orders)
 
