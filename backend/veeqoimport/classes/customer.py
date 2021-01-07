@@ -31,7 +31,7 @@ class Customer:
         self.city = self._format(city)
         self.state = self._format(state)
         self.zip = zip_code
-        self.country = country
+        self.country = country if country else "GB"
         self.phone = phone
         self.email = self._format(email)
 
