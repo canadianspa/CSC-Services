@@ -18,6 +18,7 @@ import Navbar from "./components/Navbar";
 import Homepage from "./components/Homepage";
 import ImportPage from "./components/import/ImportPage";
 import UpdatePage from "./components/update/UpdatePage";
+import CalendarPage from "./components/calendar/CalendarPage";
 import TurnoverPage from "./components/bandq/turnover/TurnoverPage";
 import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
@@ -46,6 +47,7 @@ function App() {
             <Route exact path="/" component={Homepage} />
             <Route path="/update" component={UpdatePage} />
             <Route path="/import/" component={ImportPage} />
+            <Route path="/calendar/" component={CalendarPage} />
 
             <Route path="/bandq/turnover" component={TurnoverPage} />
             <Route path="/bandq/orderwell" component={OrderWellPage} />
@@ -53,6 +55,7 @@ function App() {
 
             <Route path="/shipping/create" component={ShippingCreatePage} />
             <Route path="/shipping/items" component={ShippingItemsPage} />
+
             <Route component={PageNotFound} />
           </Switch>
         </div>

@@ -1,11 +1,20 @@
 ############# STATIC ###########
 from os import getcwd
+
 cwd = getcwd()
 
-GOOGLE_TOKEN_PATH = cwd + r"\common\credentials\token.pickle"
-GOOGLE_CREDENTIALS_PATH = cwd + r"\common\credentials\credentials.json"
 ARGOS_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\argos_stock.csv"
 HORNBACH_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\hornbach_stock.csv"
+
+
+GOOGLE_SHEETS_SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+GOOGLE_SHEETS_TOKEN_PATH = cwd + r"\common\credentials\sheets_token.pickle"
+GOOGLE_SHEETS_CREDS_PATH = cwd + r"\common\credentials\sheets_credentials.json"
+
+
+GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar"]
+GOOGLE_CALENDAR_TOKEN_PATH = cwd + r"\common\credentials\calendar_token.pickle"
+GOOGLE_CALENDAR_CREDS_PATH = cwd + r"\common\credentials\calendar_credentials.json"
 
 ############# URLS ###########
 
@@ -18,7 +27,9 @@ POSTCODER_URL = "https://ws.postcoder.com"
 
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
 RANGE_PORTAL_ORDERS_URL = "https://supplier.rstore.com/suppliers.mod/api/order.load.php"
-RANGE_PORTAL_STOCK_URL = "https://supplier.rstore.com/suppliers.mod/api/stock.load.php?supplier=5778"
+RANGE_PORTAL_STOCK_URL = (
+    "https://supplier.rstore.com/suppliers.mod/api/stock.load.php?supplier=5778"
+)
 
 MONGO_CLIENT_URL = "mongodb://localhost:27017/"
 
@@ -29,8 +40,6 @@ SHIPPING_API_URL = "http://localhost:33/"
 TAX_RATE = 0.2
 
 DEFAULT_DELIVERY_METHOD_ID = "153707"
-
-GOOGLE_SHEETS_SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 ############# VEEQO VENDOR IDS ###########
 

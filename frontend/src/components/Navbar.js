@@ -29,6 +29,7 @@ function Navbar() {
         <Nav className="mr-auto" navbar>
           <NavLink href="/update">Update</NavLink>
           <NavLink href="/import">Import</NavLink>
+          <NavLink href="/calendar">Calendar</NavLink>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               {"B & Q"}

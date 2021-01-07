@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 import re
 
-from common.api.google_service import GoogleService
+from common.api.google_sheets_service import GoogleSheetsService
 from common.api.veeqo import get_orders
 
 from .classes.vendor_details_factory import VendorDetailsFactory
@@ -18,9 +18,9 @@ def update_request(vendor):
 
     vendor_details = VendorDetailsFactory(vendor)
 
-    google_service = GoogleService()
+    google_sheets_service = GoogleSheetsService()
 
-    values = get_values_wrapper(google_service, vendor_details)
+    values = get_values_wrapper(google_sheets_service, vendor_details)
     po_numbers = re.findall(r"\d+", str(values))
 
     formatted_orders = []
@@ -31,7 +31,7 @@ def update_request(vendor):
             formatted_orders.append(formatted_order)
 
     append_values_wrapper(
-        google_service,
+        google_sheets_service,
         vendor_details,
         values,
         formatted_orders,

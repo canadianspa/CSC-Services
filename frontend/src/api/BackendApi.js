@@ -140,3 +140,27 @@ export function createShipment(params) {
     .then(handleResponse)
     .catch((error) => console.error(error));
 }
+
+export function getCalendars() {
+  let url = `${API_BASE_URL}/calendar`;
+
+  return fetch(url)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function createEvent(params) {
+  const { event } = params;
+
+  let url = `${API_BASE_URL}/calendar`;
+
+  let options = {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(event),
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
