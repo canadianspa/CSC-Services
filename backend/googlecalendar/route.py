@@ -1,13 +1,14 @@
 from flask import Blueprint, jsonify, request
 import re
 
-from common.api.google_calendar_service import GoogleCalendarService
-from common.api.veeqo import get_order_details
+from common.api.google_service import GoogleService
+from common.api.veeqo import create_order_note
+from .builders.event_builder import build_event
 
 
 calendar = Blueprint("calendar", __name__)
 
-calendar_service = GoogleCalendarService()
+calendar_service = GoogleService().calendar
 
 
 @calendar.route("/calendar", methods=["GET"])
@@ -21,17 +22,16 @@ def load():
 def create():
     body = request.json
 
-    order_ids = re.findall(r"\d{8}", body["veeqo_url"])
+    order = body["order"]
 
-    if len(order_ids) == 1:
-        order_id = order_ids[0]
+    event = build_event(
+        calendar_service.create_event,
+        body,
+        order,
+    )
 
-        order = get_order_details(order_id)
+    note = f'Delivery Event Created: {event["htmlLink"]}'
 
-    # calendar_service.create_event()
+    create_order_note(order["id"], note)
 
-    return jsonify([])
-
-
-# else:
-# return jsonify({"error": True, "message": "Invalid order URL"})
+    return jsonify(event)
