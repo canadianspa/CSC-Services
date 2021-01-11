@@ -8,7 +8,11 @@ from pdfminer.converter import PDFPageAggregator
 
 
 def handle_response(response):
-    if response.status_code == 200 or response.status_code == 201 or response.status_code == 204:
+    if (
+        response.status_code == 200
+        or response.status_code == 201
+        or response.status_code == 204
+    ):
         return response.json()
     else:
         raise Exception(response.content)
@@ -19,8 +23,9 @@ def class_to_json(classes):
     return json.loads(string)
 
 
-def extract_pages(fp, password='', page_numbers=None, maxpages=0,
-                  caching=True, laparams=None):
+def extract_pages(
+    fp, password="", page_numbers=None, maxpages=0, caching=True, laparams=None
+):
     """
         MODIFIED high_level function from pdfparser.six
         Extract and yield LTPage objects
@@ -41,8 +46,13 @@ def extract_pages(fp, password='', page_numbers=None, maxpages=0,
     resource_manager = PDFResourceManager(caching=caching)
     device = PDFPageAggregator(resource_manager, laparams=laparams)
     interpreter = PDFPageInterpreter(resource_manager, device)
-    for page in PDFPage.get_pages(fp, page_numbers, maxpages=maxpages,
-                                  password=password, caching=caching):
+    for page in PDFPage.get_pages(
+        fp,
+        page_numbers,
+        maxpages=maxpages,
+        password=password,
+        caching=caching,
+    ):
         interpreter.process_page(page)
         layout = device.get_result()
         return layout
@@ -50,4 +60,4 @@ def extract_pages(fp, password='', page_numbers=None, maxpages=0,
 
 def print_class_attrs(_class):
     attrs = vars(_class)
-    print(', '.join("%s: %s" % item for item in attrs.items()))
+    print(", ".join("%s: %s" % item for item in attrs.items()))

@@ -1,6 +1,5 @@
 from pandas import date_range, to_datetime
 
-from common.api.google_sheets_service import GoogleSheetsService
 from common.config import BANDQ_SPREADSHEET_ID, BANDQ_SPREADSHEET_NAME
 from .classes.formatted_order import FormattedOrder
 
@@ -17,11 +16,10 @@ def dates_between(start, end):
     return formatted_dt_index.values
 
 
-def get_orders():
+def get_orders(sheets_service):
     range_str = f"{BANDQ_SPREADSHEET_NAME}!A100:T"
 
-    google_sheets_service = GoogleSheetsService()
-    values = google_sheets_service.get_values(BANDQ_SPREADSHEET_ID, range_str)
+    values = sheets_service.get_values(BANDQ_SPREADSHEET_ID, range_str)
 
     return format_orders(values)
 
@@ -31,8 +29,9 @@ def format_orders(orders):
 
     for order in orders:
         try:
-            formatted_order = FormattedOrder(order)
-            formatted_orders.append(formatted_order)
+            formatted_orders.append(
+                FormattedOrder(order),
+            )
         except:
             pass
 
