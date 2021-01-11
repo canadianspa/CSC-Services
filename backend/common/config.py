@@ -7,14 +7,13 @@ ARGOS_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\argos_stock.csv"
 HORNBACH_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\hornbach_stock.csv"
 
 
-GOOGLE_SHEETS_SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-GOOGLE_SHEETS_TOKEN_PATH = cwd + r"\common\credentials\sheets_token.pickle"
-GOOGLE_SHEETS_CREDS_PATH = cwd + r"\common\credentials\sheets_credentials.json"
+GOOGLE_CREDS = cwd + r"\common\credentials\google\credentials.json"
+GOOGLE_TOKEN = cwd + r"\common\credentials\google\token.pickle"
+GOOGLE_SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/calendar",
+]
 
-
-GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar"]
-GOOGLE_CALENDAR_TOKEN_PATH = cwd + r"\common\credentials\calendar_token.pickle"
-GOOGLE_CALENDAR_CREDS_PATH = cwd + r"\common\credentials\calendar_credentials.json"
 
 ############# URLS ###########
 
@@ -22,6 +21,7 @@ VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
 VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
 VEEQO_API_SHIPMENTS_URL = "https://api.veeqo.com/shipments"
 VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
+VEEQO_APP_PACKING_URL = "https://app.veeqo.com/printing_templates/batch_templates?templates[0][entity]=order&templates[0][format]=packing_slip&templates[0][name]=[Veeqo]packing_slip&selected_ids_string="
 
 POSTCODER_URL = "https://ws.postcoder.com"
 
