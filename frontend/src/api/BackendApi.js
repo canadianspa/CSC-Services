@@ -141,6 +141,16 @@ export function createShipment(params) {
     .catch((error) => console.error(error));
 }
 
+export function getVeeqoOrder(params) {
+  const { orderUrl } = params;
+
+  let url = `${API_BASE_URL}/veeqo?url=${orderUrl}`;
+
+  return fetch(url)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
 export function getCalendars() {
   let url = `${API_BASE_URL}/calendar`;
 

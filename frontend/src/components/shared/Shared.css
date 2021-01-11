@@ -56,3 +56,30 @@
   font-weight: 450;
   margin-bottom: 10px !important;
 }
+
+/* FOR TIMES BUTTON */
+
+.multiselect-option {
+  margin-bottom: 8px;
+}
+.multiselect-option span{
+  margin-right: 10px;
+}
+
+.multiselect-option button,
+.multiselect-option button:focus {
+  font-size: 20px;
+  border: 0;
+  padding: 0;
+  outline: none;
+  color: #6c757d;
+  background-color: transparent;
+}
+
+.multiselect-option button:hover {
+  color: #939ba1;
+}
+
+.multiselect-option button svg {
+  padding: 3px 2px 0 1px;
+}

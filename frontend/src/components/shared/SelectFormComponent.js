@@ -10,7 +10,7 @@ function SelectForm({
   children,
   inputStyle,
 }) {
-  function _onSubmit(event) {
+  function onFormSubmit(event) {
     event.preventDefault();
 
     const { value } = event.target.elements.option;
@@ -26,7 +26,7 @@ function SelectForm({
   }
 
   return (
-    <Form onSubmit={_onSubmit}>
+    <Form onSubmit={onFormSubmit}>
       <Input name="option" type="select" multiple style={inputStyle}>
         {options.map((option, index) => {
           var value = useObjects ? option[optionKey] : option;

@@ -4,6 +4,7 @@ import "./Shared.css";
 import { Input } from "reactstrap";
 
 function Select({
+  value,
   options,
   onChange,
   useObjects,
@@ -30,6 +31,7 @@ function Select({
       name={name}
       style={style}
       multiple={multiple ? true : false}
+      value={value}
       onChange={_onChange}
     >
       {options.map((option, index) => (
