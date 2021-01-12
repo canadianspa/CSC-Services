@@ -1,7 +1,7 @@
 import React from "react";
 import "./CalendarPage.css";
 
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Select, MultiSelect } from "../Shared";
 
 function InitialView({ formState, onFormChange, calendars, toggleView }) {

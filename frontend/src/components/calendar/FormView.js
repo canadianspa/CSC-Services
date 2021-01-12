@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { FormGroup, Label, Input, Button } from "reactstrap";
 
 function EventForm({ formState, onFormChange, onSubmit, toggleView }) {
   const { title, date, time, length } = formState;
