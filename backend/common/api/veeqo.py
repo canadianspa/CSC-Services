@@ -7,6 +7,8 @@ from ..config import (
     VEEQO_API_ORDERS_URL,
     VEEQO_API_PRODUCTS_URL,
     VEEQO_API_SHIPMENTS_URL,
+    VEEQO_API_PACKING_URL,
+    TEMP_FILE_PATH,
 )
 
 headers = {
@@ -42,6 +44,21 @@ def update_order_details(order_id, order):
     order = handle_response(response)
 
     return order
+
+
+def download_packing_slip(order_id):
+    url = f"{VEEQO_API_PACKING_URL}{order_id}"
+
+    response = requests.get(url, headers=headers)
+
+    file_path = f"{TEMP_FILE_PATH}\\packing_slip.pdf"
+
+    try:
+        with open(file_path, "wb") as f:
+            f.write(response.content)
+            return file_path
+    except Exception as e:
+        raise Exception(f"Could not download file ", str(e))
 
 
 def create_order_note(order_id, text):

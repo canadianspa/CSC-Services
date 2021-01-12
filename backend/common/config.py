@@ -12,7 +12,13 @@ GOOGLE_TOKEN = cwd + r"\common\credentials\google\token.pickle"
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/drive",
 ]
+
+GOOGLE_DRIVE_PACKING_SLIP_FOLDER_ID = "1llFIcyrBbPj9b1HUP34LRVs5tfOzP_Ns"
+GOOGLE_DRIVE_FILE_URL = "https://drive.google.com/open?id="
+
+TEMP_FILE_PATH = cwd + r"\common\temp"
 
 
 ############# URLS ###########
@@ -21,7 +27,7 @@ VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
 VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
 VEEQO_API_SHIPMENTS_URL = "https://api.veeqo.com/shipments"
 VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
-VEEQO_APP_PACKING_URL = "https://app.veeqo.com/printing_templates/batch_templates?templates[0][entity]=order&templates[0][format]=packing_slip&templates[0][name]=[Veeqo]packing_slip&selected_ids_string="
+VEEQO_API_PACKING_URL = "https://api.veeqo.com/printing_templates/batch_templates?templates[0][entity]=order&templates[0][format]=packing_slip&templates[0][name]=[Veeqo]packing_slip&selected_ids_string="
 
 POSTCODER_URL = "https://ws.postcoder.com"
 

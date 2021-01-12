@@ -1,7 +1,7 @@
-from common.config import VEEQO_APP_PACKING_URL, VEEQO_APP_ORDERS_URL
+from common.config import VEEQO_APP_ORDERS_URL
 
 
-def build_event(create_event, body, order):
+def build_event(create_event, body, order, attachments):
     calendar_id = body["calendar"]["id"]
 
     summary = body["title"]
@@ -13,7 +13,6 @@ def build_event(create_event, body, order):
     )
     description = (
         f'<a href="{VEEQO_APP_ORDERS_URL}/{order["id"]}">Order {order["number"]}</a><br/>'
-        f'<a href="{VEEQO_APP_PACKING_URL}{order["id"]}">Packing Slip {order["number"]}</a><br/>'
         f'{order["deliver_to"]["first_name"]} {order["deliver_to"]["last_name"]}<br/>'
         f'{order["deliver_to"]["phone"]}<br/>'
         f'{order["deliver_to"]["email"]}<br/>'
@@ -30,6 +29,7 @@ def build_event(create_event, body, order):
         start,
         end,
         attendees,
+        attachments,
     )
 
 

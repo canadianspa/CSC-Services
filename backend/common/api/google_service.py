@@ -4,12 +4,9 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from googleapiclient.http import MediaFileUpload
 
-from ..config import (
-    GOOGLE_CREDS,
-    GOOGLE_SCOPES,
-    GOOGLE_TOKEN,
-)
+from ..config import GOOGLE_CREDS, GOOGLE_SCOPES, GOOGLE_TOKEN, GOOGLE_DRIVE_FILE_URL
 
 
 class GoogleService:
@@ -33,6 +30,7 @@ class GoogleService:
 
         self.sheets = self.Sheets(creds)
         self.calendar = self.Calendar(creds)
+        self.drive = self.Drive(creds)
 
     class Sheets:
         def __init__(self, creds):
@@ -109,6 +107,7 @@ class GoogleService:
             start,
             end,
             attendees,
+            attachments,
         ):
             # pylint: disable=maybe-no-member
             events = self.service.events()
@@ -126,9 +125,60 @@ class GoogleService:
                     "timeZone": "Europe/London",
                 },
                 "attendees": attendees,
+                "attachments": attachments,
                 "reminders": {
                     "useDefault": True,
                 },
             }
 
-            return events.insert(calendarId=calendarId, body=event).execute()
+            return events.insert(
+                calendarId=calendarId,
+                body=event,
+                supportsAttachments=True,
+            ).execute()
+
+    class Drive:
+        def __init__(self, creds):
+            self.service = build(
+                "drive",
+                "v3",
+                credentials=creds,
+            )
+
+        def upload(
+            self,
+            file_name,
+            file_path,
+            mime_type,
+            folder_id=None,
+        ):
+            # pylint: disable=maybe-no-member
+            files = self.service.files()
+
+            file_metadata = {
+                "name": file_name,
+            }
+
+            if folder_id is not None:
+                file_metadata["parents"] = [folder_id]
+
+            media = MediaFileUpload(file_path, mimetype=mime_type)
+
+            uploaded_file = files.create(
+                body=file_metadata,
+                media_body=media,
+                fields="id",
+            ).execute()
+
+            file_id = uploaded_file["id"]
+
+            return self.get(file_id)
+
+        def get(self, file_id):
+            # pylint: disable=maybe-no-member
+            files = self.service.files()
+
+            return files.get(
+                fileId=file_id,
+                fields="webViewLink,mimeType,name",
+            ).execute()
