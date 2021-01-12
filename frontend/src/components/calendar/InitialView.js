@@ -4,7 +4,7 @@ import "./CalendarPage.css";
 import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Select, MultiSelect } from "../Shared";
 
-function InitialView({ formState, onFormChange, calendars, toggleView }) {
+function InitialView({ formState, onFormChange, calendars, emails, toggleView }) {
   const { orderUrl, calendar, attendees } = formState;
 
   return (
@@ -14,6 +14,7 @@ function InitialView({ formState, onFormChange, calendars, toggleView }) {
         <Input
           name="orderUrl"
           type="text"
+          placeholder="URL"
           value={orderUrl}
           onChange={onFormChange}
         />
@@ -32,7 +33,12 @@ function InitialView({ formState, onFormChange, calendars, toggleView }) {
       </FormGroup>
       <FormGroup>
         <Label>Attendees</Label>
-        <MultiSelect name="attendees" options={attendees} onChange={onFormChange} />
+        <MultiSelect
+          name="attendees"
+          options={attendees}
+          onChange={onFormChange}
+          predefinedSuggestions={emails}
+        />
       </FormGroup>
       <Button onClick={toggleView}>Next</Button>
     </div>

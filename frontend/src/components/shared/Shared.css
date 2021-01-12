@@ -61,25 +61,40 @@
 
 .multiselect-option {
   margin-bottom: 8px;
+  height: 27px;
+  position: relative;
 }
 .multiselect-option span{
   margin-right: 10px;
+  color: #495057;
 }
 
 .multiselect-option button,
 .multiselect-option button:focus {
-  font-size: 20px;
   border: 0;
   padding: 0;
   outline: none;
   color: #6c757d;
   background-color: transparent;
+  position: absolute;
 }
 
 .multiselect-option button:hover {
   color: #939ba1;
 }
 
-.multiselect-option button svg {
-  padding: 3px 2px 0 1px;
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border: 1px solid #ced4da;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #007bff;
+  color: white;
 }

@@ -5,6 +5,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 
 import * as api from "../../api/BackendApi";
+import { EMAILS } from "../../config";
 import { reducer } from "../utils";
 import { Jumbotron, Spinner } from "../Shared";
 import FormView from "./FormView";
@@ -124,6 +125,7 @@ function CalendarPage() {
           formState={formState}
           onFormChange={onFormChange}
           calendars={calendars}
+          emails={EMAILS}
           toggleView={toggleView}
         />
       ) : (

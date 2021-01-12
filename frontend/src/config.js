@@ -69,3 +69,14 @@ export const IMPORT_VENDORS = [
     file_type: ".pdf",
   },
 ];
+
+export const EMAILS = [
+  "jasper.haward@canadianspacompany.com",
+  "kerry.avis@canadianspacompany.com",
+  "grace.wetherall@canadianspacompany.com",
+  "phil@canadianspacompany.com",
+  "troy.d.labelle@gmail.com",
+  "troylabellespa@googlemail.com",
+  "warehouseuk@canadianspacompany.com",
+  "shippinguk@canadianspacompany.com",
+];
