@@ -44,7 +44,6 @@ def create():
             "title": uploaded_file["name"],
         }
     ]
-    print(attachments)
 
     event = build_event(
         google_service.calendar.create_event,

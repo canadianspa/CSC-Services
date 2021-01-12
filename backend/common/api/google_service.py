@@ -164,21 +164,8 @@ class GoogleService:
 
             media = MediaFileUpload(file_path, mimetype=mime_type)
 
-            uploaded_file = files.create(
+            return files.create(
                 body=file_metadata,
                 media_body=media,
-                fields="id",
-            ).execute()
-
-            file_id = uploaded_file["id"]
-
-            return self.get(file_id)
-
-        def get(self, file_id):
-            # pylint: disable=maybe-no-member
-            files = self.service.files()
-
-            return files.get(
-                fileId=file_id,
-                fields="webViewLink,mimeType,name",
+                fields="webViewLink,mimeType,name,id",
             ).execute()
