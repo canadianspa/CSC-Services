@@ -30,9 +30,9 @@ def get_order_details(order_id):
     url = f"{VEEQO_API_ORDERS_URL}/{order_id}"
 
     response = requests.get(url, headers=headers)
-    updated_order = handle_response(response)
+    order = handle_response(response)
 
-    return updated_order
+    return order
 
 
 def update_order_details(order_id, order):
@@ -58,7 +58,7 @@ def download_packing_slip(order_id):
             f.write(response.content)
             return file_path
     except Exception as e:
-        raise Exception(f"Could not download file ", str(e))
+        raise Exception("Could not download file ", str(e))
 
 
 def create_order_note(order_id, text):
@@ -89,7 +89,9 @@ def create_shipment(order_id, allocation_id, tracking_number):
     body = json.dumps(
         {
             "shipment": {
-                "tracking_number_attributes": {"tracking_number": tracking_number},
+                "tracking_number_attributes": {
+                    "tracking_number": tracking_number,
+                },
                 "carrier_id": 3,
                 "notify_customer": False,
                 "update_remote_order": False,

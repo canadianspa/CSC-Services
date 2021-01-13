@@ -6,7 +6,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 
-from ..config import GOOGLE_CREDS, GOOGLE_SCOPES, GOOGLE_TOKEN, GOOGLE_DRIVE_FILE_URL
+from ..config import GOOGLE_CREDS, GOOGLE_SCOPES, GOOGLE_TOKEN
 
 
 class GoogleService:

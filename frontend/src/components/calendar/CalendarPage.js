@@ -11,10 +11,15 @@ import { Jumbotron, Spinner } from "../Shared";
 import FormView from "./FormView";
 import InitialView from "./InitialView";
 
+const defaultAttendees = [
+  EMAILS[0],
+  EMAILS[1],
+]
+
 const initialFormState = {
   orderUrl: "",
   calendar: null,
-  attendees: [],
+  attendees: defaultAttendees,
   title: "",
   date: "",
   time: "",
@@ -72,6 +77,8 @@ function CalendarPage() {
     const { calendar, title, date, time, length, attendees } = formState;
 
     if (title !== "" && date !== "" && time !== "") {
+      setLoading(true);
+
       var datetime = `${date} ${time}`;
       var format = "YYYY-MM-DD HH-mm";
       var start = moment(datetime, format);
@@ -88,6 +95,8 @@ function CalendarPage() {
       };
 
       api.createEvent(params).then((response) => {
+        setLoading(false);
+        
         onResponse(response, () => {
           toast.dark("Event added successfully");
           setInitialState();

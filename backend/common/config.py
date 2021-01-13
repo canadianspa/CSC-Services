@@ -16,7 +16,6 @@ GOOGLE_SCOPES = [
 ]
 
 GOOGLE_DRIVE_PACKING_SLIP_FOLDER_ID = "1llFIcyrBbPj9b1HUP34LRVs5tfOzP_Ns"
-GOOGLE_DRIVE_FILE_URL = "https://drive.google.com/open?id="
 
 TEMP_FILE_PATH = cwd + r"\common\temp"
 
@@ -41,10 +40,9 @@ MONGO_CLIENT_URL = "mongodb://localhost:27017/"
 
 SHIPPING_API_URL = "http://localhost:33/"
 
-############# CONST ###########
+############# VEEQO CONST ###########
 
 TAX_RATE = 0.2
-
 DEFAULT_DELIVERY_METHOD_ID = "153707"
 
 ############# VEEQO VENDOR IDS ###########
