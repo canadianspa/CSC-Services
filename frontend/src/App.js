@@ -22,8 +22,6 @@ import CalendarPage from "./components/calendar/CalendarPage";
 import TurnoverPage from "./components/bandq/turnover/TurnoverPage";
 import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
-import ShippingCreatePage from "./components/shipping/create/ShippingCreatePage";
-import ShippingItemsPage from "./components/shipping/items/ShippingItemsPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add({
@@ -52,10 +50,7 @@ function App() {
             <Route path="/bandq/turnover" component={TurnoverPage} />
             <Route path="/bandq/orderwell" component={OrderWellPage} />
             <Route path="/bandq/comparison" component={ComparisonPage} />
-
-            <Route path="/shipping/create" component={ShippingCreatePage} />
-            <Route path="/shipping/items" component={ShippingItemsPage} />
-
+            
             <Route component={PageNotFound} />
           </Switch>
         </div>

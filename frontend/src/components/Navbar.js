@@ -46,19 +46,6 @@ function Navbar() {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-          <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-              Shipping
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                <NavLink href="/shipping/create">Create</NavLink>
-              </DropdownItem>
-              <DropdownItem>
-                <NavLink href="/shipping/items">Items</NavLink>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
         </Nav>
       </Collapse>
     </NavigationBar>
