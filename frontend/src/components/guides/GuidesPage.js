@@ -4,15 +4,17 @@ import "./GuidesPage.css";
 import { Jumbotron } from "../Shared";
 import GuidesPageModal from "./GuidesPageModal";
 import Article from "./Article";
-import articleList from "./Articles";
+import loadArticles from "./Articles";
 
 function HelpPage({ match, history }) {
+  const articles = loadArticles();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [article, setArticle] = useState(articleList[0]);
+  const [article, setArticle] = useState(articles[0]);
 
   useEffect(() => {
     if (match.params.article) {
-      var loadArticle = articleList.find((article) => {
+      var loadArticle = articles.find((article) => {
         return article.alt === match.params.article;
       });
 
@@ -24,7 +26,8 @@ function HelpPage({ match, history }) {
   }, [match]);
 
   function toggle() {
-    if (isOpen === true) {
+    if (isOpen === true && match.params.article) {
+      alert("ere");
       history.push("/guides");
     }
 
@@ -40,7 +43,7 @@ function HelpPage({ match, history }) {
     <div className="container">
       <Jumbotron>Guides</Jumbotron>
       <div className="article-container">
-        {articleList.map((article, index) => (
+        {articles.map((article, index) => (
           <Article key={index} article={article} onClick={onArticleClick} />
         ))}
       </div>

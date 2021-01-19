@@ -6,7 +6,6 @@ import {
   Collapse,
   NavbarToggler,
   NavbarBrand,
-  NavbarText,
   Nav,
   NavLink,
   UncontrolledDropdown,
