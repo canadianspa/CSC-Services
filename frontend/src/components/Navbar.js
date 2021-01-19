@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 import {
   Navbar as NavigationBar,
+  NavItem,
   Collapse,
   NavbarToggler,
   NavbarBrand,
+  NavbarText,
   Nav,
   NavLink,
   UncontrolledDropdown,
@@ -27,9 +29,15 @@ function Navbar() {
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
-          <NavLink href="/update">Update</NavLink>
-          <NavLink href="/import">Import</NavLink>
-          <NavLink href="/calendar">Calendar</NavLink>
+          <NavItem>
+            <NavLink href="/update">Update</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/import">Import</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/calendar">Calendar</NavLink>
+          </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               {"B & Q"}
@@ -46,6 +54,9 @@ function Navbar() {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
+          <NavItem>
+            <NavLink href="/guides">Guides</NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
     </NavigationBar>

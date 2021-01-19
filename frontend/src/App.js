@@ -22,6 +22,7 @@ import CalendarPage from "./components/calendar/CalendarPage";
 import TurnoverPage from "./components/bandq/turnover/TurnoverPage";
 import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
+import GuidesPage from "./components/guides/GuidesPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add({
@@ -50,7 +51,10 @@ function App() {
             <Route path="/bandq/turnover" component={TurnoverPage} />
             <Route path="/bandq/orderwell" component={OrderWellPage} />
             <Route path="/bandq/comparison" component={ComparisonPage} />
-            
+
+            <Route exact path="/guides" component={GuidesPage} />
+            <Route exact path="/guides/:article" component={GuidesPage} />
+
             <Route component={PageNotFound} />
           </Switch>
         </div>

@@ -5,7 +5,6 @@ from veeqoimport.route import veeqoimport
 from update.route import update
 from postcoder.route import postcoder
 from bandq.route import bandq
-from shipping.route import shipping
 from googlecalendar.route import calendar
 from veeqo.route import veeqo
 
@@ -26,7 +25,6 @@ app.register_blueprint(veeqoimport, url_prefix="/api")
 app.register_blueprint(update, url_prefix="/api")
 app.register_blueprint(postcoder, url_prefix="/api")
 app.register_blueprint(bandq, url_prefix="/api")
-app.register_blueprint(shipping, url_prefix="/api")
 app.register_blueprint(calendar, url_prefix="/api")
 app.register_blueprint(veeqo, url_prefix="/api")
 

@@ -35,7 +35,9 @@ function Select({
       onChange={_onChange}
     >
       {options.map((option, index) => (
-        <option key={index}>{useObjects ? option[objectTitleKey] : option}</option>
+        <option key={index} disabled={option.disabled ? true : false}>
+          {useObjects ? option[objectTitleKey] : option}
+        </option>
       ))}
     </Input>
   );

@@ -55,6 +55,7 @@ export const IMPORT_VENDORS = [
     title: "Shop Direct TXT",
     requires_file: true,
     file_type: ".txt",
+    disabled: true,
   },
   {
     name: "globus",
@@ -67,6 +68,7 @@ export const IMPORT_VENDORS = [
     title: "Hornbach PDF",
     requires_file: true,
     file_type: ".pdf",
+    disabled: true,
   },
 ];
 
