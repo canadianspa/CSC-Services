@@ -4,10 +4,14 @@ import HomebaseArticle from "./arcticles/homebase";
 import WayfairArticle from "./arcticles/wayfair";
 import ImportArticle from "./arcticles/import";
 
-export default [
-  ArgosArticle(),
-  BandQArticle(),
-  HomebaseArticle(),
-  WayfairArticle(),
-  ImportArticle(),
-];
+function loadArticles() {
+  return [
+    ArgosArticle(),
+    BandQArticle(),
+    HomebaseArticle(),
+    WayfairArticle(),
+    ImportArticle(),
+  ];
+}
+
+export default loadArticles;
