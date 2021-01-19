@@ -52,7 +52,8 @@ function App() {
             <Route path="/bandq/orderwell" component={OrderWellPage} />
             <Route path="/bandq/comparison" component={ComparisonPage} />
 
-            <Route path="/guides" component={GuidesPage} />
+            <Route exact path="/guides" component={GuidesPage} />
+            <Route exact path="/guides/:article" component={GuidesPage} />
 
             <Route component={PageNotFound} />
           </Switch>

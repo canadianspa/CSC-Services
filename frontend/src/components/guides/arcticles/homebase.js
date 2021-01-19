@@ -49,6 +49,12 @@ function HomebaseArticle() {
         <img className="article-image" alt="email-data" src={dataEmailImg} />
         <ul>
           <li>Save the attachment "xxxxxxxx.xml"</li>
+          <li>
+            A guide to uploading the file can be found{" "}
+            <a href="/guides/import" target="_blank" rel="noreferrer">
+              here
+            </a>
+          </li>
         </ul>
       </div>
     ),

@@ -11,7 +11,7 @@ function WayfairArticle() {
     description: "Guide to exporting orders from Wayfair's Partner portal",
     portalTitle: "Wayfair Portal",
     portalUrl: portalUrl,
-    alt: "bandq",
+    alt: "wayfair",
     homepageImg: homepageImg,
     content: (
       <div>
@@ -36,6 +36,12 @@ function WayfairArticle() {
           <li>
             Download the CSV file by clicking "Generate Report" (circled in blue) at
             the bottom of the page
+          </li>
+          <li>
+            A guide to uploading the file can be found{" "}
+            <a href="/guides/import" target="_blank" rel="noreferrer">
+              here
+            </a>
           </li>
         </ul>
       </div>

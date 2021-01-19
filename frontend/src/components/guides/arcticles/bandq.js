@@ -30,6 +30,12 @@ function BandQArticle() {
             (circled in red)
           </li>
           <li>Download the file by clicking "Export CSV"</li>
+          <li>
+            A guide to uploading the file can be found{" "}
+            <a href="/guides/import" target="_blank" rel="noreferrer">
+              here
+            </a>
+          </li>
         </ul>
       </div>
     ),

@@ -44,6 +44,12 @@ function ArgosArticle() {
           <li>
             Download the CSV file by clicking "EXPORT TO CSV" (circled in green)
           </li>
+          <li>
+            A guide to uploading the file can be found{" "}
+            <a href="/guides/import" target="_blank" rel="noreferrer">
+              here
+            </a>
+          </li>
         </ul>
       </div>
     ),
