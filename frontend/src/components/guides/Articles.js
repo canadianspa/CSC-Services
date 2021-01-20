@@ -3,6 +3,7 @@ import BandQArticle from "./arcticles/bandq";
 import HomebaseArticle from "./arcticles/homebase";
 import WayfairArticle from "./arcticles/wayfair";
 import ImportArticle from "./arcticles/import";
+import RangeStoreArticle from "./arcticles/range_store";
 
 function loadArticles() {
   return [
@@ -11,6 +12,7 @@ function loadArticles() {
     HomebaseArticle(),
     WayfairArticle(),
     ImportArticle(),
+    RangeStoreArticle(),
   ];
 }
 
