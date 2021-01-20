@@ -10,7 +10,7 @@ var addressModalImg = "/images/articles/import/address-modal.PNG";
 function ImportArticle() {
   return {
     header: "Importing to Veeqo",
-    description: "Guide to importing a file into Veeqo using this site",
+    description: "Guide to importing a file into Veeqo using CSC Services",
     portalTitle: "Import Page",
     portalUrl: pageUrl,
     alt: "import",

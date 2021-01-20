@@ -7,6 +7,7 @@ from .handlers import (
     handle_pdf_file,
     handle_xml_file,
     handle_range,
+    handle_range_store,
 )
 
 veeqoimport = Blueprint("veeqoimport", __name__)
@@ -33,7 +34,10 @@ def convert_request(vendor):
             file = request.files["file"]
             file_type = file.filename.split(".")[-1]
 
-            if file_type == "csv":
+            if vendor == "range_store":
+                response = handle_range_store(vendor, file)
+
+            elif file_type == "csv":
                 response = handle_limited_input(vendor, file, ",")
             elif file_type == "txt":
                 response = handle_limited_input(vendor, file, "|")

@@ -1,6 +1,7 @@
 from ..vendors.bandq import bandq_csv_to_customer
 from ..vendors.argos import argos_csv_to_customer
 from ..vendors.range import range_json_to_customer
+from ..vendors.range_store import range_store_csv_to_customer
 from ..vendors.wayfair import wayfair_csv_to_customer
 from ..vendors.homebase import homebase_xml_to_customer
 from ..vendors.robert_dyas import robert_dyas_csv_to_customer
@@ -16,6 +17,8 @@ def customer_strategy(vendor, data):
         return argos_csv_to_customer(data)
     elif vendor == "range":
         return range_json_to_customer(data)
+    elif vendor == "range_store":
+        return range_store_csv_to_customer(data)
     elif vendor == "wayfair":
         return wayfair_csv_to_customer(data)
     elif vendor == "homebase":

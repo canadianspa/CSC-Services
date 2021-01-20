@@ -4,7 +4,7 @@ from common.config import (
     ARGOS_CHANNEL_ID,
     ARGOS_BILLING_ID,
     TAX_RATE,
-    ARGOS_STOCK_PATH
+    ARGOS_STOCK_PATH,
 )
 
 from ..classes.customer import Customer
@@ -15,7 +15,7 @@ from common.api.veeqo import get_sellable_id
 
 def argos_csv_to_customer(csv_row):
     # Reverse split
-    parsed_name = csv_row[70].rsplit(' ', 1)
+    parsed_name = csv_row[70].rsplit(" ", 1)
 
     first_name = parsed_name[0]
     last_name = parsed_name[1]
@@ -28,7 +28,18 @@ def argos_csv_to_customer(csv_row):
     phone = csv_row[26]
     email = csv_row[9]
 
-    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
+    return Customer(
+        first_name,
+        last_name,
+        address1,
+        address2,
+        city,
+        county,
+        postcode,
+        country,
+        phone,
+        email,
+    )
 
 
 def argos_csv_to_item(csv_row):
@@ -47,12 +58,18 @@ def argos_csv_to_order(csv_row, customer, items):
 
     notes = order_no + " " + order_ref + " " + customer_sku + " " + customer.email
 
-    return Order(customer, ARGOS_CHANNEL_ID, ARGOS_BILLING_ID, items, notes)
+    return Order(
+        customer,
+        ARGOS_CHANNEL_ID,
+        ARGOS_BILLING_ID,
+        items,
+        notes,
+    )
 
 
 def get_price(sku):
     with open(ARGOS_STOCK_PATH) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
+        csv_reader = csv.reader(csv_file, delimiter=",")
         next(csv_reader)
 
         for row in csv_reader:

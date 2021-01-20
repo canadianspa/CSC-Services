@@ -15,7 +15,7 @@ from common.api.veeqo import get_sellable_id
 
 def bandq_csv_to_customer(csv_row):
     # Reverse split
-    parsed_name = csv_row[14].rsplit(' ', 1)
+    parsed_name = csv_row[14].rsplit(" ", 1)
 
     first_name = parsed_name[0]
     last_name = parsed_name[1]
@@ -28,7 +28,18 @@ def bandq_csv_to_customer(csv_row):
     phone = csv_row[19]
     email = csv_row[21]
 
-    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
+    return Customer(
+        first_name,
+        last_name,
+        address1,
+        address2,
+        city,
+        county,
+        postcode,
+        country,
+        phone,
+        email,
+    )
 
 
 def bandq_csv_to_item(csv_row):
@@ -43,7 +54,12 @@ def bandq_csv_to_item(csv_row):
     if "Jersey" in billing_name or "Guernsey" in billing_name:
         tax_rate = 0
 
-    return Item(sellable_id, quantity, price_per_unit, tax_rate)
+    return Item(
+        sellable_id,
+        quantity,
+        price_per_unit,
+        tax_rate,
+    )
 
 
 def bandq_csv_to_order(csv_row, customer, items):
@@ -53,10 +69,15 @@ def bandq_csv_to_order(csv_row, customer, items):
     sales_order_no = csv_row[23]
     site_code = csv_row[13]
 
-    notes = order_no + " " + sales_order_no + \
-        " " + site_code + " " + customer.email
+    notes = order_no + " " + sales_order_no + " " + site_code + " " + customer.email
 
-    return Order(customer, BANDQ_CHANNEL_ID, billing_id, items, notes)
+    return Order(
+        customer,
+        BANDQ_CHANNEL_ID,
+        billing_id,
+        items,
+        notes,
+    )
 
 
 def get_billing_id(billing_name):

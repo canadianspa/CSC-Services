@@ -7,7 +7,7 @@ from common.api.veeqo import get_sellable_id
 
 
 def robert_dyas_csv_to_customer(csv_row):
-    parsed_name = csv_row[2].rsplit(' ', 1)
+    parsed_name = csv_row[2].rsplit(" ", 1)
 
     first_name = parsed_name[0]
     last_name = parsed_name[1]
@@ -20,7 +20,18 @@ def robert_dyas_csv_to_customer(csv_row):
     phone = csv_row[9]
     email = csv_row[10]
 
-    return Customer(first_name, last_name, address1, address2, city, county, postcode, country, phone, email)
+    return Customer(
+        first_name,
+        last_name,
+        address1,
+        address2,
+        city,
+        county,
+        postcode,
+        country,
+        phone,
+        email,
+    )
 
 
 def robert_dyas_csv_to_item(csv_row):
@@ -29,10 +40,21 @@ def robert_dyas_csv_to_item(csv_row):
     quantity = csv_row[12]
     price_per_unit = csv_row[16]
 
-    return Item(sellable_id, quantity, price_per_unit, TAX_RATE)
+    return Item(
+        sellable_id,
+        quantity,
+        price_per_unit,
+        TAX_RATE,
+    )
 
 
 def robert_dyas_csv_to_order(csv_row, customer, items):
     notes = csv_row[0]
 
-    return Order(customer, ROBERT_DYAS_CHANNEL_ID, ROBERT_DYAS_BILLING_ID, items, notes)
+    return Order(
+        customer,
+        ROBERT_DYAS_CHANNEL_ID,
+        ROBERT_DYAS_BILLING_ID,
+        items,
+        notes,
+    )

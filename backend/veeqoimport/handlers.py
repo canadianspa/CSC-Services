@@ -61,7 +61,7 @@ def handle_pdf_file(vendor, file):
 
 def handle_range(vendor):
     range_service = RangeService()
-    
+
     orders = range_service.get_orders()
     stock = range_service.get_stock()
 
@@ -69,8 +69,8 @@ def handle_range(vendor):
 
     for order in orders:
         # Adding stock to order for item_strategy
-        order['stock'] = stock
-        
+        order["stock"] = stock
+
         customer = customer_strategy(vendor, order)
         items = item_strategy(vendor, order)
         order = order_strategy(vendor, order, customer, items)
@@ -78,3 +78,28 @@ def handle_range(vendor):
         order_list.append(order)
 
     return class_to_json(order_list)
+
+
+def handle_range_store(vendor, file):
+    stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
+    delimited_input = csv.reader(stream)
+    # Remove header row
+    next(delimited_input)
+
+    items = []
+    first_row = None
+
+    for index, row in enumerate(delimited_input):
+        if len(row) != 0:
+            if index == 0:
+                first_row = row
+            elif index > 2:
+                items.append(
+                    item_strategy(vendor, row),
+                )
+
+    customer = customer_strategy(vendor, first_row)
+    order = order_strategy(vendor, first_row, customer, items)
+    orders = [order]
+
+    return class_to_json(orders)
