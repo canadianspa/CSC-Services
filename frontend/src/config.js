@@ -33,6 +33,12 @@ export const IMPORT_VENDORS = [
     file_type: null,
   },
   {
+    name: "range_store",
+    title: "Range Store CSV",
+    requires_file: true,
+    file_type: ".csv",
+  },
+  {
     name: "homebase",
     title: "Homebase XML",
     requires_file: true,
