@@ -22,7 +22,6 @@ GOOGLE_DRIVE_PACKING_SLIP_FOLDER_ID = "1llFIcyrBbPj9b1HUP34LRVs5tfOzP_Ns"
 
 TEMP_FILE_PATH = cwd + r"\common\temp"
 
-
 ############# URLS ###########
 
 VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
@@ -40,8 +39,6 @@ RANGE_PORTAL_STOCK_URL = (
 )
 
 MONGO_CLIENT_URL = "mongodb://localhost:27017/"
-
-SHIPPING_API_URL = "http://localhost:33/"
 
 ############# VEEQO CONST ###########
 

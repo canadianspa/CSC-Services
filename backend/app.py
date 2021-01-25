@@ -7,6 +7,7 @@ from postcoder.route import postcoder
 from bandq.route import bandq
 from googlecalendar.route import calendar
 from veeqo.route import veeqo
+from database.route import database
 
 app = Flask(__name__, static_folder="../frontend/build", static_url_path="/")
 
@@ -27,6 +28,7 @@ app.register_blueprint(postcoder, url_prefix="/api")
 app.register_blueprint(bandq, url_prefix="/api")
 app.register_blueprint(calendar, url_prefix="/api")
 app.register_blueprint(veeqo, url_prefix="/api")
+app.register_blueprint(database, url_prefix="/api")
 
 
 if __name__ == "__main__":

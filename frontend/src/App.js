@@ -11,6 +11,7 @@ import {
   faTimes,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ import TurnoverPage from "./components/bandq/turnover/TurnoverPage";
 import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
 import GuidesPage from "./components/guides/GuidesPage";
+import PortablesPage from "./components/portables/PortablesPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add({
@@ -52,6 +54,7 @@ function App() {
             <Route path="/bandq/orderwell" component={OrderWellPage} />
             <Route path="/bandq/comparison" component={ComparisonPage} />
 
+            <Route exact path="/portables" component={PortablesPage} />
             <Route exact path="/guides" component={GuidesPage} />
             <Route exact path="/guides/:article" component={GuidesPage} />
 

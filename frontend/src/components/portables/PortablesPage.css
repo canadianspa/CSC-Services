@@ -1,0 +1,13 @@
+.customer-row-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.notes-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.note {
+    margin-right: auto;
+}

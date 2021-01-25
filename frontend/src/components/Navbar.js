@@ -54,6 +54,9 @@ function Navbar() {
             </DropdownMenu>
           </UncontrolledDropdown>
           <NavItem>
+            <NavLink href="/portables">Portables</NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink href="/guides">Guides</NavLink>
           </NavItem>
         </Nav>

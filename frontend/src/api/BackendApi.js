@@ -108,3 +108,59 @@ export function createEvent(params) {
     .then(handleResponse)
     .catch((error) => console.error(error));
 }
+
+export function dbRead(params) {
+  const { database, collection } = params;
+
+  let url = `${API_BASE_URL}/database/${database}/${collection}`;
+
+  return fetch(url)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function dbCreate(params) {
+  const { database, collection, body } = params;
+
+  let url = `${API_BASE_URL}/database/${database}/${collection}`;
+
+  let options = {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function dbUpdate(params) {
+  const { database, collection, body, _id } = params;
+
+  let url = `${API_BASE_URL}/database/${database}/${collection}/${_id}`;
+
+  let options = {
+    method: "PUT",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function dbDelete(params) {
+  const { database, collection, _id } = params;
+
+  let url = `${API_BASE_URL}/database/${database}/${collection}/${_id}`;
+
+  let options = {
+    method: "DELETE",
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
