@@ -86,7 +86,7 @@ export function getVeeqoOrder(params) {
 }
 
 export function getCalendars() {
-  let url = `${API_BASE_URL}/calendar`;
+  let url = `${API_BASE_URL}/calendar/calendars`;
 
   return fetch(url)
     .then(handleResponse)
@@ -96,7 +96,7 @@ export function getCalendars() {
 export function createEvent(params) {
   const { event } = params;
 
-  let url = `${API_BASE_URL}/calendar`;
+  let url = `${API_BASE_URL}/calendar/create`;
 
   let options = {
     method: "POST",

@@ -57,6 +57,11 @@
   margin-bottom: 10px !important;
 }
 
+.dark {
+  color: white;
+  background-color: #343a40;
+}
+
 /* FOR TIMES BUTTON */
 
 .multiselect-option {
@@ -64,7 +69,7 @@
   height: 27px;
   position: relative;
 }
-.multiselect-option span{
+.multiselect-option span {
   margin-right: 10px;
   color: #495057;
 }

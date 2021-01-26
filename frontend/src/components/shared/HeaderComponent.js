@@ -1,8 +1,8 @@
 import React from "react";
 import "./Shared.css";
 
-function Header({ children }) {
-  return <div className="header">{children}</div>;
+function Header({ children, dark }) {
+  return <div className={dark ? "header dark" : "header"}>{children}</div>;
 }
 
 export default Header;

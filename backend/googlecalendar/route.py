@@ -12,14 +12,16 @@ calendar = Blueprint("calendar", __name__)
 google_service = GoogleService()
 
 
-@calendar.route("/calendar", methods=["GET"])
+@calendar.route("/calendar/calendars", methods=["GET"])
 def load():
     calendars = google_service.calendar.get_calendars()
+
+    calendars.reverse()
 
     return jsonify(calendars)
 
 
-@calendar.route("/calendar", methods=["POST"])
+@calendar.route("/calendar/create", methods=["POST"])
 def create():
     body = request.json
 

@@ -1,13 +1,46 @@
-.customer-row-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+.window {
+  width: 100%;
+  height: 71vh;
+  display: flex;
+  border-radius: 0.3rem;
+  border: 1px solid #6c757d;
 }
 
-.notes-container {
-    display: flex;
-    flex-direction: column;
+.customer-list {
+  width: 50%;
+  border-right: 1px solid #6c757d;
+}
+
+.customer-notes {
+  width: 50%;
+}
+
+.customer {
+  display: flex;
+}
+
+.notes-container > div:not(:last-child) {
+  margin-bottom: 8px;
 }
 
 .note {
-    margin-right: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+.note-content {
+  margin-left: 10px;
+}
+
+.note-content > div {
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 8px 5px 8px;
+  color: white;
+  background-color: #343a40;
+}
+
+.note-content > span {
+  font-size: 14px;
+  color: #343a40;
 }

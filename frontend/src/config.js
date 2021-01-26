@@ -79,8 +79,8 @@ export const IMPORT_VENDORS = [
 ];
 
 export const EMAILS = [
-  "shippinguk@canadianspacompany.com",
   "warehouseuk@canadianspacompany.com",
+  "shippinguk@canadianspacompany.com",
   "jasper.haward@canadianspacompany.com",
   "kerry.avis@canadianspacompany.com",
   "grace.wetherall@canadianspacompany.com",

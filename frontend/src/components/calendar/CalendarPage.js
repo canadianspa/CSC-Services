@@ -13,7 +13,6 @@ import InitialView from "./InitialView";
 
 const defaultAttendees = [
   EMAILS[0],
-  EMAILS[1],
 ]
 
 const initialFormState = {
@@ -21,7 +20,7 @@ const initialFormState = {
   calendar: null,
   attendees: defaultAttendees,
   title: "",
-  date: "",
+  date: moment().format("YYYY-MM-DD"),
   time: "",
   length: "30",
 };

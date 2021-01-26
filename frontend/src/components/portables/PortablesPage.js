@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./PortablesPage.css";
 
 import * as api from "../../api/BackendApi";
-import { Jumbotron } from "../Shared";
+import { Spinner, Jumbotron, Header } from "../Shared";
 
-import { Table } from "reactstrap";
-import CustomerRow from "./CustomerRow";
+import Customer from "./Customer";
+import Note from "./Note";
 
 function PortablesPage() {
   const [customers, setCustomers] = useState([]);
-  const [openIndex, setOpenIndex] = useState(null);
+  const [activeCustomer, setActiveCustomer] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -21,41 +21,46 @@ function PortablesPage() {
       collection: "customers",
     };
 
-    api.dbRead(params).then(setCustomers);
+    api.dbRead(params).then(setInitialState);
   }
 
-  function onCustomerRowClick(event) {
-    const { id } = event.currentTarget;
-    var index = parseInt(id);
+  function setInitialState(customers) {
+    setActiveCustomer(customers[0]);
+    setCustomers(customers);
+  }
 
-    setOpenIndex(index === openIndex ? null : index);
+  function onCustomerClick(customer) {
+    setActiveCustomer(customer);
   }
 
   return (
     <div className="container">
       <Jumbotron>Portables</Jumbotron>
-      <Table striped>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Product</th>
-            <th>In Warranty</th>
-            <th>Fault</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((customer, index) => (
-            <CustomerRow
-              key={index}
-              customer={customer}
-              index={index}
-              isOpen={openIndex === index}
-              onClick={onCustomerRowClick}
-            />
-          ))}
-        </tbody>
-      </Table>
+      {customers.length === 0 ? (
+        <Spinner style={{ marginTop: "120px" }} />
+      ) : (
+        <div className="window">
+          <div className="customer-list">
+            <Header dark>Customer</Header>
+            {customers.map((customer, index) => (
+              <Customer
+                key={index}
+                customer={customer}
+                isActiveCustomer={customer === activeCustomer}
+                onClick={onCustomerClick}
+              />
+            ))}
+          </div>
+          <div className="customer-notes">
+            <Header dark>{activeCustomer.name}</Header>
+            <div>
+              {activeCustomer.notes.map((note) => (
+                <Note note={note} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
