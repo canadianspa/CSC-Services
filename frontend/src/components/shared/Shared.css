@@ -103,3 +103,25 @@
   background-color: #007bff;
   color: white;
 }
+
+/* ICON BUTTON */
+
+.icon-button,
+.icon-button:focus {
+  margin: 10px;
+  border: 0;
+  padding: 0;
+  outline: none;
+  color: #6c757d;
+  background-color: transparent !important;
+  font-size: 20px;
+}
+
+.icon-button:hover,
+.icon-button:focus,
+.icon-button:visited {
+  color: #939ba1;
+  border: 0;
+  padding: 0;
+  outline: none;
+}

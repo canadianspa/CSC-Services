@@ -1,0 +1,72 @@
+.customer {
+  margin: 10px;
+  padding: 8px;
+  border-radius: 19px;
+
+  display: grid;
+  grid-template-areas:
+    "a b b b b b b b b b b b e"
+    "a c c c c c c c c c c c e"
+    "a d d d d d d d d d d d e";
+
+  text-align: start;
+}
+
+.customer.selected {
+  background-color: #e9ecef !important;
+}
+
+.customer:hover {
+  cursor: pointer;
+  background-color: #f2f4f7;
+}
+
+.icon {
+  grid-area: a;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  padding: 8px 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #b2b6bb;
+  text-align: center;
+}
+
+.title {
+  grid-area: b;
+  margin-left: 5px;
+}
+
+.content {
+  grid-area: c;
+  margin-left: 5px;
+  font-size: 15px;
+  color: #65676b;
+
+  width: 90%;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer {
+  grid-area: d;
+  margin-left: 5px;
+  font-size: 14px;
+  color: #65676b;
+
+  width: 90%;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date {
+  grid-area: e;
+  margin: auto;
+  font-size: 14px;
+}

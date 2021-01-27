@@ -85,7 +85,19 @@ export const EMAILS = [
   "kerry.avis@canadianspacompany.com",
   "grace.wetherall@canadianspacompany.com",
   "phil@canadianspacompany.com",
+  "tony@canadianspacompany.com",
   "troy@canadianspacompany.com",
   "troy.d.labelle@gmail.com",
   "troylabellespa@googlemail.com",
+];
+
+export const PRODUCTS = [
+  "Grand Rapids 2014 - 2016",
+  "Rio Grande 2014 - 2016",
+  "Swift Current 2014 - 2016",
+  "Muskoka 2012 - 2016",
+  "Grand Rapids V2 2017",
+  "Rio Grande V2 2017",
+  "Swift Current V2 2017",
+  "Muskoka V2 2017",
 ];
