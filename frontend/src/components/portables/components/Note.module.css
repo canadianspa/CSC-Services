@@ -9,18 +9,18 @@
   font-size: 22px;
 }
 
-.note-content {
+.noteContent {
   margin-left: 10px;
 }
 
-.note-content > div {
+.noteContent > div {
   font-size: 15px;
   border-radius: 5px;
   padding: 5px 8px 5px 8px;
   background-color: #e9ecef;
 }
 
-.note-content > span {
+.noteContent > span {
   font-size: 14px;
   color: #65676b;
 }

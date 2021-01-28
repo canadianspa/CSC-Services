@@ -1,9 +1,12 @@
 import React from "react";
 
 import { Label, FormGroup, Input } from "reactstrap";
-import { PRODUCTS } from "../../../config";
+import { Button } from "reactstrap";
 
-function AddCustomerForm({ formState, onFormChange }) {
+import { PRODUCTS } from "../../../config";
+import { InlineButton } from "../../Shared";
+
+function AddCustomerForm({ formState, onFormChange, onSubmit }) {
   const { name, product, fault, in_warranty } = formState;
 
   return (
@@ -26,10 +29,22 @@ function AddCustomerForm({ formState, onFormChange }) {
         <Label>Fault</Label>
         <Input name="fault" value={fault} onChange={onFormChange} />
       </FormGroup>
-      <FormGroup>
-        <Label>Name</Label>
-        <Input name="name" value={name} onChange={onFormChange} />
+      <FormGroup check style={{ marginBottom: "10px" }}>
+        <Label check>
+          <Input
+            type="checkbox"
+            name="in_warranty"
+            checked={in_warranty}
+            onChange={onFormChange}
+          />{" "}
+          Warranty
+        </Label>
       </FormGroup>
+      <InlineButton>
+        <Button name="createCustomer" onClick={onSubmit}>
+          Create
+        </Button>
+      </InlineButton>
     </div>
   );
 }

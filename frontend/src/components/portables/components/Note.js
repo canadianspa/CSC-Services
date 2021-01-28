@@ -1,5 +1,5 @@
 import React from "react";
-import "./Note.css";
+import styles from "./Note.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
@@ -10,9 +10,9 @@ function Note({ note }) {
   var date = new Date(created_at).toLocaleString();
 
   return (
-    <div className="note">
+    <div className={styles.note}>
       <FontAwesomeIcon icon={faComment} />
-      <div className="note-content">
+      <div className={styles.noteContent}>
         <div>{content}</div>
         <span>{date}</span>
       </div>

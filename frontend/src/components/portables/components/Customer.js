@@ -1,11 +1,11 @@
 import React from "react";
-import "./Customer.css";
+import styles from "./Customer.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function Customer({ customer, isActiveCustomer, onClick }) {
-  const { name, created_at, product, fault } = customer;
+  const { name, created_at, product } = customer;
 
   function onCustomerClick() {
     onClick(customer);
@@ -15,16 +15,18 @@ function Customer({ customer, isActiveCustomer, onClick }) {
 
   return (
     <div
-      className={isActiveCustomer ? "customer selected" : "customer"}
+      className={
+        isActiveCustomer ? styles.customer + " " + styles.selected : styles.customer
+      }
       onClick={onCustomerClick}
     >
-      <div className="icon">
+      <div className={styles.icon}>
         <FontAwesomeIcon icon={faUser} />
       </div>
-      <div className="title">{name}</div>
-      <div className="content">{fault}</div>
-      <div className="footer">{product}</div>
-      <div className="date">{date}</div>
+      <div className={styles.title}>{name}</div>
+      <div className={styles.content}>{product.fault}</div>
+      <div className={styles.footer}>{product.title}</div>
+      <div className={styles.date}>{date}</div>
     </div>
   );
 }

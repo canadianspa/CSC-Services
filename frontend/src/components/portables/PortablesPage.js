@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useReducer } from "react";
 import "./PortablesPage.css";
 
+import { faPlus, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { Input } from "reactstrap";
+import moment from "moment";
+
 import * as api from "../../api/BackendApi";
 import { reducer } from "../utils";
-import { Input } from "reactstrap";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Spinner, Jumbotron, Header, IconButton } from "../Shared";
-
+import { PRODUCTS } from "../../config";
 import { filterArray } from "./Utils";
+
+import { Spinner, Jumbotron, Header, IconButton, IconHeader } from "../Shared";
 import PortablesModal from "./PortablesModal";
-import Customer from "./Customer";
-import Note from "./Note";
+import Product from "./components/Product";
+import Customer from "./components/Customer";
+import Note from "./components/Note";
 
 const initialFormState = {
   search: "",
   note: "",
   name: "",
-  product: "",
+  title: PRODUCTS[0],
   fault: "",
+  serial_numbers: [],
   in_warranty: true,
 };
 
@@ -32,6 +37,7 @@ function PortablesPage() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   function fetchData() {
@@ -40,7 +46,11 @@ function PortablesPage() {
       collection: "customers",
     };
 
-    api.dbRead(params).then(setInitialState);
+    api.dbRead(params).then((customers) => {
+      setActiveCustomer(customers[0]);
+      setCustomers(customers);
+      setFilteredCustomers(customers);
+    });
   }
 
   function toggleModal(name) {
@@ -51,14 +61,13 @@ function PortablesPage() {
   }
 
   function onFormChange(event) {
-    const { name, value } = event.target;
-    setFormState({ [name]: value });
-  }
+    const { name, value, checked, type } = event.target;
 
-  function setInitialState(customers) {
-    setActiveCustomer(customers[0]);
-    setCustomers(customers);
-    setFilteredCustomers(customers);
+    if (type === "checkbox") {
+      setFormState({ [name]: checked });
+    } else {
+      setFormState({ [name]: value });
+    }
   }
 
   function onCustomerClick(customer) {
@@ -86,7 +95,31 @@ function PortablesPage() {
 
   function onButtonClick(event) {
     const { name } = event.currentTarget;
+
+    if (name === "editProduct") {
+      setFormState({ ...initialFormState, ...activeCustomer.product });
+    }
     toggleModal(name);
+  }
+
+  function onSubmit(event) {
+    const { name } = event.target;
+
+    if (name === "createCustomer") {
+      createCustomer();
+    }
+  }
+
+  function createCustomer() {
+    var params = {
+      name: formState.name,
+      product: formState.product,
+      fault: formState.fault,
+      in_warranty: formState.in_warranty,
+      created_at: moment().toISOString(),
+    };
+
+    console.log(params);
   }
 
   return (
@@ -104,7 +137,6 @@ function PortablesPage() {
               <Input
                 name="search"
                 placeholder="Search"
-                className="rounded-input"
                 value={formState.search}
                 onChange={onSearchChange}
               />
@@ -124,33 +156,6 @@ function PortablesPage() {
               {activeCustomer.name}
             </Header>
             <div className="customer-grid">
-              <div className="product">
-                <Header>Product</Header>
-                <div>{activeCustomer.product}</div>
-                <div>{activeCustomer.fault}</div>
-                {activeCustomer.serial_numbers.map((serialNumber, index) => (
-                  <div key={index}>{serialNumber}</div>
-                ))}
-              </div>
-              <div className="links">
-                <Header>Links</Header>
-                {activeCustomer.freshdesk_tickets.map((url, index) => (
-                  <a key={index} href={url}>
-                    Ticket
-                  </a>
-                ))}
-                {activeCustomer.purchase_invoices.map((url, index) => (
-                  <a key={index} href={url}>
-                    Ticket
-                  </a>
-                ))}
-                {activeCustomer.repair_invoices.map((url, index) => (
-                  <a key={index} href={url}>
-                    Ticket
-                  </a>
-                ))}
-              </div>
-
               <div className="notes">
                 <Header>Notes</Header>
                 <div className="notes-container">
@@ -166,6 +171,33 @@ function PortablesPage() {
                   onChange={onFormChange}
                 />
               </div>
+              <div>
+                <IconHeader
+                  text="Product"
+                  icon={faPencilAlt}
+                  name="editProduct"
+                  onClick={onButtonClick}
+                />
+                <Product product={activeCustomer.product} />
+              </div>
+            </div>
+            <div className="links">
+              <Header>Links</Header>
+              {activeCustomer.freshdesk_tickets.map((url, index) => (
+                <a key={index} href={url}>
+                  Ticket
+                </a>
+              ))}
+              {activeCustomer.purchase_invoices.map((url, index) => (
+                <a key={index} href={url}>
+                  Ticket
+                </a>
+              ))}
+              {activeCustomer.repair_invoices.map((url, index) => (
+                <a key={index} href={url}>
+                  Ticket
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -176,6 +208,7 @@ function PortablesPage() {
         modalType={modalType}
         formState={formState}
         onFormChange={onFormChange}
+        onSubmit={onSubmit}
       />
     </div>
   );

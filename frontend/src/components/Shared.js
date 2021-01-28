@@ -6,6 +6,8 @@ import SelectFormComponent from "./shared/SelectFormComponent";
 import SpinnerComponent from "./shared/SpinnerComponent";
 import MultiSelectComponent from "./shared/MultiSelectComponent";
 import IconButtonComponent from "./shared/IconButtonComponent";
+import InlineButtonComponent from "./shared/InlineButtonComponent";
+import IconHeaderComponent from "./shared/IconHeaderComponent";
 
 export const Card = CardComponent;
 export const Header = HeaderComponent;
@@ -15,3 +17,5 @@ export const SelectForm = SelectFormComponent;
 export const Spinner = SpinnerComponent;
 export const MultiSelect = MultiSelectComponent;
 export const IconButton = IconButtonComponent;
+export const InlineButton = InlineButtonComponent;
+export const IconHeader = IconHeaderComponent;
