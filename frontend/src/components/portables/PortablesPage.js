@@ -169,7 +169,7 @@ function PortablesPage() {
       ) : (
         <div className={styles.window}>
           <div className={styles.leftWindow}>
-            <Header dark style={{ padding: "5px" }}>
+            <Header dark padded>
               Customers
             </Header>
             <div className={styles.searchBar}>
@@ -191,7 +191,7 @@ function PortablesPage() {
             ))}
           </div>
           <div className={styles.rightWindow}>
-            <Header dark style={{ padding: "5px" }}>
+            <Header dark padded>
               {activeCustomer.name}
             </Header>
             <div className={styles.customerGrid}>
@@ -230,31 +230,28 @@ function PortablesPage() {
                 <div>
                   <SubHeader>Freshdesk Tickets</SubHeader>
                   <LinkMultiSelect
-                    name="freshdesk_tickets"
+                    prefix="Ticket #"
+                    name="deleteFreshdeskLink"
                     links={activeCustomer.freshdesk_tickets}
                     onDelete={onFormChange}
-                    placeholder="Freshdesk Ticket URL"
-                    prefix="Ticket "
                   />
                 </div>
                 <div>
                   <SubHeader>Purchase Invoices</SubHeader>
                   <LinkMultiSelect
-                    name="purchase_invoices"
+                    prefix="Order "
+                    name="deletePurchaseLink"
                     links={activeCustomer.purchase_invoices}
                     onDelete={onFormChange}
-                    placeholder="Veeqo Order URL"
-                    prefix="Order "
                   />
                 </div>
                 <div>
                   <SubHeader>Repair Invoices</SubHeader>
                   <LinkMultiSelect
-                    name="repair_invoices"
+                    prefix="Order "
+                    name="deleteRepairLink"
                     links={activeCustomer.repair_invoices}
                     onDelete={onFormChange}
-                    placeholder="Veeqo Order URL"
-                    prefix="Order "
                   />
                 </div>
               </div>

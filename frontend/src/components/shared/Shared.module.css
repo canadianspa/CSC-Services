@@ -48,6 +48,10 @@
   margin-bottom: 10px !important;
 }
 
+.padded {
+  padding: 5px;
+}
+
 .dark {
   color: white;
   background-color: #343a40;
