@@ -1,6 +1,7 @@
 import React from "react";
 
 import { FormGroup, Label, Input, Button } from "reactstrap";
+import { InlineButton } from "../Shared";
 
 function EventForm({ formState, onFormChange, onSubmit, toggleView }) {
   const { title, date, time, length } = formState;
@@ -28,12 +29,12 @@ function EventForm({ formState, onFormChange, onSubmit, toggleView }) {
           <option value="60">60</option>
         </Input>
       </FormGroup>
-      <div className="centered-parent">
+      <InlineButton>
         <Button color="danger" onClick={toggleView}>
           Back
         </Button>
         <Button onClick={onSubmit}>Create</Button>
-      </div>
+      </InlineButton>
     </div>
   );
 }

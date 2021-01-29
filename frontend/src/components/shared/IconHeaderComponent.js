@@ -4,10 +4,10 @@ import styles from "./Shared.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "./HeaderComponent";
 
-function IconHeaderComponent({ text, icon, name, onClick }) {
+function IconHeaderComponent({ children, icon, name, onClick, style }) {
   return (
-    <div className={styles.iconHeader}>
-      <Header>{text}</Header>
+    <div className={styles.iconHeader} style={style}>
+      <Header>{children}</Header>
       <button name={name} onClick={onClick}>
         <FontAwesomeIcon icon={icon} />
       </button>

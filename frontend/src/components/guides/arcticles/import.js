@@ -25,25 +25,21 @@ function ImportArticle() {
             </a>
           </li>
         </ul>
-        <img
-          className="article-image"
-          alt="import-page"
-          src={importPageDropdownImg}
-        />
+        <img alt="import-page" src={importPageDropdownImg} />
         <ul>
           <li>
             Select which file you want to upload from the dropdown (some are greyed
             out)
           </li>
         </ul>
-        <img className="article-image" alt="import-page" src={importPageImg} />
+        <img alt="import-page" src={importPageImg} />
         <ul>
           <li>
             You can drag and drop a file into the dashed area or click to select the
             file to upload
           </li>
         </ul>
-        <img className="article-image" alt="import-table" src={importTableImg} />
+        <img alt="import-table" src={importTableImg} />
         <ul>
           <li>Orders found in the file will be shown here</li>
           <li>
@@ -55,7 +51,7 @@ function ImportArticle() {
             (circled in red)
           </li>
         </ul>
-        <img className="article-image" alt="address-modal" src={addressModalImg} />
+        <img alt="address-modal" src={addressModalImg} />
         <ul>
           <li>After clicking "Edit Address" this window will pop up</li>
           <li>
@@ -63,11 +59,7 @@ function ImportArticle() {
             click "Update" (blue button)
           </li>
         </ul>
-        <img
-          className="article-image"
-          alt="address-modal"
-          src={importTableOptionsImg}
-        />
+        <img alt="address-modal" src={importTableOptionsImg} />
         <ul>
           <li>
             The yellow circle above shows the only selected order, only selected

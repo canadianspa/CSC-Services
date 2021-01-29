@@ -1,5 +1,4 @@
 import React, { useState, useReducer } from "react";
-import "./ImportPage.css";
 
 import { IMPORT_VENDORS } from "../../config";
 import * as api from "../../api/BackendApi";
@@ -130,7 +129,7 @@ function ImportPage() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Import to Veeqo</Jumbotron>
       {showInitialView ? (
         <>
@@ -167,7 +166,7 @@ function ImportPage() {
         addresses={addresses}
         handleUpdateAddress={handleUpdateAddress}
       />
-    </div>
+    </>
   );
 }
 

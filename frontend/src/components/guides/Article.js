@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./GuidesPage.module.css";
 
 import { Card, CardBody, CardLink, CardText, CardTitle, CardImg } from "reactstrap";
 
@@ -10,7 +11,7 @@ function Article({ article, onClick }) {
   }
 
   return (
-    <Card onClick={() => onClick(article)}>
+    <Card className={styles.card} onClick={() => onClick(article)}>
       <CardBody>
         <CardTitle tag="h5">{header}</CardTitle>
       </CardBody>

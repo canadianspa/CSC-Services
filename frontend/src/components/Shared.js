@@ -1,5 +1,6 @@
 import CardComponent from "./shared/CardComponent";
 import HeaderComponent from "./shared/HeaderComponent";
+import SubHeaderComponent from "./shared/SubHeaderComponent";
 import JumbotronComponent from "./shared/JumbotronComponent";
 import SelectComponents from "./shared/SelectComponents";
 import SelectFormComponent from "./shared/SelectFormComponent";
@@ -19,3 +20,4 @@ export const MultiSelect = MultiSelectComponent;
 export const IconButton = IconButtonComponent;
 export const InlineButton = InlineButtonComponent;
 export const IconHeader = IconHeaderComponent;
+export const SubHeader = SubHeaderComponent;

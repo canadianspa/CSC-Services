@@ -1,8 +1,7 @@
 import React from "react";
-import "./ImportPage.css";
 
 import { Button } from "reactstrap";
-import { Header } from "../Shared";
+import { Header, InlineButton } from "../Shared";
 import OrdersTable from "./OrdersTable";
 
 function OrdersView({
@@ -28,12 +27,12 @@ function OrdersView({
         handleCheckboxClick={handleCheckboxClick}
         handleEditClick={handleEditAddressClick}
       />
-      <div className="centered-parent">
+      <InlineButton>
         <Button color="danger" onClick={setInitialState}>
           Cancel
         </Button>
         <Button onClick={handleImportClick}>Import</Button>
-      </div>
+      </InlineButton>
     </>
   );
 }

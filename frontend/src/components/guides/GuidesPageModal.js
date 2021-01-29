@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./GuidesPage.module.css";
 
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
@@ -8,7 +9,7 @@ function HelpPageModal({ isOpen, toggle, article }) {
   return (
     <Modal isOpen={isOpen} size="lg">
       <ModalHeader toggle={toggle}>{header}</ModalHeader>
-      <ModalBody>{content}</ModalBody>
+      <ModalBody className={styles.modalBody}>{content}</ModalBody>
     </Modal>
   );
 }

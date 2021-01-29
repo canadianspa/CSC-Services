@@ -1,16 +1,15 @@
 import React, { useReducer, useState } from "react";
-import "./ComparisonPage.css";
-
-import * as api from "../../../api/BackendApi";
-import { reducer } from "../../utils";
+import styles from "./ComparisonPage.module.css";
 
 import moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
-
 import { toast } from "react-toastify";
 import { Button } from "reactstrap";
+
+import * as api from "../../../api/BackendApi";
+import { reducer } from "../../utils";
 import { Jumbotron, Header, Spinner, Card } from "../../Shared";
 
 const intialDatesState = {
@@ -64,7 +63,7 @@ function ComparisonPage() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Sales Comparison</Jumbotron>
       <Header>Select Date Range</Header>
       <DateRangePicker
@@ -80,13 +79,13 @@ function ComparisonPage() {
         }
         displayFormat="DD/MM/YYYY"
       />
-      <Button onClick={onSubmit} className="calc-button">
+      <Button onClick={onSubmit} className={styles.calcButton}>
         Calculate
       </Button>
 
       {loading && <Spinner style={{ marginTop: "50px" }} />}
       {sales && previousSales && (
-        <div className="totals-wrapper">
+        <div className={styles.totalsWrapper}>
           <Card
             header={"Previous Year"}
             text={previousSales.total_with_vat}
@@ -99,7 +98,7 @@ function ComparisonPage() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 

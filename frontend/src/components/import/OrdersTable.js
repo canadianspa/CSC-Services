@@ -1,5 +1,5 @@
 import React from "react";
-import "./ImportPage.css";
+import styles from "./ImportPage.module.css";
 
 import { Table, Button, Input } from "reactstrap";
 
@@ -23,10 +23,11 @@ function OrdersTable({ orders, handleEditClick, handleCheckboxClick }) {
         {orders.map((order, index) => {
           let customer = order.deliver_to_attributes;
           return (
-            <tr key={index}>
+            <tr key={index} className={styles.row}>
               <td>
                 <Input
                   type="checkbox"
+                  className={styles.checkbox}
                   id={index}
                   defaultChecked="true"
                   onChange={handleCheckboxClick}

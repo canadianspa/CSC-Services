@@ -1,0 +1,9 @@
+.eventForm {
+  width: 400px;
+}
+
+.eventForm > *,
+.eventForm > * > * {
+  margin-left: auto;
+  margin-right: auto;
+}

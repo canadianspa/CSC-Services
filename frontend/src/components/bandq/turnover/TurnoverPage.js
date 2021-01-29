@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TurnoverPage.css";
+import styles from "./TurnoverPage.module.css";
 
 import * as api from "../../../api/BackendApi";
 
@@ -38,10 +38,10 @@ function TurnoverPage() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Turnover</Jumbotron>
 
-      <Form onSubmit={onSubmit} className="date-form">
+      <Form onSubmit={onSubmit} className={styles.dateForm}>
         <Header>Select Month</Header>
         <Input type="month" name="date" min="2017-04" max={currentMonth} />
         <Button type="submit">Calculate</Button>
@@ -49,12 +49,12 @@ function TurnoverPage() {
 
       {loading && <Spinner style={{ marginTop: "50px" }} />}
       {turnover && (
-        <div className="totals-wrapper">
+        <div className={styles.totalsWrapper}>
           <Card header="Total excluding VAT" text={`£${turnover.total_ex_vat}`} />
           <Card header="Total including VAT" text={`£${turnover.total_with_vat}`} />
         </div>
       )}
-    </div>
+    </>
   );
 }
 

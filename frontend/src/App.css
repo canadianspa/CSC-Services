@@ -4,33 +4,17 @@
   text-align: center;
 }
 
-.logo {
-  height: 40px;
-  width: 40px;
-}
-
-.dropdown-menu,
-.dropdown-item:hover {
-  background-color: #343a40 !important;
-}
-
-.nav-link {
-  padding: 0;
-}
-
-.wrapper {
+.container {
   margin-top: 20px;
   width: 70%;
   display: inline-block;
 }
 
-.container {
-  width: 100%;
-}
-
 .container > * {
   margin: 0 auto 15px auto;
 }
+
+/* GLOBAL DARK MODAL */
 
 .modal-header,
 .modal-header > *,
@@ -39,12 +23,8 @@
   background-color: #343a40;
 }
 
-.centered-parent {
-  display: flex;
-  justify-content: space-between;
-}
+/* SCROLL BAR */
 
-/* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 8px;
 }

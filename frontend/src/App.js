@@ -43,7 +43,7 @@ function App() {
         <Navbar />
         <ToastContainer hideProgressBar={true} autoClose={3000} />
 
-        <div className="wrapper">
+        <div className="container">
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route path="/update" component={UpdatePage} />

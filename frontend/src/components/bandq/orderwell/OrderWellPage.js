@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./OrderWell.css";
 
 import * as api from "../../../api/BackendApi";
 
@@ -16,8 +15,8 @@ function OrderWell() {
     // eslint-disable-next-line
   }, []);
 
-  async function fetchData() {
-    await api.getOrderWell().then((orders) => {
+  function fetchData() {
+    api.getOrderWell().then((orders) => {
       setOrders(orders);
       setLoading(false);
     });
@@ -49,7 +48,7 @@ function OrderWell() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Order Well</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
@@ -59,7 +58,7 @@ function OrderWell() {
           <OrderWellTable orders={orders} />
         </>
       )}
-    </div>
+    </>
   );
 }
 

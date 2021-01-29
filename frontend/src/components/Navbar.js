@@ -22,7 +22,7 @@ function Navbar() {
   return (
     <NavigationBar color="dark" dark expand="md">
       <NavbarBrand href="/">
-        <img className="logo" src="/images/csc-logo.png" alt="logo" />
+        <img alt="logo" src="/images/csc-logo.png" />
       </NavbarBrand>
       <NavbarBrand href="/">CSC Services</NavbarBrand>
       <NavbarToggler onClick={toggle} />
@@ -37,19 +37,25 @@ function Navbar() {
           <NavItem>
             <NavLink href="/calendar">Calendar</NavLink>
           </NavItem>
-          <UncontrolledDropdown nav inNavbar>
+          <UncontrolledDropdown nav inNavbar style={{ backgroundColor: "#343a40" }}>
             <DropdownToggle nav caret>
-              {"B & Q"}
+              B & Q
             </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                <NavLink href="/bandq/turnover">Turnover</NavLink>
+            <DropdownMenu right style={{ backgroundColor: "#343a40" }}>
+              <DropdownItem style={{ backgroundColor: "#343a40" }}>
+                <NavLink href="/bandq/turnover" style={{ padding: "0" }}>
+                  Turnover
+                </NavLink>
               </DropdownItem>
-              <DropdownItem>
-                <NavLink href="/bandq/orderwell">Order Well</NavLink>
+              <DropdownItem style={{ backgroundColor: "#343a40" }}>
+                <NavLink href="/bandq/orderwell" style={{ padding: "0" }}>
+                  Order Well
+                </NavLink>
               </DropdownItem>
-              <DropdownItem>
-                <NavLink href="/bandq/comparison">Sales Comparison</NavLink>
+              <DropdownItem style={{ backgroundColor: "#343a40" }}>
+                <NavLink href="/bandq/comparison" style={{ padding: "0" }}>
+                  Sales Comparison
+                </NavLink>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>

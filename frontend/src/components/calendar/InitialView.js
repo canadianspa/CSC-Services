@@ -1,5 +1,5 @@
 import React from "react";
-import "./CalendarPage.css";
+import styles from "./CalendarPage.module.css";
 
 import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Select, MultiSelect } from "../Shared";
@@ -8,7 +8,7 @@ function InitialView({ formState, onFormChange, calendars, emails, toggleView })
   const { orderUrl, calendar, attendees } = formState;
 
   return (
-    <div className="event-form">
+    <div className={styles.eventForm}>
       <FormGroup>
         <Label>Veeqo Order URL</Label>
         <Input

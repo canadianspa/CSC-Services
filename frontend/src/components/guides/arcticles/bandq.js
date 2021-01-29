@@ -23,7 +23,7 @@ function BandQArticle() {
           </li>
           <li>You should be redirected to the page below</li>
         </ul>
-        <img className="article-image" alt="homepage" src={homepageHighlightsImg} />
+        <img alt="homepage" src={homepageHighlightsImg} />
         <ul>
           <li>
             Select the order(s) to export by clicking in their respective checkbox

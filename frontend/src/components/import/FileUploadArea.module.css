@@ -1,0 +1,33 @@
+.dropzoneContainer {
+  width: 300px;
+  height: 300px;
+}
+
+.dropzoneContainer:hover {
+  cursor: pointer;
+}
+
+.dropzoneContainer:focus {
+  outline: none;
+}
+
+.dropzoneContent {
+  width: inherit;
+  height: inherit;
+  border: 2px #6c757d dashed;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropzoneContent > span {
+  color: #4f555a;
+  font-size: 15px;
+}
+
+.dropzoneContent > svg {
+  color: #6c757d;
+  margin: 100px auto 15px auto;
+  font-size: 40px;
+}

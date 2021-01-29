@@ -25,17 +25,13 @@ function ArgosArticle() {
           </li>
           <li>You should be redirected to the page below</li>
         </ul>
-        <img className="article-image" alt="homepage" src={homepageHighlightsImg} />
+        <img alt="homepage" src={homepageHighlightsImg} />
         <ul>
           <li>Click on "Orders" in the top left of the page (circled in red)</li>
           <li>Click "Find orders" (circled in green)</li>
           <li>You should be redirected to the page below</li>
         </ul>
-        <img
-          className="article-image"
-          alt="orders-page"
-          src={ordersPageHighlightsImg}
-        />
+        <img alt="orders-page" src={ordersPageHighlightsImg} />
         <ul>
           <li>
             Select the required orders by clicking in the relative checkbox(s)

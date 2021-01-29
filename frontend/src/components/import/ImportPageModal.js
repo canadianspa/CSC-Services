@@ -1,8 +1,7 @@
 import React from "react";
-import "./ImportPage.css";
 
 import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
-import { SelectForm } from "../Shared";
+import { SelectForm, InlineButton } from "../Shared";
 
 function ImportPageModal({
   isOpen,
@@ -21,14 +20,14 @@ function ImportPageModal({
         useObjects={true}
         optionKey="summaryline"
         children={
-          <div className="button-parent">
+          <InlineButton style={{ marginTop: "20px" }}>
             <Button color="danger" onClick={toggle}>
               Cancel
             </Button>
             <Button color="primary" type="submit">
               Update
             </Button>
-          </div>
+          </InlineButton>
         }
       />
     );

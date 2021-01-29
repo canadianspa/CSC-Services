@@ -1,0 +1,23 @@
+.linkWrapper {
+  margin-bottom: 8px;
+  height: 27px;
+  position: relative;
+}
+
+.linkWrapper a {
+  margin-right: 10px;
+}
+
+.linkWrapper button,
+.linkWrapper button:focus {
+  border: 0;
+  padding: 0;
+  outline: none;
+  color: #6c757d;
+  background-color: transparent;
+  position: absolute;
+}
+
+.linkWrapper button:hover {
+  color: #939ba1;
+}

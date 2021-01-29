@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./GuidesPage.css";
+import styles from "./GuidesPage.module.css";
 
 import { Jumbotron } from "../Shared";
 import GuidesPageModal from "./GuidesPageModal";
@@ -23,7 +23,8 @@ function HelpPage({ match, history }) {
         setIsOpen(true);
       }
     }
-  }, [match]);
+    // eslint-disable-next-line
+  }, []);
 
   function toggle() {
     if (isOpen === true && match.params.article) {
@@ -40,15 +41,15 @@ function HelpPage({ match, history }) {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Guides</Jumbotron>
-      <div className="article-container">
+      <div className={styles.articleContainer}>
         {articles.map((article, index) => (
           <Article key={index} article={article} onClick={onArticleClick} />
         ))}
       </div>
       <GuidesPageModal isOpen={isOpen} toggle={toggle} article={article} />
-    </div>
+    </>
   );
 }
 

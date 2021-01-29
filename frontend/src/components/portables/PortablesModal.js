@@ -1,10 +1,10 @@
 import React from "react";
-import "./PortablesPage.css";
 
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import AddCustomerForm from "./forms/AddCustomerForm";
 import EditProductForm from "./forms/EditProductForm";
+import AddLinkForm from "./forms/AddLinkForm";
 
 function PortablesModal({
   isOpen,
@@ -29,6 +29,15 @@ function PortablesModal({
     header = "Edit Product";
     body = (
       <EditProductForm
+        formState={formState}
+        onFormChange={onFormChange}
+        onSubmit={onSubmit}
+      />
+    );
+  } else if (modalType === "addLink") {
+    header = "Add Link";
+    body = (
+      <AddLinkForm
         formState={formState}
         onFormChange={onFormChange}
         onSubmit={onSubmit}

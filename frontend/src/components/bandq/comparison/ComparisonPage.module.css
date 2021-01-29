@@ -1,8 +1,8 @@
-.calc-button {
+.calcButton {
   display: block;
 }
 
-.totals-wrapper {
+.totalsWrapper {
   display: grid;
   justify-content: center;
   align-content: center;

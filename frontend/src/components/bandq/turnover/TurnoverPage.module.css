@@ -1,12 +1,12 @@
-.date-form {
+.dateForm {
   width: 200px !important;
 }
 
-.date-form > * {
+.dateForm > * {
   margin-bottom: 15px;
 }
 
-.totals-wrapper {
+.totalsWrapper {
   display: grid;
   justify-content: center;
   align-content: center;

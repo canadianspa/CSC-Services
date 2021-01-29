@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect } from "react";
-import "./CalendarPage.css";
 
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -123,7 +122,7 @@ function CalendarPage() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Create Event</Jumbotron>
       {loading ? (
         <Spinner style={{ marginTop: "120px" }} />
@@ -143,7 +142,7 @@ function CalendarPage() {
           toggleView={toggleView}
         />
       )}
-    </div>
+    </>
   );
 }
 

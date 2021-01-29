@@ -24,13 +24,13 @@ function WayfairArticle() {
           </li>
           <li>You should be redirected to the page below</li>
         </ul>
-        <img className="article-image" alt="homepage" src={homepageHighlightsImg} />
+        <img alt="homepage" src={homepageHighlightsImg} />
         <ul>
           <li>Click "Orders" in the top left of the page</li>
           <li>Click "Order Exports" in the menu (circled in red)</li>
           <li>You should be redirected to the page below</li>
         </ul>
-        <img className="article-image" alt="reports-page" src={reportsPageImg} />
+        <img alt="reports-page" src={reportsPageImg} />
         <ul>
           <li>Click "All Open Orders" (circled in green)</li>
           <li>

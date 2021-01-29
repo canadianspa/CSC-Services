@@ -33,7 +33,7 @@ function UpdatePage() {
   }
 
   return (
-    <div className="container">
+    <>
       <Jumbotron>Update Google Spreadsheet</Jumbotron>
       {loading ? (
         <Spinner style={{ width: "70px", height: "70px", marginTop: "50px" }} />
@@ -49,7 +49,7 @@ function UpdatePage() {
           <Button onClick={handleUpdateClick}>Update</Button>
         </>
       )}
-    </div>
+    </>
   );
 }
 
