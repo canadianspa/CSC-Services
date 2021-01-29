@@ -35,6 +35,7 @@ function InitialView({ formState, onFormChange, calendars, emails, toggleView })
         <Label>Attendees</Label>
         <MultiSelect
           name="attendees"
+          placeholder="Email"
           options={attendees}
           onChange={onFormChange}
           predefinedSuggestions={emails}

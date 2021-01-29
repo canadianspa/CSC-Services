@@ -1,17 +1,26 @@
 import React, { useState } from "react";
+import styles from "./Shared.module.css";
 import "./Shared.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Autosuggest from "react-autosuggest";
 
-function MultiSelect({ options, onChange, name, predefinedSuggestions }) {
+function MultiSelect({
+  options,
+  onChange,
+  predefinedSuggestions,
+  name,
+  placeholder,
+  useEvent,
+}) {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   function onAddClick(suggestion) {
     if (input !== "") {
       var value = suggestion ? [...options, suggestion] : [...options, input];
-      onChange(value, name);
+
+      handleChange(value);
       setInput("");
     }
   }
@@ -23,7 +32,21 @@ function MultiSelect({ options, onChange, name, predefinedSuggestions }) {
       return index !== parseInt(id);
     });
 
-    onChange(value, name);
+    handleChange(value);
+  }
+
+  function handleChange(value) {
+    if (useEvent) {
+      var event = {
+        target: {
+          name: name,
+          value: value,
+        },
+      };
+      onChange(event);
+    } else {
+      onChange(value, name);
+    }
   }
 
   function onSuggestionsFetchRequested({ value }) {
@@ -40,7 +63,7 @@ function MultiSelect({ options, onChange, name, predefinedSuggestions }) {
   const renderSuggestion = (suggestion) => suggestion;
 
   const inputProps = {
-    placeholder: "Email",
+    placeholder: placeholder,
     className: "form-control",
     value: input,
     onChange: (event, { newValue }) => {
@@ -56,7 +79,7 @@ function MultiSelect({ options, onChange, name, predefinedSuggestions }) {
   return (
     <div>
       {options.map((option, index) => (
-        <div key={index} className="multiselect-option">
+        <div key={index} className={styles.multiselectOption}>
           <span>{option}</span>
           <button id={index} onClick={onDeleteClick}>
             <FontAwesomeIcon icon="times" />

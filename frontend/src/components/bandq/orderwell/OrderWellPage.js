@@ -13,6 +13,7 @@ function OrderWell() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   async function fetchData() {

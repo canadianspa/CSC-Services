@@ -1,5 +1,5 @@
 import React from "react";
-import "./Shared.css";
+import styles from "./Shared.module.css";
 
 import { Input } from "reactstrap";
 
@@ -27,7 +27,7 @@ function Select({
   return (
     <Input
       type="select"
-      className="select"
+      className={styles.select}
       name={name}
       style={style}
       multiple={multiple ? true : false}

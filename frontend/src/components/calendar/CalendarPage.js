@@ -11,9 +11,7 @@ import { Jumbotron, Spinner } from "../Shared";
 import FormView from "./FormView";
 import InitialView from "./InitialView";
 
-const defaultAttendees = [
-  EMAILS[0],
-]
+const defaultAttendees = [EMAILS[0]];
 
 const initialFormState = {
   orderUrl: "",
@@ -35,6 +33,7 @@ function CalendarPage() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   function fetchData() {
@@ -95,7 +94,7 @@ function CalendarPage() {
 
       api.createEvent(params).then((response) => {
         setLoading(false);
-        
+
         onResponse(response, () => {
           toast.dark("Event added successfully");
           setInitialState();

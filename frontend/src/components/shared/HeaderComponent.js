@@ -1,9 +1,12 @@
 import React from "react";
-import "./Shared.css";
+import styles from "./Shared.module.css";
 
 function Header({ children, dark, style }) {
   return (
-    <div className={dark ? "header dark" : "header"} style={style}>
+    <div
+      className={dark ? styles.header + " " + styles.dark : styles.header}
+      style={style}
+    >
       {children}
     </div>
   );

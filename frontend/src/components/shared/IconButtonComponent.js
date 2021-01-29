@@ -1,14 +1,13 @@
 import React from "react";
-import "./Shared.css";
+import styles from "./Shared.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "reactstrap";
 
 function IconButton({ name, icon, onClick }) {
   return (
-    <Button name={name} onClick={onClick} className="icon-button">
+    <button name={name} onClick={onClick} className={styles.iconButton}>
       <FontAwesomeIcon icon={icon} />
-    </Button>
+    </button>
   );
 }
 
