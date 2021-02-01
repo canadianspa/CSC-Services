@@ -15,13 +15,15 @@ function Product({ product }) {
       </div>
       <div className={styles.infoBox}>
         <span>Serial Number(s)</span>
-        {serial_numbers.map((number, index) => (
-          <div key={index}>{number}</div>
-        ))}
+        {serial_numbers.length > 0 ? (
+          serial_numbers.map((number, index) => <div key={index}>{number}</div>)
+        ) : (
+          <div>Not given</div>
+        )}
       </div>
       <div className={styles.infoBox}>
         <span>Fault Description</span>
-        <div>{fault}</div>
+        <div>{fault === "" ? "Not given" : fault}</div>
       </div>
     </div>
   );

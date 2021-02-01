@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Customer.module.css";
 
+import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,7 +12,7 @@ function Customer({ customer, isActiveCustomer, onClick }) {
     onClick(customer);
   }
 
-  var date = new Date(created_at).toLocaleDateString();
+  var date = moment(created_at).format("DD/MM/YYYY");
 
   return (
     <div

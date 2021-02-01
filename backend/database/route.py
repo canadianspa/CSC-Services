@@ -28,7 +28,7 @@ def database_update_request(db, col, _id):
     _id = int(_id)
     doc = request.json
 
-    result = client.update(db, col, doc, _id)
+    result = client.update(db, col, _id, doc)
 
     return jsonify(result)
 

@@ -6,12 +6,12 @@
   border: 1px solid #6c757d;
 }
 
-.leftWindow {
+.window > div:first-child {
   width: 40%;
   border-right: 1px solid #6c757d;
 }
 
-.rightWindow {
+.window > div:last-child {
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -26,19 +26,28 @@
   border-radius: 19px;
 }
 
-.customerGrid {
+.detailsWindow {
   display: flex;
+}
+
+.detailsWindow > div:first-child {
   flex-grow: 1;
-  width: 100%;
+  padding: 0 10px 0 20px;
+}
+
+.detailsWindow > div:last-child {
   text-align: start;
-  padding: 0 10px 10px 20px;
+  padding: 0 20px 0 10px;
+  width: 205px;
+  min-width: 205px;
 }
 
 .notes {
-  width: 70%;
-  max-width: 70%;
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+}
+
+.notes > div {
+  margin-bottom: 10px;
 }
 
 .notesContainer {
@@ -46,19 +55,10 @@
   overflow-y: scroll;
 }
 
-.notesContainer > *:not(:last-child) {
+.notesContainer > * {
   margin-bottom: 10px;
 }
 
 .notes input {
   border-radius: 19px;
-}
-
-.links {
-  height: 200px;
-}
-
-.linksGrid {
-  display: flex;
-  justify-content: space-evenly;
 }

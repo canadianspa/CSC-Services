@@ -10,25 +10,23 @@ class MongoClientWrapper:
         self.client = MongoClient(MONGO_CLIENT_URL)
 
     def create(self, db, col, doc):
-        collection = self.client[db][col]
+        _id = self.__get_next_sequence(db, col)
+        result = self.upsert(db, col, _id, doc)
 
-        document = {
-            "_id": self.__get_next_sequence(db, col),
-            **doc,
-        }
-
-        result = collection.insert_one(document)
-
-        return result.inserted_id
+        return result
 
     def read(self, db, col):
         collection = self.client[db][col]
-
         result = collection.find()
 
         return self.bson_to_json(result)
 
-    def update(self, db, col, doc, _id):
+    def update(self, db, col, _id, doc):
+        result = self.upsert(db, col, _id, doc)
+
+        return result
+
+    def upsert(self, db, col, _id, doc):
         collection = self.client[db][col]
 
         query = {
@@ -38,36 +36,6 @@ class MongoClientWrapper:
         values = {
             "$set": doc,
         }
-
-        result = collection.update_one(query, values)
-
-        return result.modified_count
-
-    def upsert(
-        self,
-        db,
-        col,
-        _id,
-        doc,
-        increment=False,
-    ):
-        collection = self.client[db][col]
-
-        if not _id:
-            _id = self.__get_next_sequence(db, col)
-
-        query = {
-            "_id": _id,
-        }
-
-        values = {
-            "$set": doc,
-        }
-
-        if increment:
-            values = {
-                "$inc": doc,
-            }
 
         result = collection.find_one_and_update(
             query,

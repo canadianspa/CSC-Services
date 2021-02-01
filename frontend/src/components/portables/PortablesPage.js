@@ -1,30 +1,22 @@
 import React, { useState, useEffect, useReducer } from "react";
 import styles from "./PortablesPage.module.css";
 
-import moment from "moment";
+import { toast } from "react-toastify";
 import { Input } from "reactstrap";
 import { faPlus, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 import * as api from "../../api/BackendApi";
+import * as dbHelper from "./DatabaseHelper";
 import { reducer } from "../utils";
 import { PRODUCTS } from "../../config";
-import { filterArray } from "./Utils";
+import { filterArray, sortByDate } from "./Utils";
 
-import {
-  Spinner,
-  Jumbotron,
-  Header,
-  SubHeader,
-  IconButton,
-  IconHeader,
-} from "../Shared";
+import { Spinner, Jumbotron, Header, IconButton, IconHeader } from "../Shared";
 import PortablesModal from "./PortablesModal";
 import Product from "./components/Product";
 import Customer from "./components/Customer";
 import Note from "./components/Note";
 import LinkMultiSelect from "./components/LinkMultiSelect";
-
-const urlTypes = ["Freshdesk Ticket", "Purchase Invoice", "Repair Invoice"];
 
 const initialFormState = {
   search: "",
@@ -34,12 +26,8 @@ const initialFormState = {
   fault: "",
   serial_numbers: [],
   in_warranty: true,
-  purchase_invoices: [],
-  repair_invoices: [],
-  freshdesk_tickets: [],
   url: "",
-  urlType: urlTypes[0],
-  urlTypes: urlTypes,
+  urlTitle: "",
 };
 
 function PortablesPage() {
@@ -66,9 +54,11 @@ function PortablesPage() {
   }
 
   function loadCustomers(customers) {
-    setActiveCustomer(customers[0]);
-    setCustomers(customers);
-    setFilteredCustomers(customers);
+    var sortedCustomers = sortByDate(customers, "created_at");
+
+    setActiveCustomer(sortedCustomers[0]);
+    setCustomers(sortedCustomers);
+    setFilteredCustomers(sortedCustomers);
   }
 
   function toggleModal(name) {
@@ -89,7 +79,7 @@ function PortablesPage() {
   }
 
   function onCustomerClick(customer) {
-    setFormState({ search: "" });
+    setFormState(initialFormState);
     setActiveCustomer(customer);
   }
 
@@ -98,15 +88,7 @@ function PortablesPage() {
 
     onFormChange(event);
 
-    var keys = [
-      "name",
-      "product",
-      "freshdesk_tickets",
-      "purchase_invoices",
-      "repair_invoices",
-      "serial_numbers",
-      "fault",
-    ];
+    var keys = ["name"];
 
     setFilteredCustomers(filterArray(customers, keys, value));
   }
@@ -114,9 +96,9 @@ function PortablesPage() {
   function onClick(event) {
     const { name } = event.currentTarget;
 
-    if (name === "createCustomer") {
-      setFormState(initialFormState);
-    } else if (name === "editProduct") {
+    setFormState(initialFormState);
+
+    if (name === "editProduct") {
       setFormState({ ...initialFormState, ...activeCustomer.product });
     }
 
@@ -124,41 +106,46 @@ function PortablesPage() {
   }
 
   function onSubmit(event) {
-    const { name } = event.currentTarget;
+    const { key } = event;
+    const { name, value } = event.currentTarget;
 
     if (name === "createCustomer") {
-      createCustomer();
+      dbHelper.createCustomer(customers, formState, onSuccess, onError);
     } else if (name === "editProduct") {
-      editProduct();
+      dbHelper.editProduct(activeCustomer, formState, onSuccess, onError);
+    } else if (name === "note" && key === "Enter") {
+      dbHelper.addNote(activeCustomer, formState, onSuccess, onError);
+    } else if (name === "addLink") {
+      dbHelper.addLink(activeCustomer, formState, onSuccess, onError);
+    } else if (name === "removeLink") {
+      dbHelper.deleteLink(value, activeCustomer, formState, onSuccess, onError);
     }
   }
 
-  function createCustomer() {
-    var params = {
-      name: formState.name,
-      created_at: moment().toISOString(),
-      product: {
-        title: formState.title,
-        fault: formState.fault,
-        serial_numbers: [],
-        in_warranty: formState.in_warranty,
-      },
-    };
+  function onSuccess({
+    updatedCustomer,
+    updatedCustomers,
+    toggleModal,
+    successMsg,
+  }) {
+    if (updatedCustomers) {
+      loadCustomers(updatedCustomers);
+    } else {
+      updatedCustomers = [...customers];
+      var index = updatedCustomers.indexOf(activeCustomer);
+      updatedCustomers[index] = updatedCustomer;
 
-    console.log(params);
+      setFormState(initialFormState);
+      loadCustomers(updatedCustomers);
+      setActiveCustomer(updatedCustomer);
+    }
+
+    toggleModal && toggleModal();
+    successMsg && toast.dark(successMsg);
   }
 
-  function editProduct() {
-    var params = {
-      product: {
-        title: formState.title,
-        fault: formState.fault,
-        serial_numbers: formState.serial_numbers,
-        in_warranty: formState.in_warranty,
-      },
-    };
-
-    console.log(params);
+  function onError(errorMsg) {
+    toast.error(errorMsg);
   }
 
   return (
@@ -168,7 +155,7 @@ function PortablesPage() {
         <Spinner style={{ marginTop: "120px" }} />
       ) : (
         <div className={styles.window}>
-          <div className={styles.leftWindow}>
+          <div>
             <Header dark padded>
               Customers
             </Header>
@@ -190,68 +177,44 @@ function PortablesPage() {
               />
             ))}
           </div>
-          <div className={styles.rightWindow}>
+          <div>
             <Header dark padded>
               {activeCustomer.name}
             </Header>
-            <div className={styles.customerGrid}>
+            <div className={styles.detailsWindow}>
               <div className={styles.notes}>
                 <Header>Notes</Header>
-                <div className={styles.notesContainer}>
-                  {activeCustomer.notes.map((note, index) => (
-                    <Note key={index} note={note} />
-                  ))}
-                </div>
+                {activeCustomer.notes.map((note, index) => (
+                  <Note key={index} note={note} />
+                ))}
                 <Input
                   name="note"
                   placeholder="Enter note"
                   className={styles.roundedInput}
                   value={formState.note}
                   onChange={onFormChange}
+                  onKeyPress={onSubmit}
                 />
               </div>
               <div>
-                <IconHeader icon={faPencilAlt} name="editProduct" onClick={onClick}>
-                  Product
-                </IconHeader>
-                <Product product={activeCustomer.product} />
-              </div>
-            </div>
-            <div className={styles.links}>
-              <IconHeader
-                name="addLink"
-                icon={faPlus}
-                onClick={onClick}
-                style={{ width: "70px" }}
-              >
-                Links
-              </IconHeader>
-              <div className={styles.linksGrid}>
                 <div>
-                  <SubHeader>Freshdesk Tickets</SubHeader>
-                  <LinkMultiSelect
-                    prefix="Ticket #"
-                    name="deleteFreshdeskLink"
-                    links={activeCustomer.freshdesk_tickets}
-                    onDelete={onFormChange}
-                  />
+                  <IconHeader
+                    icon={faPencilAlt}
+                    name="editProduct"
+                    onClick={onClick}
+                  >
+                    Product
+                  </IconHeader>
+                  <Product product={activeCustomer.product} />
                 </div>
                 <div>
-                  <SubHeader>Purchase Invoices</SubHeader>
+                  <IconHeader name="addLink" icon={faPlus} onClick={onClick}>
+                    Links
+                  </IconHeader>
                   <LinkMultiSelect
-                    prefix="Order "
-                    name="deletePurchaseLink"
-                    links={activeCustomer.purchase_invoices}
-                    onDelete={onFormChange}
-                  />
-                </div>
-                <div>
-                  <SubHeader>Repair Invoices</SubHeader>
-                  <LinkMultiSelect
-                    prefix="Order "
-                    name="deleteRepairLink"
-                    links={activeCustomer.repair_invoices}
-                    onDelete={onFormChange}
+                    name="removeLink"
+                    links={activeCustomer.links}
+                    onDelete={onSubmit}
                   />
                 </div>
               </div>

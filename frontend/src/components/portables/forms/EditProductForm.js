@@ -49,7 +49,7 @@ function EditCustomerForm({ formState, onFormChange, onSubmit }) {
         <Input name="fault" value={fault} onChange={onFormChange} />
       </FormGroup>
       <InlineButton>
-        <Button name="updateProduct" onClick={onSubmit}>
+        <Button name="editProduct" onClick={onSubmit}>
           Update
         </Button>
       </InlineButton>
