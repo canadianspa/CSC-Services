@@ -98,7 +98,7 @@ export function deleteLink(index, activeCustomer, formState, onSuccess, onError)
 }
 
 function modifyLinks(action, activeCustomer, formState, onSuccess, onError, index) {
-  var links, callToggleModal, successMsg, errorMsg;
+  var links, callToggleModal, successMsg;
 
   if (action === "add") {
     links = [
