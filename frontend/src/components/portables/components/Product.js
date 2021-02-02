@@ -1,12 +1,19 @@
 import React from "react";
 import styles from "./Product.module.css";
 
+import { getBackgroundColor } from "../Utils";
+
 function Product({ product }) {
   const { title, fault, serial_numbers, in_warranty } = product;
 
   return (
     <div>
-      <div className={styles.title}>{title}</div>
+      <div
+        className={styles.title}
+        style={{ backgroundColor: getBackgroundColor(title) }}
+      >
+        {title}
+      </div>
       <div className={styles.infoBox}>
         <span>In Warranty</span>
         <div className={in_warranty ? styles.yes : styles.no}>
@@ -16,7 +23,11 @@ function Product({ product }) {
       <div className={styles.infoBox}>
         <span>Serial Number(s)</span>
         {serial_numbers.length > 0 ? (
-          serial_numbers.map((number, index) => <div key={index}>{number}</div>)
+          serial_numbers.map((number, index) => (
+            <div key={index} className={styles.serialNumber}>
+              {number}
+            </div>
+          ))
         ) : (
           <div>Not given</div>
         )}

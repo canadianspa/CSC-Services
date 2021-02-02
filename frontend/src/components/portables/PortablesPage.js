@@ -9,17 +9,17 @@ import * as api from "../../api/BackendApi";
 import * as dbHelper from "./DatabaseHelper";
 import { reducer } from "../utils";
 import { PRODUCTS } from "../../config";
-import { filterArray, sortByDate } from "./Utils";
+import { sortByDate } from "./Utils";
 
-import { Spinner, Jumbotron, Header, IconButton, IconHeader } from "../Shared";
+import { Spinner, Jumbotron, Header, IconHeader } from "../Shared";
 import PortablesModal from "./PortablesModal";
 import Product from "./components/Product";
 import Customer from "./components/Customer";
 import Note from "./components/Note";
+import Filter from "./components/Filter";
 import LinkMultiSelect from "./components/LinkMultiSelect";
 
 const initialFormState = {
-  search: "",
   note: "",
   name: "",
   title: PRODUCTS[0],
@@ -83,23 +83,13 @@ function PortablesPage() {
     setActiveCustomer(customer);
   }
 
-  function onSearchChange(event) {
-    const { value } = event.target;
-
-    onFormChange(event);
-
-    var keys = ["name"];
-
-    setFilteredCustomers(filterArray(customers, keys, value));
-  }
-
   function onClick(event) {
     const { name } = event.currentTarget;
 
-    setFormState(initialFormState);
-
     if (name === "editProduct") {
       setFormState({ ...initialFormState, ...activeCustomer.product });
+    } else {
+      setFormState(initialFormState);
     }
 
     toggleModal(name);
@@ -107,7 +97,7 @@ function PortablesPage() {
 
   function onSubmit(event) {
     const { key } = event;
-    const { name, value } = event.currentTarget;
+    const { name, id } = event.currentTarget;
 
     if (name === "createCustomer") {
       dbHelper.createCustomer(customers, formState, onSuccess, onError);
@@ -118,14 +108,16 @@ function PortablesPage() {
     } else if (name === "addLink") {
       dbHelper.addLink(activeCustomer, formState, onSuccess, onError);
     } else if (name === "removeLink") {
-      dbHelper.deleteLink(value, activeCustomer, formState, onSuccess, onError);
+      dbHelper.deleteLink(id, activeCustomer, formState, onSuccess, onError);
+    } else if (name === "archive") {
+      dbHelper.archiveCustomer(activeCustomer, onSuccess, onError);
     }
   }
 
   function onSuccess({
     updatedCustomer,
     updatedCustomers,
-    toggleModal,
+    callToggleModal,
     successMsg,
   }) {
     if (updatedCustomers) {
@@ -140,12 +132,12 @@ function PortablesPage() {
       setActiveCustomer(updatedCustomer);
     }
 
-    toggleModal && toggleModal();
+    callToggleModal && toggleModal();
     successMsg && toast.dark(successMsg);
   }
 
-  function onError(errorMsg) {
-    toast.error(errorMsg);
+  function onError() {
+    toast.error("Error completing action");
   }
 
   return (
@@ -159,14 +151,24 @@ function PortablesPage() {
             <Header dark padded>
               Customers
             </Header>
-            <div className={styles.searchBar}>
-              <Input
-                name="search"
-                placeholder="Search"
-                value={formState.search}
-                onChange={onSearchChange}
+            <div className={styles.filter}>
+              <div className={styles.buttonContainer}>
+                <button name="addCustomer" onClick={onClick}>
+                  New Customer
+                </button>
+                <button
+                  name="archive"
+                  onClick={onClick}
+                  disabled={activeCustomer.status === "archived"}
+                >
+                  Archive Current
+                </button>
+              </div>
+              <Filter
+                customers={customers}
+                filteredCustomers={filteredCustomers}
+                setFilteredCustomers={setFilteredCustomers}
               />
-              <IconButton name="addCustomer" icon={faPlus} onClick={onClick} />
             </div>
             {filteredCustomers.map((customer, index) => (
               <Customer
@@ -184,9 +186,15 @@ function PortablesPage() {
             <div className={styles.detailsWindow}>
               <div className={styles.notes}>
                 <Header>Notes</Header>
-                {activeCustomer.notes.map((note, index) => (
-                  <Note key={index} note={note} />
-                ))}
+                <div className={styles.notesContainer}>
+                  {activeCustomer.notes.length > 0 ? (
+                    activeCustomer.notes.map((note, index) => (
+                      <Note key={index} note={note} />
+                    ))
+                  ) : (
+                    <div>No previous notes</div>
+                  )}
+                </div>
                 <Input
                   name="note"
                   placeholder="Enter note"

@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Label, FormGroup, Input } from "reactstrap";
-import { Button } from "reactstrap";
+import { Label, FormGroup, Input, Button } from "reactstrap";
 
 import { InlineButton } from "../../Shared";
 

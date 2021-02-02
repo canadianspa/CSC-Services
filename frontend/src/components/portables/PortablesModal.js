@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import AddCustomerForm from "./forms/AddCustomerForm";
 import EditProductForm from "./forms/EditProductForm";
 import AddLinkForm from "./forms/AddLinkForm";
+import ConfirmArchiveForm from "./forms/ConfirmArchiveForm";
 
 function PortablesModal({
   isOpen,
@@ -43,6 +44,9 @@ function PortablesModal({
         onSubmit={onSubmit}
       />
     );
+  } else if (modalType === "archive") {
+    header = "Archive Customer";
+    body = <ConfirmArchiveForm toggle={toggle} onSubmit={onSubmit} />;
   }
 
   return (
