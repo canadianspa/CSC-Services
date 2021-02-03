@@ -17,24 +17,75 @@ const initialFormState = {
   warranty: warranties[0],
 };
 
-function Filter({ customers, filteredCustomers, setFilteredCustomers }) {
+function Filter({ customers, setFilteredCustomers, children }) {
   const [formState, setFormState] = useReducer(reducer, initialFormState);
 
   function onFormChange(event) {
     const { name, value } = event.target;
-    setFormState({ [name]: value });
 
-    if (name === "search") {
-      setFilteredCustomers(
-        customers.filter((customer) => {
-          return customer.name.includes(value);
-        })
-      );
-    }
+    var updatedFormState = {
+      ...formState,
+      [name]: value,
+    };
+
+    var tempCustomers = filterCustomers(updatedFormState);
+    var search = updatedFormState.search.toUpperCase();
+
+    setFilteredCustomers(
+      tempCustomers.filter((customer) => {
+        var customerName = customer.name.toUpperCase();
+        var customerAddress = customer.address.toUpperCase();
+        var customerPhone = customer.phone.toUpperCase();
+
+        if (search !== "") {
+          return (
+            customerName.includes(search) ||
+            customerAddress.includes(search) ||
+            customerPhone.includes(search)
+          );
+        } else {
+          return true;
+        }
+      })
+    );
+
+    setFormState({ [name]: value });
+  }
+
+  function filterCustomers(updatedFormState) {
+    const { status, product, warranty } = updatedFormState;
+
+    return customers
+      .filter((customer) => {
+        if (status === "On Going") {
+          return customer.status === "ongoing";
+        } else if (status === "Archived") {
+          return customer.status === "archived";
+        } else {
+          return true;
+        }
+      })
+      .filter((customer) => {
+        if (product !== "All") {
+          return customer.product.title === product;
+        } else {
+          return true;
+        }
+      })
+      .filter((customer) => {
+        if (warranty === "Yes") {
+          return customer.product.warranty === true;
+        } else if (warranty === "No") {
+          return customer.product.warranty === false;
+        } else {
+          return true;
+        }
+      });
   }
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.children}>{children}</div>
       <div className={styles.filter}>
         <div>
           <span>Status</span>

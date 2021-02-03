@@ -1,0 +1,17 @@
+.infoBox {
+  margin-bottom: 5px;
+}
+
+.infoBox > span {
+  font-size: 14px;
+  color: #65676b;
+}
+
+.infoBox > div {
+  width: fit-content;
+  padding: 5px 7px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  white-space: pre-wrap;
+}

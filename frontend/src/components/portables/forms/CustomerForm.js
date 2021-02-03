@@ -5,11 +5,28 @@ import { Label, FormGroup, Input, Button } from "reactstrap";
 import { PRODUCTS } from "../../../config";
 import { InlineButton, MultiSelect } from "../../Shared";
 
-function EditCustomerForm({ formState, onFormChange, onSubmit }) {
-  const { title, fault, serial_numbers, in_warranty } = formState;
+function CustomerForm({ modalType, formState, onFormChange, onSubmit }) {
+  const { name, address, phone, title, fault, serial_numbers, warranty } = formState;
 
   return (
     <div>
+      <FormGroup>
+        <Label>Name</Label>
+        <Input name="name" value={name} onChange={onFormChange} />
+      </FormGroup>
+      <FormGroup>
+        <Label>Address</Label>
+        <Input
+          type="textarea"
+          name="address"
+          value={address}
+          onChange={onFormChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label>Phone</Label>
+        <Input name="phone" value={phone} onChange={onFormChange} />
+      </FormGroup>
       <FormGroup>
         <Label>Product</Label>
         <Input type="select" name="title" value={title} onChange={onFormChange}>
@@ -24,8 +41,8 @@ function EditCustomerForm({ formState, onFormChange, onSubmit }) {
         <Label check>
           <Input
             type="checkbox"
-            name="in_warranty"
-            checked={in_warranty}
+            name="warranty"
+            checked={warranty}
             onChange={onFormChange}
           />{" "}
           Warranty
@@ -45,15 +62,15 @@ function EditCustomerForm({ formState, onFormChange, onSubmit }) {
       </FormGroup>
       <FormGroup>
         <Label>Fault Description</Label>
-        <Input name="fault" value={fault} onChange={onFormChange} />
+        <Input type="textarea" name="fault" value={fault} onChange={onFormChange} />
       </FormGroup>
       <InlineButton>
-        <Button name="editProduct" onClick={onSubmit}>
-          Update
+        <Button name={modalType} onClick={onSubmit}>
+          {modalType === "addCustomer" ? "Create" : "Update"}
         </Button>
       </InlineButton>
     </div>
   );
 }
 
-export default EditCustomerForm;
+export default CustomerForm;

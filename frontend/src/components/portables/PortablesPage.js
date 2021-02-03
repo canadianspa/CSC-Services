@@ -13,19 +13,21 @@ import { sortByDate } from "./Utils";
 
 import { Spinner, Jumbotron, Header, IconHeader } from "../Shared";
 import PortablesModal from "./PortablesModal";
-import Product from "./components/Product";
 import Customer from "./components/Customer";
 import Note from "./components/Note";
 import Filter from "./components/Filter";
 import LinkMultiSelect from "./components/LinkMultiSelect";
+import Details from "./components/Details";
 
 const initialFormState = {
   note: "",
   name: "",
+  address: "",
+  phone: "",
   title: PRODUCTS[0],
   fault: "",
   serial_numbers: [],
-  in_warranty: true,
+  warranty: true,
   url: "",
   urlTitle: "",
 };
@@ -86,8 +88,12 @@ function PortablesPage() {
   function onClick(event) {
     const { name } = event.currentTarget;
 
-    if (name === "editProduct") {
-      setFormState({ ...initialFormState, ...activeCustomer.product });
+    if (name === "editCustomer") {
+      setFormState({
+        ...initialFormState,
+        ...activeCustomer,
+        ...activeCustomer.product,
+      });
     } else {
       setFormState(initialFormState);
     }
@@ -99,10 +105,10 @@ function PortablesPage() {
     const { key } = event;
     const { name, id } = event.currentTarget;
 
-    if (name === "createCustomer") {
-      dbHelper.createCustomer(customers, formState, onSuccess, onError);
-    } else if (name === "editProduct") {
-      dbHelper.editProduct(activeCustomer, formState, onSuccess, onError);
+    if (name === "addCustomer") {
+      dbHelper.addCustomer(customers, formState, onSuccess, onError);
+    } else if (name === "editCustomer") {
+      dbHelper.editCustomer(activeCustomer, formState, onSuccess, onError);
     } else if (name === "note" && key === "Enter") {
       dbHelper.addNote(activeCustomer, formState, onSuccess, onError);
     } else if (name === "addLink") {
@@ -151,37 +157,37 @@ function PortablesPage() {
             <Header dark padded>
               Customers
             </Header>
-            <div className={styles.filter}>
-              <div className={styles.buttonContainer}>
-                <button name="addCustomer" onClick={onClick}>
-                  New Customer
-                </button>
-                <button
-                  name="archive"
-                  onClick={onClick}
-                  disabled={activeCustomer.status === "archived"}
-                >
-                  Archive Current
-                </button>
-              </div>
-              <Filter
-                customers={customers}
-                filteredCustomers={filteredCustomers}
-                setFilteredCustomers={setFilteredCustomers}
-              />
+            <Filter
+              customers={customers}
+              filteredCustomers={filteredCustomers}
+              setFilteredCustomers={setFilteredCustomers}
+            >
+              <button name="addCustomer" onClick={onClick}>
+                New Customer
+              </button>
+              <button
+                name="archive"
+                onClick={onClick}
+                disabled={activeCustomer.status === "archived"}
+              >
+                Archive Current
+              </button>
+            </Filter>
+            <div className={styles.customerContainer}>
+              {filteredCustomers.map((customer, index) => (
+                <Customer
+                  key={index}
+                  customer={customer}
+                  isActiveCustomer={customer === activeCustomer}
+                  onClick={onCustomerClick}
+                />
+              ))}
             </div>
-            {filteredCustomers.map((customer, index) => (
-              <Customer
-                key={index}
-                customer={customer}
-                isActiveCustomer={customer === activeCustomer}
-                onClick={onCustomerClick}
-              />
-            ))}
           </div>
           <div>
             <Header dark padded>
               {activeCustomer.name}
+              {activeCustomer.status === "archived" && " (Archived)"}
             </Header>
             <div className={styles.detailsWindow}>
               <div className={styles.notes}>
@@ -205,26 +211,18 @@ function PortablesPage() {
                 />
               </div>
               <div>
-                <div>
-                  <IconHeader
-                    icon={faPencilAlt}
-                    name="editProduct"
-                    onClick={onClick}
-                  >
-                    Product
-                  </IconHeader>
-                  <Product product={activeCustomer.product} />
-                </div>
-                <div>
-                  <IconHeader name="addLink" icon={faPlus} onClick={onClick}>
-                    Links
-                  </IconHeader>
-                  <LinkMultiSelect
-                    name="removeLink"
-                    links={activeCustomer.links}
-                    onDelete={onSubmit}
-                  />
-                </div>
+                <IconHeader icon={faPencilAlt} name="editCustomer" onClick={onClick}>
+                  Details
+                </IconHeader>
+                <Details customer={activeCustomer} />
+                <IconHeader name="addLink" icon={faPlus} onClick={onClick}>
+                  Links
+                </IconHeader>
+                <LinkMultiSelect
+                  name="removeLink"
+                  links={activeCustomer.links}
+                  onDelete={onSubmit}
+                />
               </div>
             </div>
           </div>
@@ -237,6 +235,7 @@ function PortablesPage() {
         formState={formState}
         onFormChange={onFormChange}
         onSubmit={onSubmit}
+        activeCustomer={activeCustomer}
       />
     </>
   );

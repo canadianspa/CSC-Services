@@ -1,16 +1,15 @@
 .linkWrapper {
-  margin-bottom: 8px;
-  height: 27px;
-  position: relative;
+  width: fit-content;
+  height: 34px;
+  margin-bottom: 5px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background-color: #e9ecef;
 }
 
 .linkWrapper a {
   margin-right: 10px;
-  margin-left: 5px;
-  padding: 5px 7px;
-  border-radius: 5px;
-  color: #fff;
-  background-color: #868f97;
+  text-decoration: underline;
 }
 
 .linkWrapper button,
@@ -18,11 +17,9 @@
   border: 0;
   padding: 0;
   outline: none;
-  color: #6c757d;
   background-color: transparent;
-  position: absolute;
 }
 
 .linkWrapper button:hover {
-  color: #939ba1;
+  color: #3d4144;
 }

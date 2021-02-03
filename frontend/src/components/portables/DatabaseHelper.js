@@ -5,20 +5,23 @@ import * as api from "../../api/BackendApi";
 const database = "portables";
 const collection = "customers";
 
-export function createCustomer(customers, formState, onSuccess, onError) {
+export function addCustomer(customers, formState, onSuccess, onError) {
   var params = {
     database: database,
     collection: collection,
     body: {
-      name: formState.name,
       created_at: moment().toISOString(),
-      notes: [],
+      name: formState.name,
+      address: formState.address,
+      phone: formState.phone,
       product: {
         title: formState.title,
         fault: formState.fault,
         serial_numbers: formState.serial_numbers,
-        in_warranty: formState.in_warranty,
+        warranty: formState.warranty,
       },
+      status: "ongoing",
+      notes: [],
       links: [],
     },
   };
@@ -35,17 +38,20 @@ export function createCustomer(customers, formState, onSuccess, onError) {
     .catch(onError);
 }
 
-export function editProduct(activeCustomer, formState, onSuccess, onError) {
+export function editCustomer(activeCustomer, formState, onSuccess, onError) {
   var params = {
     _id: activeCustomer._id,
     database: database,
     collection: collection,
     body: {
+      name: formState.name,
+      address: formState.address,
+      phone: formState.phone,
       product: {
         title: formState.title,
         fault: formState.fault,
         serial_numbers: formState.serial_numbers,
-        in_warranty: formState.in_warranty,
+        warranty: formState.warranty,
       },
     },
   };

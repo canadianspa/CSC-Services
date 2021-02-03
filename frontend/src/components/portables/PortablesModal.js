@@ -2,8 +2,7 @@ import React from "react";
 
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-import AddCustomerForm from "./forms/AddCustomerForm";
-import EditProductForm from "./forms/EditProductForm";
+import CustomerForm from "./forms/CustomerForm";
 import AddLinkForm from "./forms/AddLinkForm";
 import ConfirmArchiveForm from "./forms/ConfirmArchiveForm";
 
@@ -14,22 +13,15 @@ function PortablesModal({
   formState,
   onFormChange,
   onSubmit,
+  activeCustomer,
 }) {
   let header, body;
 
-  if (modalType === "addCustomer") {
-    header = "Add Customer";
+  if (modalType === "addCustomer" || modalType === "editCustomer") {
+    header = modalType === "addCustomer" ? "Add Customer" : "Edit Customer";
     body = (
-      <AddCustomerForm
-        formState={formState}
-        onFormChange={onFormChange}
-        onSubmit={onSubmit}
-      />
-    );
-  } else if (modalType === "editProduct") {
-    header = "Edit Product";
-    body = (
-      <EditProductForm
+      <CustomerForm
+        modalType={modalType}
         formState={formState}
         onFormChange={onFormChange}
         onSubmit={onSubmit}
@@ -45,8 +37,14 @@ function PortablesModal({
       />
     );
   } else if (modalType === "archive") {
-    header = "Archive Customer";
-    body = <ConfirmArchiveForm toggle={toggle} onSubmit={onSubmit} />;
+    header = "Archive Customer '" + activeCustomer.name + "'";
+    body = (
+      <ConfirmArchiveForm
+        toggle={toggle}
+        onSubmit={onSubmit}
+        activeCustomer={activeCustomer}
+      />
+    );
   }
 
   return (
