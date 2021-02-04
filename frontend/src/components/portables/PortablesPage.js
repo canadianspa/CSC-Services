@@ -170,7 +170,7 @@ function PortablesPage() {
                 onClick={onClick}
                 disabled={activeCustomer.status === "archived"}
               >
-                Archive Current
+                Archive Customer
               </button>
             </Filter>
             <div className={styles.customerContainer}>
