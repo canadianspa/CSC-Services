@@ -89,6 +89,11 @@ export const EMAILS = [
   "troy@canadianspacompany.com",
   "troy.d.labelle@gmail.com",
   "troylabellespa@googlemail.com",
+  "david.knight@canadianspacompany.com",
+  "gary.beadell@canadianspacompany.com",
+  "kerry.williams@canadianspacompany.com",
+  "tony.greig@canadianspacompany.com",
+  "adam.miller@canadianspacompany.com",
 ];
 
 export const PRODUCTS = [
