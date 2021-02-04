@@ -2,7 +2,9 @@ import React from "react";
 import styles from "./InfoBox.module.css";
 
 function InfoBox({ header, content, className, backgroundColor }) {
-  var backgroundColor = backgroundColor ? backgroundColor : "#e9ecef";
+  if (!backgroundColor) {
+    backgroundColor = "#e9ecef";
+  }
 
   return (
     <div className={styles.infoBox}>
