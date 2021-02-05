@@ -8,7 +8,7 @@ from ..config import (
     VEEQO_API_PRODUCTS_URL,
     VEEQO_API_SHIPMENTS_URL,
     VEEQO_API_PACKING_URL,
-    TEMP_FILE_PATH,
+    TEMP_FOLDER_PATH,
 )
 
 headers = {
@@ -51,7 +51,7 @@ def download_packing_slip(order_id):
 
     response = requests.get(url, headers=headers)
 
-    file_path = f"{TEMP_FILE_PATH}\\packing_slip.pdf"
+    file_path = f"{TEMP_FOLDER_PATH}\\packing_slip.pdf"
 
     try:
         with open(file_path, "wb") as f:

@@ -1,17 +1,17 @@
+import pathlib
+
+common_dir = pathlib.Path(__file__).parent
+
 ############# STATIC ###########
 
 UK_POSTCODE_REGEX = r"[A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA"
 
-from os import getcwd
+TEMP_FOLDER_PATH = f"{common_dir}\\credentials\\temp"
 
-cwd = getcwd()
+############# GOOGLE ###########
 
-ARGOS_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\argos_stock.csv"
-HORNBACH_STOCK_PATH = cwd + r"\veeqoimport\vendors\stock\hornbach_stock.csv"
-
-
-GOOGLE_CREDS = cwd + r"\common\credentials\google\credentials.json"
-GOOGLE_TOKEN = cwd + r"\common\credentials\google\token.pickle"
+GOOGLE_CREDS = f"{common_dir}\\credentials\\google\\credentials.json"
+GOOGLE_TOKEN = f"{common_dir}\\credentials\\google\\token.pickle"
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/calendar",
@@ -19,8 +19,6 @@ GOOGLE_SCOPES = [
 ]
 
 GOOGLE_DRIVE_PACKING_SLIP_FOLDER_ID = "1llFIcyrBbPj9b1HUP34LRVs5tfOzP_Ns"
-
-TEMP_FILE_PATH = cwd + r"\common\temp"
 
 ############# URLS ###########
 

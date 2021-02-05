@@ -1,18 +1,22 @@
 import re
 import csv
+import pathlib
 from pdfminer.layout import LTTextContainer
 
 from common.config import (
     CSC_GMBH_CHANNEL_ID,
     HORNBACH_BILLING_ID,
     TAX_RATE,
-    HORNBACH_STOCK_PATH
 )
 from ..classes.customer import Customer
 from ..classes.item import Item
 from ..classes.order import Order
 from common.api.veeqo import get_sellable_id
 
+
+file_path = pathlib.Path(__file__)
+
+HORNBACH_STOCK_PATH = f"{file_path.parent}\\stock\\hornbach_stock.csv"
 
 def hornbach_pdf_to_customer(pdf_pages):
     delivery_info = []

@@ -1,10 +1,10 @@
 import csv
+import pathlib
 
 from common.config import (
     ARGOS_CHANNEL_ID,
     ARGOS_BILLING_ID,
     TAX_RATE,
-    ARGOS_STOCK_PATH,
 )
 
 from ..classes.customer import Customer
@@ -12,6 +12,9 @@ from ..classes.item import Item
 from ..classes.order import Order
 from common.api.veeqo import get_sellable_id
 
+file_path = pathlib.Path(__file__)
+
+ARGOS_STOCK_PATH = f"{file_path.parent}\\stock\\argos_stock.csv"
 
 def argos_csv_to_customer(csv_row):
     # Reverse split
