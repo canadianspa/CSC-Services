@@ -6,7 +6,7 @@ common_dir = pathlib.Path(__file__).parent
 
 UK_POSTCODE_REGEX = r"[A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA"
 
-TEMP_FOLDER_PATH = f"{common_dir}\\credentials\\temp"
+TEMP_FOLDER_PATH = f"{common_dir}\\temp"
 
 ############# GOOGLE ###########
 
