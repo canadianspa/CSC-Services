@@ -1,7 +1,7 @@
 import { handleResponse } from "./ApiUtils";
 import { API_BASE_URL } from "../config";
 
-export function convertFile(params) {
+export function convertImportFile(params) {
   const { vendor, file } = params;
 
   let url = `${API_BASE_URL}/import/convert/${vendor}`;
@@ -161,6 +161,32 @@ export function dbDelete(params) {
   };
 
   return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function convertVeeqoCSVFile(params) {
+  const { file } = params;
+
+  let url = `${API_BASE_URL}/shipping/convert`;
+
+  let formData = new FormData();
+  formData.append("file", file);
+
+  let options = {
+    method: "POST",
+    body: formData,
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}
+
+export function getQuotes() {
+  let url = `${API_BASE_URL}/shipping/quotes`;
+
+  return fetch(url)
     .then(handleResponse)
     .catch((error) => console.error(error));
 }

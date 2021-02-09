@@ -65,6 +65,9 @@ function Navbar() {
           <NavItem>
             <NavLink href="/guides">Guides</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink href="/shipping">Shipping</NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
     </NavigationBar>

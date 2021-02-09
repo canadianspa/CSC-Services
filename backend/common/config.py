@@ -28,13 +28,15 @@ VEEQO_API_SHIPMENTS_URL = "https://api.veeqo.com/shipments"
 VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
 VEEQO_API_PACKING_URL = "https://api.veeqo.com/printing_templates/batch_templates?templates[0][entity]=order&templates[0][format]=packing_slip&templates[0][name]=[Veeqo]packing_slip&selected_ids_string="
 
-POSTCODER_URL = "https://ws.postcoder.com"
-
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
 RANGE_PORTAL_ORDERS_URL = "https://supplier.rstore.com/suppliers.mod/api/order.load.php"
 RANGE_PORTAL_STOCK_URL = (
     "https://supplier.rstore.com/suppliers.mod/api/stock.load.php?supplier=5778"
 )
+
+POSTCODER_URL = "https://ws.postcoder.com"
+
+SHIPPING_API_URL = "https://www.passenger.canamspas.com"
 
 MONGO_CLIENT_URL = "mongodb://localhost:27017/"
 

@@ -83,7 +83,7 @@ def create_order(order):
     return response_json["number"]
 
 
-def create_shipment(order_id, allocation_id, tracking_number):
+def attach_shipment(order_id, allocation_id, tracking_number):
     url = VEEQO_API_SHIPMENTS_URL
 
     body = json.dumps(

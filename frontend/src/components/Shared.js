@@ -9,6 +9,7 @@ import MultiSelectComponent from "./shared/MultiSelectComponent";
 import IconButtonComponent from "./shared/IconButtonComponent";
 import InlineButtonComponent from "./shared/InlineButtonComponent";
 import IconHeaderComponent from "./shared/IconHeaderComponent";
+import FileUploadComponent from "./shared/FileUploadComponent";
 
 export const Card = CardComponent;
 export const Header = HeaderComponent;
@@ -21,3 +22,4 @@ export const IconButton = IconButtonComponent;
 export const InlineButton = InlineButtonComponent;
 export const IconHeader = IconHeaderComponent;
 export const SubHeader = SubHeaderComponent;
+export const FileUploadArea = FileUploadComponent;

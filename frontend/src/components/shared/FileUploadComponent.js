@@ -1,23 +1,21 @@
 import React, { useCallback } from "react";
-import styles from "./FileUploadArea.module.css";
+import styles from "./FileUploadComponent.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDropzone } from "react-dropzone";
 
-function FileUploadArea({ selectedVendor, handleFileSubmit }) {
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      if (acceptedFiles[0]) {
-        handleFileSubmit(selectedVendor.name, acceptedFiles[0]);
-      }
-    },
-    [selectedVendor, handleFileSubmit]
-  );
+function FileUploadArea({ name, type, onSubmit }) {
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles[0]) {
+      onSubmit(acceptedFiles[0], name);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
-    accept: selectedVendor.file_type,
+    accept: type,
   });
 
   return (
@@ -25,7 +23,7 @@ function FileUploadArea({ selectedVendor, handleFileSubmit }) {
       <input {...getInputProps()} />
       <div className={styles.dropzoneContent}>
         <FontAwesomeIcon icon="upload" />
-        <span>Click to upload file ({selectedVendor.file_type})</span>
+        <span>Click to upload file ({type})</span>
       </div>
     </div>
   );

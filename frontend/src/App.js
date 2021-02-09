@@ -25,6 +25,7 @@ import OrderWellPage from "./components/bandq/orderwell/OrderWellPage";
 import ComparisonPage from "./components/bandq/comparison/ComparisonPage";
 import GuidesPage from "./components/guides/GuidesPage";
 import PortablesPage from "./components/portables/PortablesPage";
+import BulkShippingPage from "./components/shipping/BulkShippingPage";
 import PageNotFound from "./components/PageNotFound";
 
 library.add({
@@ -49,12 +50,13 @@ function App() {
             <Route path="/update" component={UpdatePage} />
             <Route path="/import/" component={ImportPage} />
             <Route path="/calendar/" component={CalendarPage} />
+            <Route path="/portables" component={PortablesPage} />
+            <Route path="/shipping" component={BulkShippingPage} />
 
             <Route path="/bandq/turnover" component={TurnoverPage} />
             <Route path="/bandq/orderwell" component={OrderWellPage} />
             <Route path="/bandq/comparison" component={ComparisonPage} />
 
-            <Route exact path="/portables" component={PortablesPage} />
             <Route exact path="/guides" component={GuidesPage} />
             <Route exact path="/guides/:article" component={GuidesPage} />
 

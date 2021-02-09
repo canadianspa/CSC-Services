@@ -8,19 +8,34 @@ function Select({
   options,
   onChange,
   useObjects,
+  useEvent,
   objectTitleKey = "name",
   multiple,
   name,
   style,
 }) {
-  function _onChange(event) {
-    if (useObjects) {
-      const { value, name } = event.target;
+  function onInputChange(event) {
+    const { value, name } = event.target;
 
-      var option = options.find((_option) => _option[objectTitleKey] === value);
-      onChange(option, name);
+    var option = value;
+
+    if (useObjects) {
+      option = options.find((option) => {
+        return option[objectTitleKey] === value;
+      });
+    }
+
+    if (useEvent) {
+      var syntheticEvent = {
+        target: {
+          name: name,
+          value: option,
+        },
+      };
+
+      onChange(syntheticEvent);
     } else {
-      onChange(event);
+      onChange(option, name);
     }
   }
 
@@ -30,12 +45,12 @@ function Select({
       className={styles.select}
       name={name}
       style={style}
-      multiple={multiple ? true : false}
+      multiple={multiple}
       value={value}
-      onChange={_onChange}
+      onChange={onInputChange}
     >
       {options.map((option, index) => (
-        <option key={index} disabled={option.disabled ? true : false}>
+        <option key={index} disabled={option.disabled}>
           {useObjects ? option[objectTitleKey] : option}
         </option>
       ))}

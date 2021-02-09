@@ -5,9 +5,8 @@ import * as api from "../../api/BackendApi";
 import { reducer } from "../utils";
 
 import { toast } from "react-toastify";
-import { Jumbotron, Spinner, Select, Header } from "../Shared";
+import { Jumbotron, Spinner, Select, Header, FileUploadArea } from "../Shared";
 import OrdersView from "./OrdersView";
-import FileUploadArea from "./FileUploadArea";
 import ImportPageModal from "./ImportPageModal";
 
 var intialState = {
@@ -33,11 +32,11 @@ function ImportPage() {
     setPageVariables({ selectedVendor: vendor });
 
     if (!vendor.requires_file) {
-      getOrders(vendor.name);
+      getOrders(null, vendor.name);
     }
   }
 
-  function getOrders(vendorName, file) {
+  function getOrders(file, vendorName) {
     setLoading(true);
 
     var params = {
@@ -45,7 +44,7 @@ function ImportPage() {
       file: file,
     };
 
-    api.convertFile(params).then((json) => {
+    api.convertImportFile(params).then((json) => {
       setLoading(false);
 
       if (json.error) {
@@ -144,8 +143,9 @@ function ImportPage() {
             <Spinner style={{ marginTop: "60px" }} />
           ) : (
             <FileUploadArea
-              selectedVendor={pageVariables.selectedVendor}
-              handleFileSubmit={getOrders}
+              name={pageVariables.selectedVendor.name}
+              type={pageVariables.selectedVendor.file_type}
+              onSubmit={getOrders}
             />
           )}
         </>

@@ -20,7 +20,7 @@ def handle_limited_input(vendor, file, delimiter):
     order_list = []
 
     for row in delimited_input:
-        if len(row) != 0 and valid_csv_row(row):
+        if valid_csv_row(row):
             customer = customer_strategy(vendor, row)
             item = item_strategy(vendor, row)
 
@@ -35,7 +35,7 @@ def handle_limited_input(vendor, file, delimiter):
     return class_to_json(order_list)
 
 def valid_csv_row(row):
-    if all(text == '' for text in row):
+    if len(row) == 0 or all(text == '' for text in row):
         return False
     else:
         return True
