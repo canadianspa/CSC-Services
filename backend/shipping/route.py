@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-
+import base64
+from .utils import merge_pdfs
 from .handlers import handle_csv_input
 from .api.shipping import get_quotes, create_shipment
 
@@ -26,10 +27,12 @@ def quotes_request():
 
     return jsonify(quotes)
     
-@shipping.route("/shipping/create", methods=["GET"])
+@shipping.route("/shipping/create", methods=["POST"])
 def create_request():
     body = request.json
+    #shipment = create_shipment(body)
 
-    shipment = create_shipment(body)
+    #merge_pdfs(labels)
 
-    return jsonify(shipment)
+
+    return jsonify(body)

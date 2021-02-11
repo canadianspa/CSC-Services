@@ -14,9 +14,15 @@ def build_order(row):
             "phone": row[28],
             "email": row[27],
         },
+        "products": [row[57]],
         "reference": row[1],
     }
 
+def add_product(order, row):
+    product = row[57]
+    order["products"].append(product)
+
+    return order
 
 """
     PARCEL
