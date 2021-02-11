@@ -7,15 +7,14 @@ import * as api from "../../api/BackendApi";
 import { EMAILS } from "../../config";
 import { reducer } from "../utils";
 import { Jumbotron, Spinner } from "../Shared";
+
 import FormView from "./FormView";
 import InitialView from "./InitialView";
-
-const defaultAttendees = [EMAILS[0]];
 
 const initialFormState = {
   orderUrl: "",
   calendar: null,
-  attendees: defaultAttendees,
+  attendees: [EMAILS[0]],
   title: "",
   date: moment().format("YYYY-MM-DD"),
   time: "",
@@ -37,10 +36,22 @@ function CalendarPage() {
 
   function fetchData() {
     api.getCalendars().then((response) => {
-      onFormChange(response[0], "calendar");
       setCalendars(response);
       setLoading(false);
     });
+  }
+
+  function onFormChange(event) {
+    const { name, value } = event.target;
+    setFormState({ [name]: value });
+  }
+
+  function onResponse(response, onSuccess) {
+    if (response.error) {
+      toast.error(response.message);
+    } else {
+      onSuccess(response);
+    }
   }
 
   function toggleView() {
@@ -50,23 +61,18 @@ function CalendarPage() {
       };
 
       api.getVeeqoOrder(params).then((response) => {
-        onResponse(response, () => {
+        const onSuccess = () => {
           toast.dark(`Using order ${response.number}`);
           setOrder(response);
           setView("form");
-        });
+        };
+
+        onResponse(response, onSuccess);
       });
     } else {
+      setFormState(initialFormState);
+      setOrder(null);
       setView("initial");
-    }
-  }
-
-  function onFormChange(event, name) {
-    if (name) {
-      setFormState({ [name]: event });
-    } else {
-      const { name, value } = event.target;
-      setFormState({ [name]: value });
     }
   }
 
@@ -92,40 +98,24 @@ function CalendarPage() {
       };
 
       api.createEvent(params).then((response) => {
-        setLoading(false);
-
-        onResponse(response, () => {
+        const onSuccess = () => {
           toast.dark("Event added successfully");
-          setInitialState();
-        });
+          toggleView();
+        };
+
+        setLoading(false);
+        onResponse(response, onSuccess);
       });
     } else {
       toast.dark("No inputs may be empty");
     }
   }
 
-  function onResponse(response, onSuccess) {
-    if (response.error) {
-      toast.error(response.message);
-    } else {
-      onSuccess(response);
-    }
-  }
-
-  function setInitialState() {
-    setFormState({
-      ...initialFormState,
-      calendar: calendars[0],
-    });
-    setOrder(null);
-    setView("initial");
-  }
-
   return (
     <>
       <Jumbotron>Create Event</Jumbotron>
       {loading ? (
-        <Spinner style={{ marginTop: "120px" }} />
+        <Spinner />
       ) : view === "initial" ? (
         <InitialView
           formState={formState}

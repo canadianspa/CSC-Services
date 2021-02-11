@@ -1,0 +1,37 @@
+.row td {
+  vertical-align: middle;
+}
+
+.product {
+  width: fit-content;
+  font-size: 15px;
+  padding: 5px 7px;
+  margin: 2px;
+  border-radius: 5px;
+  background: #e4f0f9;
+}
+
+.product:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.parcelGrid {
+  min-height: 200px;
+  width: fit-content;
+  display: flex;
+}
+
+.parcelGrid > * {
+  margin: 0 10px;
+}
+
+.parcel {
+  margin-top: 10px;
+  font-size: 17px;
+  height: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}

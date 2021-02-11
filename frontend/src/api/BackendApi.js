@@ -190,3 +190,25 @@ export function getQuotes() {
     .then(handleResponse)
     .catch((error) => console.error(error));
 }
+
+export function createShipments(params) {
+  const { orders, service, parcels } = params;
+
+  let url = `${API_BASE_URL}/shipping/create`;
+
+  var body = {
+    orders: orders,
+    service_code: service.service_code,
+    parcels: parcels,
+  };
+
+  let options = {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  };
+
+  return fetch(url, options)
+    .then(handleResponse)
+    .catch((error) => console.error(error));
+}

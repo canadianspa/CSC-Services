@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Shared.module.css";
 
 import { Input } from "reactstrap";
 
 function Select({
-  value,
   options,
   onChange,
   useObjects,
@@ -14,8 +13,16 @@ function Select({
   name,
   style,
 }) {
+  useEffect(() => {
+    // On render
+    // => calls onChange with intial value
+    handleChange(options[0]);
+
+    // eslint-disable-next-line
+  }, []);
+
   function onInputChange(event) {
-    const { value, name } = event.target;
+    const { value } = event.target;
 
     var option = value;
 
@@ -25,17 +32,21 @@ function Select({
       });
     }
 
+    handleChange(option);
+  }
+
+  function handleChange(value) {
     if (useEvent) {
       var syntheticEvent = {
         target: {
           name: name,
-          value: option,
+          value: value,
         },
       };
 
       onChange(syntheticEvent);
     } else {
-      onChange(option, name);
+      onChange(value, name);
     }
   }
 
@@ -43,17 +54,19 @@ function Select({
     <Input
       type="select"
       className={styles.select}
-      name={name}
       style={style}
       multiple={multiple}
-      value={value}
       onChange={onInputChange}
     >
-      {options.map((option, index) => (
-        <option key={index} disabled={option.disabled}>
-          {useObjects ? option[objectTitleKey] : option}
-        </option>
-      ))}
+      {options.map((option, index) => {
+        var value = useObjects ? option[objectTitleKey] : option;
+
+        return (
+          <option key={index} disabled={option.disabled} value={value}>
+            {value}
+          </option>
+        );
+      })}
     </Input>
   );
 }

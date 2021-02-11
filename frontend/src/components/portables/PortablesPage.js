@@ -150,7 +150,7 @@ function PortablesPage() {
     <>
       <Jumbotron>Portables</Jumbotron>
       {customers.length === 0 ? (
-        <Spinner style={{ marginTop: "120px" }} />
+        <Spinner />
       ) : (
         <div className={styles.window}>
           <div>

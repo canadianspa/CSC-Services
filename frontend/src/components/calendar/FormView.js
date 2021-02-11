@@ -31,9 +31,11 @@ function EventForm({ formState, onFormChange, onSubmit, toggleView }) {
       </FormGroup>
       <InlineButton>
         <Button color="danger" onClick={toggleView}>
-          Back
+          Cancel
         </Button>
-        <Button onClick={onSubmit}>Create</Button>
+        <Button color="primary" onClick={onSubmit}>
+          Create
+        </Button>
       </InlineButton>
     </div>
   );

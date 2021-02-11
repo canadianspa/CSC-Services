@@ -25,9 +25,9 @@ function InitialView({ formState, onFormChange, calendars, emails, toggleView })
           name="calendar"
           options={calendars}
           objectTitleKey="summary"
-          value={calendar.summary}
           onChange={onFormChange}
-          useObjects={true}
+          useObjects
+          useEvent
           style={{ marginBottom: "10px", width: "250px" }}
         />
       </FormGroup>
@@ -39,6 +39,7 @@ function InitialView({ formState, onFormChange, calendars, emails, toggleView })
           options={attendees}
           onChange={onFormChange}
           predefinedSuggestions={emails}
+          useEvent
         />
       </FormGroup>
       <Button onClick={toggleView}>Next</Button>

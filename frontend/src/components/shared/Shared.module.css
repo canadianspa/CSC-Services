@@ -1,15 +1,16 @@
 /* CARD */
 
-.cardWrapper {
-  display: flex;
-  flex-direction: column;
+.card {
+  position: relative;
   height: 200px;
   width: 200px;
   border-radius: 10px;
   box-shadow: 10px 10px 15px 0px rgba(0, 0, 0, 0.6);
 }
 
-.cardWrapper > label {
+.card > label,
+.card > div {
+  width: 100%;
   font-size: 18px;
   line-height: 40px;
   height: 40px;
@@ -19,12 +20,13 @@
   background-color: #343a40;
 }
 
-.cardWrapper > span {
-  font-size: 30px;
-  line-height: 135px;
+.card > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 
-.cardWrapper > p {
+.description {
   font-size: 16px;
   color: #616a72;
   position: absolute;
@@ -32,6 +34,11 @@
   right: 0;
   bottom: 10px;
   margin: auto;
+}
+
+.text {
+  font-size: 20px;
+  line-height: 135px;
 }
 
 /* HEADER & SUB HEADER */
@@ -64,7 +71,6 @@
 /* ICON BUTTON */
 
 .iconButton {
-  margin: 10px;
   border: 0;
   padding: 0;
   outline: none;
@@ -164,6 +170,7 @@
 
 .spinner {
   display: block;
-  width: 100px;
-  height: 100px;
+  margin-top: 50px;
+  width: 80px;
+  height: 80px;
 }

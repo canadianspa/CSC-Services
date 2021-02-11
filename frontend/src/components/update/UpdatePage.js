@@ -13,6 +13,11 @@ function UpdatePage() {
   const [loading, setLoading] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(initialVendor);
 
+  function onFormChange(event) {
+    const { value } = event.target;
+    setSelectedVendor(value);
+  }
+
   function handleUpdateClick() {
     setLoading(true);
 
@@ -36,15 +41,16 @@ function UpdatePage() {
     <>
       <Jumbotron>Update Google Spreadsheet</Jumbotron>
       {loading ? (
-        <Spinner style={{ width: "70px", height: "70px", marginTop: "50px" }} />
+        <Spinner />
       ) : (
         <>
           <Header>Select Spreadsheet</Header>
           <Select
             options={UPDATE_VENDORS}
             objectTitleKey="title"
-            onChange={setSelectedVendor}
-            useObjects={true}
+            onChange={onFormChange}
+            useObjects
+            useEvent
           />
           <Button onClick={handleUpdateClick}>Update</Button>
         </>

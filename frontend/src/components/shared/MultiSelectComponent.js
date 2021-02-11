@@ -3,6 +3,7 @@ import styles from "./Shared.module.css";
 import "./Shared.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Autosuggest from "react-autosuggest";
 
 function MultiSelect({
@@ -82,7 +83,7 @@ function MultiSelect({
         <div key={index} className={styles.multiselectOption}>
           <span>{option}</span>
           <button id={index} onClick={onDeleteClick}>
-            <FontAwesomeIcon icon="times" />
+            <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
       ))}

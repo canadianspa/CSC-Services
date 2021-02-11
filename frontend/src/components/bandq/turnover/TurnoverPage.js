@@ -47,7 +47,7 @@ function TurnoverPage() {
         <Button type="submit">Calculate</Button>
       </Form>
 
-      {loading && <Spinner style={{ marginTop: "50px" }} />}
+      {loading && <Spinner />}
       {turnover && (
         <div className={styles.totalsWrapper}>
           <Card header="Total excluding VAT" text={`£${turnover.total_ex_vat}`} />

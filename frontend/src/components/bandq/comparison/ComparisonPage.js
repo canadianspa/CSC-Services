@@ -83,7 +83,7 @@ function ComparisonPage() {
         Calculate
       </Button>
 
-      {loading && <Spinner style={{ marginTop: "50px" }} />}
+      {loading && <Spinner />}
       {sales && previousSales && (
         <div className={styles.totalsWrapper}>
           <Card

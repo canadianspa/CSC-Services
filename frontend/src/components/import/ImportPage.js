@@ -44,17 +44,17 @@ function ImportPage() {
       file: file,
     };
 
-    api.convertImportFile(params).then((json) => {
+    api.convertImportFile(params).then((response) => {
       setLoading(false);
 
-      if (json.error) {
+      if (response.error) {
         toast.dark(
           "Error getting orders, ensure you are uploading the correct file."
         );
       } else {
-        setOrders(json);
+        setOrders(response);
         setFile(file);
-        setSelectedIndexes(json.map((x, idx) => idx));
+        setSelectedIndexes(response.map((x, idx) => idx));
         setShowInitialView(false);
       }
     });
@@ -137,10 +137,10 @@ function ImportPage() {
             options={IMPORT_VENDORS}
             objectTitleKey="title"
             onChange={handleVendorChange}
-            useObjects={true}
+            useObjects
           />
           {loading ? (
-            <Spinner style={{ marginTop: "60px" }} />
+            <Spinner />
           ) : (
             <FileUploadArea
               name={pageVariables.selectedVendor.name}

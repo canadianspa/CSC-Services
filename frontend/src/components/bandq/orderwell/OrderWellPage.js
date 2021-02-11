@@ -51,7 +51,7 @@ function OrderWell() {
     <>
       <Jumbotron>Order Well</Jumbotron>
       {loading ? (
-        <Spinner style={{ marginTop: "120px" }} />
+        <Spinner />
       ) : (
         <>
           <Button onClick={handleCopyClick}>Copy</Button>
