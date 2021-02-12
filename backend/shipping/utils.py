@@ -1,26 +1,66 @@
-from io import BytesIO
-from io import FileIO as file
 from base64 import b64encode, b64decode
-from packages.PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileMerger
 
 from common.config import TEMP_FOLDER_PATH
 
-def merge_pdfs(strings):
+label_folder = f"{TEMP_FOLDER_PATH}\\labels"
+label = f"{TEMP_FOLDER_PATH}\\label.pdf"
+
+
+def encode_pdf(binary):
+    encoded = b64encode(binary)
+
+    return str(encoded)
+
+
+def decode_pdf(string):
+    decoded = b64decode(string)
+
+    html = str.encode("<!DOCTYPE html>")
+
+    if html in decoded:
+        decoded = decoded.split(html)[0]
+
+    return decoded
+
+
+def save_pdf(filepath, binary):
+    temp = open(filepath, 'wb')
+    temp.write(binary)
+    temp.close()
+
+
+def open_pdf(filepath):
+    temp = open(filepath, 'rb')
+    return temp.read()
+
+
+def save_pdfs(strings):
+    files = []
+
+    for index, string in enumerate(strings):
+        binary = decode_pdf(string)
+
+        filename = "templabel" + str(index) + ".pdf"
+        filepath = label_folder + "\\" + filename
+
+        save_pdf(filepath, binary)
+
+        files.append(filepath)
+
+    return files
+
+
+def merge_pdfs(files):
     merger = PdfFileMerger()
 
-    for string in strings:
-        decoded = b64decode(string)
-        pdf = BytesIO(decoded)
-
+    for pdf in files:
         merger.append(pdf)
 
-    label = f"{TEMP_FOLDER_PATH}\\label.pdf"
-
-    # TODO: CUSTOM WRITE FUNC RETURNING B64 STRING
     merger.write(label)
-    merger.close()
+    merger.close()  
 
-    fileobj = file(label, 'rb')
-    b64label = b64encode(fileobj.read())
+    pdf = open_pdf(label)
+    b64pdf = encode_pdf(pdf)
 
-    return b64label
+    return b64pdf

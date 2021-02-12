@@ -1,4 +1,4 @@
-from common.config import VEEQO_APP_ORDERS_URL
+from common.config import VEEQO_APP_URL
 
 
 def build_event(create_event, body, order, attachments):
@@ -12,7 +12,7 @@ def build_event(create_event, body, order, attachments):
         f'{order["deliver_to"]["country"]}'
     )
     description = (
-        f'<a href="{VEEQO_APP_ORDERS_URL}/{order["id"]}">Order {order["number"]}</a><br/>'
+        f'<a href="{VEEQO_APP_URL}/orders/{order["id"]}">Order {order["number"]}</a><br/>'
         f'{order["deliver_to"]["first_name"]} {order["deliver_to"]["last_name"]}<br/>'
         f'{order["deliver_to"]["phone"]}<br/>'
         f'{order["deliver_to"]["email"]}<br/>'

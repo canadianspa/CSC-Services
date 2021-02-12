@@ -192,13 +192,13 @@ export function getQuotes() {
 }
 
 export function createShipments(params) {
-  const { orders, service, parcels } = params;
+  const { orders, service_code, parcels } = params;
 
   let url = `${API_BASE_URL}/shipping/create`;
 
   var body = {
     orders: orders,
-    service_code: service.service_code,
+    service_code: service_code,
     parcels: parcels,
   };
 

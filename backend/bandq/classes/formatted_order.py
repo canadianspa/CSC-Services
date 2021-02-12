@@ -1,9 +1,9 @@
-from common.config import VEEQO_APP_ORDERS_URL
+from common.config import VEEQO_APP_URL
 
 class FormattedOrder():
     def __init__(self, order):
         self.id = order[3]
-        self.url = f"{VEEQO_APP_ORDERS_URL}/{order[3][3:]}"
+        self.url = f"{VEEQO_APP_URL}/orders/{order[3][3:]}"
         
         self.price_with_vat = float(order[2].replace(",", ""))
         self.price_ex_vat = float(order[18].replace(",", ""))

@@ -96,45 +96,18 @@ function BulkShippingPage() {
     }
   }
 
-  function onCreateShipments() {
-    const { parcels, service } = formState;
-
-    if (parcels.length > 0) {
-      setLoading(true);
-
-      var params = {
-        orders: orders,
-        service: service,
-        parcels: parcels,
-      };
-
-      const onSuccess = (response) => {
-        toast.dark("Created " + response.length + " shipments");
-        setFormState(initialFormState);
-        setView("initial");
-      };
-
-      api.createShipments(params).then((response) => {
-        setLoading(false);
-        onResponse(response, onSuccess);
-      });
-    } else {
-      toast.dark("Shipment must contain at least one parcel");
-    }
-  }
-
   function onAddParcel() {
     const { height, width, length, weight } = formState;
 
     if (height && width && length && weight) {
       var parcel = {
         dimensions: {
-          height: height,
-          width: width,
-          length: length,
+          height: parseInt(height),
+          width: parseInt(width),
+          length: parseInt(length),
           unit: "cm",
         },
-        weight_in_grams: weight,
+        weight_in_grams: parseInt(weight),
       };
 
       setFormState({
@@ -153,6 +126,34 @@ function BulkShippingPage() {
       (parcel, index) => index !== parseInt(id)
     );
     setFormState({ parcels: parcels });
+  }
+
+  function onCreateShipments() {
+    const { parcels, service } = formState;
+
+    if (parcels.length > 0) {
+      setLoading(true);
+
+      var params = {
+        orders: orders,
+        service_code: service.code,
+        parcels: parcels,
+      };
+
+      const onSuccess = (response) => {
+        toast.dark("Created " + response.shipped.length + " shipments");
+        buildLabelWindow(response.label)
+        setFormState(initialFormState);
+        setView("initial");
+      };
+
+      api.createShipments(params).then((response) => {
+        setLoading(false);
+        onResponse(response, onSuccess);
+      });
+    } else {
+      toast.dark("Shipment must contain at least one parcel");
+    }
   }
 
   function buildLabelWindow(label) {

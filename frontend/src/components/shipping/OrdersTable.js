@@ -19,18 +19,17 @@ function OrdersTable({ orders }) {
       <tbody>
         {orders.map((order, index) => (
           <tr key={index} className={styles.row}>
-            <td>{order.reference}</td>
+            <td>{order.number}</td>
             <td>
-              {order.destination_address.first_name}{" "}
-              {order.destination_address.last_name}
+              {order.deliver_to.first_name} {order.deliver_to.last_name}
             </td>
-            <td>{order.destination_address.line_1}</td>
-            <td>{order.destination_address.city}</td>
-            <td>{order.destination_address.zip}</td>
+            <td>{order.deliver_to.address1}</td>
+            <td>{order.deliver_to.city}</td>
+            <td>{order.deliver_to.zip}</td>
             <td>
-              {order.products.map((product, index) => (
+              {order.line_items.map((item, index) => (
                 <div key={index} className={styles.product}>
-                  {product}
+                  {item.sellable.product_title}
                 </div>
               ))}
             </td>

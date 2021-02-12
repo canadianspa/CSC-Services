@@ -4,6 +4,7 @@ import json
 from common.utils import handle_response
 from common.config import SHIPPING_API_URL
 from common.credentials.tokens import SHIPPING_API_TOKEN
+from ..exceptions import ShipmentNotCreatedError
 
 headers = {
     "Content-Type": "application/json",
@@ -25,6 +26,11 @@ def create_shipment(body):
     data = json.dumps(body)
 
     response = requests.post(url, headers=headers, data=data)
-    quotes = handle_response(response)
 
-    return quotes
+    try:
+        shipment = handle_response(response)
+        return shipment
+    except:
+        ref = body["reference"]
+        raise ShipmentNotCreatedError(ref)
+

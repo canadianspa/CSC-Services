@@ -22,10 +22,8 @@ GOOGLE_DRIVE_PACKING_SLIP_FOLDER_ID = "1llFIcyrBbPj9b1HUP34LRVs5tfOzP_Ns"
 
 ############# URLS ###########
 
-VEEQO_APP_ORDERS_URL = "https://app.veeqo.com/orders"
-VEEQO_API_ORDERS_URL = "https://api.veeqo.com/orders"
-VEEQO_API_SHIPMENTS_URL = "https://api.veeqo.com/shipments"
-VEEQO_API_PRODUCTS_URL = "https://api.veeqo.com/products"
+VEEQO_APP_URL = "https://app.veeqo.com"
+VEEQO_API_URL = "https://api.veeqo.com"
 VEEQO_API_PACKING_URL = "https://api.veeqo.com/printing_templates/batch_templates?templates[0][entity]=order&templates[0][format]=packing_slip&templates[0][name]=[Veeqo]packing_slip&selected_ids_string="
 
 RANGE_PORTAL_LOGIN_URL = "https://supplier.rstore.com/login.php"
@@ -40,12 +38,10 @@ SHIPPING_API_URL = "https://www.passenger.canamspas.com"
 
 MONGO_CLIENT_URL = "mongodb://localhost:27017/"
 
-############# VEEQO CONST ###########
+############# VEEQO ###########
 
 TAX_RATE = 0.2
 DEFAULT_DELIVERY_METHOD_ID = "153707"
-
-############# VEEQO VENDOR IDS ###########
 
 BANDQ_CHANNEL_ID = "48307"
 ARGOS_CHANNEL_ID = "46116"

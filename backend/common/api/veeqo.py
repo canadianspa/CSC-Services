@@ -3,14 +3,8 @@ import json
 
 from ..credentials.apikeys import VEEQO_APIKEY
 from ..utils import handle_response
-from ..config import (
-    VEEQO_API_ORDERS_URL,
-    VEEQO_API_PRODUCTS_URL,
-    VEEQO_API_SHIPMENTS_URL,
-    VEEQO_API_PACKING_URL,
-    TEMP_FOLDER_PATH,
-)
-
+from ..config import VEEQO_API_URL, VEEQO_API_PACKING_URL, TEMP_FOLDER_PATH
+ 
 headers = {
     "Content-Type": "application/json",
     "x-api-key": VEEQO_APIKEY,
@@ -18,7 +12,7 @@ headers = {
 
 
 def get_orders():
-    url = f"{VEEQO_API_ORDERS_URL}?page_size=100&status=awaiting_payment"
+    url = f"{VEEQO_API_URL}/orders?page_size=100&status=awaiting_payment"
 
     response = requests.get(url, headers=headers)
     orders = handle_response(response)
@@ -27,7 +21,7 @@ def get_orders():
 
 
 def get_order_details(order_id):
-    url = f"{VEEQO_API_ORDERS_URL}/{order_id}"
+    url = f"{VEEQO_API_URL}/orders/{order_id}"
 
     response = requests.get(url, headers=headers)
     order = handle_response(response)
@@ -35,8 +29,19 @@ def get_order_details(order_id):
     return order
 
 
+def create_order(order):
+    url = f"{VEEQO_API_URL}/orders"
+
+    data = json.dumps({"order": order})
+
+    response = requests.post(url, headers=headers, data=data)
+    order = handle_response(response)
+
+    return order
+
+
 def update_order_details(order_id, order):
-    url = f"{VEEQO_API_ORDERS_URL}/{order_id}"
+    url = f"{VEEQO_API_URL}/orders/{order_id}"
 
     data = json.dumps({"order": order})
 
@@ -62,29 +67,18 @@ def download_packing_slip(order_id):
 
 
 def create_order_note(order_id, text):
-    url = f"{VEEQO_API_ORDERS_URL}/{order_id}/notes"
+    url = f"{VEEQO_API_URL}/orders/{order_id}/notes"
 
     data = json.dumps({"note": {"text": text}})
 
     response = requests.post(url, headers=headers, data=data)
-    response_json = handle_response(response)
+    note = handle_response(response)
 
-    return response_json
-
-
-def create_order(order):
-    url = VEEQO_API_ORDERS_URL
-
-    data = json.dumps({"order": order})
-
-    response = requests.post(url, headers=headers, data=data)
-    response_json = handle_response(response)
-
-    return response_json["number"]
+    return note
 
 
 def attach_shipment(order_id, allocation_id, tracking_number):
-    url = VEEQO_API_SHIPMENTS_URL
+    url = f"{VEEQO_API_URL}/shipments"
 
     body = json.dumps(
         {
@@ -102,18 +96,18 @@ def attach_shipment(order_id, allocation_id, tracking_number):
     )
 
     response = requests.post(url, headers=headers, data=body)
-    response_json = handle_response(response)
+    shipment = handle_response(response)
 
-    return response_json["order_id"]
+    return shipment
 
 
 def get_sellable_id(sku):
-    url = f"{VEEQO_API_PRODUCTS_URL}?query={sku}"
+    url = f"{VEEQO_API_URL}/products?query={sku}"
 
     response = requests.get(url, headers=headers)
-    response_json = handle_response(response)
+    results = handle_response(response)
 
-    for product in response_json:
+    for product in results:
         for sellable in product["sellables"]:
             if sellable["sku_code"] == sku:
                 return sellable["stock_entries"][0]["sellable_id"]
