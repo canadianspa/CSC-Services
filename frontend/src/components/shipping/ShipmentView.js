@@ -59,10 +59,10 @@ function ShipmentView({ quotes, formState, onFormChange, onClick }) {
         ))}
       </div>
       <InlineButton>
-        <Button color="danger" name="cancel" onClick={onClick}>
+        <Button color="danger" name="initial" onClick={onClick}>
           Cancel
         </Button>
-        <Button color="primary" name="ship" onClick={onClick}>
+        <Button color="primary" name="createShipment" onClick={onClick}>
           Ship
         </Button>
       </InlineButton>

@@ -20,6 +20,15 @@ def get_orders():
     return orders
 
 
+def get_cancelled_orders():
+    url = f"{VEEQO_API_URL}/orders?page_size=100&status=cancelled"
+
+    response = requests.get(url, headers=headers)
+    orders = handle_response(response)
+
+    return orders
+
+
 def get_order_details(order_id):
     url = f"{VEEQO_API_URL}/orders/{order_id}"
 

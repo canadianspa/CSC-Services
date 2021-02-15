@@ -13,7 +13,7 @@ function OrdersView({ orders, formState, onClick }) {
       <Header>Orders</Header>
       <OrdersTable orders={orders} />
       <InlineButton>
-        <Button color="danger" name="cancel" onClick={onClick}>
+        <Button color="danger" name="initial" onClick={onClick}>
           Cancel
         </Button>
         <Button color="primary" name="continue" onClick={onClick}>

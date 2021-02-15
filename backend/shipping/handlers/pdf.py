@@ -10,7 +10,7 @@ label = f"{TEMP_FOLDER_PATH}\\label.pdf"
 def encode_pdf(binary):
     encoded = b64encode(binary)
 
-    return str(encoded)
+    return encoded.decode("utf-8")
 
 
 def decode_pdf(string):

@@ -9,6 +9,7 @@ from googlecalendar.route import calendar
 from veeqo.route import veeqo
 from database.route import database
 from shipping.route import shipping
+import notifications.main
 
 app = Flask(__name__, static_folder="../frontend/build", static_url_path="/")
 
@@ -21,7 +22,6 @@ def index():
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file("index.html")
-
 
 app.register_blueprint(veeqoimport, url_prefix="/api")
 app.register_blueprint(update, url_prefix="/api")

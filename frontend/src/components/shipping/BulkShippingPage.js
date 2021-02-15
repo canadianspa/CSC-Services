@@ -8,6 +8,7 @@ import { Jumbotron, Spinner } from "../Shared";
 import InitialView from "./InitialView";
 import OrdersView from "./OrdersView";
 import ShipmentView from "./ShipmentView";
+import ShipmentDetailsView from "./ShipmentDetailsView";
 import BulkShippingPageModal from "./BulkShippingPageModal";
 
 const initialFormState = {
@@ -26,6 +27,7 @@ function BulkShippingPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [formState, setFormState] = useReducer(reducer, initialFormState);
 
+  const [details, setDetails] = useState(null);
   const [quotes, setQuotes] = useState([]);
   const [orders, setOrders] = useState([]);
 
@@ -58,6 +60,27 @@ function BulkShippingPage() {
     }
   }
 
+  function onClick(event) {
+    const { name, id } = event.currentTarget;
+
+    if (name === "continue") {
+      setView("shipment");
+    } else if (name === "initial") {
+      setFormState(initialFormState);
+      setView("initial");
+    } else if (name === "createShipment") {
+      onCreateShipments();
+    } else if (name === "openModal") {
+      toggle();
+    } else if (name === "addParcel") {
+      onAddParcel();
+    } else if (name === "deleteParcel") {
+      onDeleteParcel(id);
+    } else if (name === "viewLabel") {
+      buildLabelWindow();
+    }
+  }
+
   function onFileSubmit(file) {
     setLoading(true);
 
@@ -75,25 +98,6 @@ function BulkShippingPage() {
       setLoading(false);
       onResponse(response, onSuccess);
     });
-  }
-
-  function onClick(event) {
-    const { name, id } = event.currentTarget;
-
-    if (name === "continue") {
-      setView("shipment");
-    } else if (name === "ship") {
-      onCreateShipments();
-    } else if (name === "cancel") {
-      setFormState(initialFormState);
-      setView("initial");
-    } else if (name === "openModal") {
-      toggle();
-    } else if (name === "addParcel") {
-      onAddParcel();
-    } else if (name === "deleteParcel") {
-      onDeleteParcel(id);
-    }
   }
 
   function onAddParcel() {
@@ -141,10 +145,8 @@ function BulkShippingPage() {
       };
 
       const onSuccess = (response) => {
-        toast.dark("Created " + response.shipped.length + " shipments");
-        buildLabelWindow(response.label)
-        setFormState(initialFormState);
-        setView("initial");
+        setDetails(response)
+        setView("details")
       };
 
       api.createShipments(params).then((response) => {
@@ -156,13 +158,15 @@ function BulkShippingPage() {
     }
   }
 
-  function buildLabelWindow(label) {
+  function buildLabelWindow() {
+    var label = details.label;
+
     let pdfWindow = window.open("");
 
     pdfWindow.document.write(
-      "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+      '<iframe width="100%" height="100%" src="data:application/pdf;base64,' +
         encodeURI(label) +
-        "'></iframe>"
+        '"></iframe>'
     );
   }
 
@@ -175,13 +179,15 @@ function BulkShippingPage() {
         <InitialView onFileSubmit={onFileSubmit} />
       ) : view === "orders" ? (
         <OrdersView orders={orders} formState={formState} onClick={onClick} />
-      ) : (
+      ) : view === "shipment" ? (
         <ShipmentView
           quotes={quotes}
           formState={formState}
           onFormChange={onFormChange}
           onClick={onClick}
         />
+      ) : (
+        <ShipmentDetailsView details={details} onClick={onClick} />
       )}
       <BulkShippingPageModal
         isOpen={isOpen}
