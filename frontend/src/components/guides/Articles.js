@@ -4,6 +4,7 @@ import HomebaseArticle from "./arcticles/homebase";
 import WayfairArticle from "./arcticles/wayfair";
 import ImportArticle from "./arcticles/import";
 import RangeStoreArticle from "./arcticles/range_store";
+import BulkShippingArticle from "./arcticles/shipping";
 
 function loadArticles() {
   return [
@@ -13,6 +14,7 @@ function loadArticles() {
     WayfairArticle(),
     ImportArticle(),
     RangeStoreArticle(),
+    BulkShippingArticle(),
   ];
 }
 

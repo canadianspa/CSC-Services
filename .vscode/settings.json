@@ -1,6 +1,6 @@
 {
     "editor.formatOnSave": true,
     "prettier.printWidth": 85,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "ms-python.python",
     "editor.wordWrap": "on",
 }
