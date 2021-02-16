@@ -1,8 +1,11 @@
 .articleContainer {
-  width: 100%;
+  width: 80%;
+  height: 75vh;
+  padding: 10px;
+  overflow-y: scroll;
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .modalBody img {

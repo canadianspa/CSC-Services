@@ -3,7 +3,7 @@ import styles from "./Shared.module.css";
 
 import { Spinner as ReactStrapSpinner } from "reactstrap";
 
-function Spinner({}) {
+function Spinner() {
   return <ReactStrapSpinner color="dark" className={styles.spinner} />;
 }
 

@@ -5,7 +5,7 @@ import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Select, MultiSelect } from "../Shared";
 
 function InitialView({ formState, onFormChange, calendars, emails, toggleView }) {
-  const { orderUrl, calendar, attendees } = formState;
+  const { orderUrl, attendees } = formState;
 
   return (
     <div className={styles.eventForm}>

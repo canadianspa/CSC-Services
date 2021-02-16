@@ -10,7 +10,7 @@ const dataEmailImg = "/images/articles/homebase/data-email.png";
 function HomebaseArticle() {
   return {
     header: "Get Homebase File",
-    description: "Guide to exporting an order from the Homebase Freeway EDI portal",
+    description: "Guide to exporting an order from the Homebase EDI portal",
     portalTitle: "Freeway EDI",
     portalUrl: portalUrl,
     alt: "homebase",
