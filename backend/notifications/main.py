@@ -16,6 +16,7 @@ def cancellation_notification():
     for order in orders:
         _id = order["id"]
         cancelled_at = order["cancelled_at"]
+
         if cancelled_at:
             cancelled_at = parser.parse(cancelled_at)
             now = datetime.now()
