@@ -63,10 +63,10 @@ function Navbar() {
             <NavLink href="/portables">Portables</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/guides">Guides</NavLink>
+            <NavLink href="/shipping">Shipping</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/shipping">Shipping</NavLink>
+            <NavLink href="/guides">Guides</NavLink>
           </NavItem>
         </Nav>
       </Collapse>
