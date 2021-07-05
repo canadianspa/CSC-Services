@@ -57,6 +57,12 @@ export const IMPORT_VENDORS = [
     file_type: ".csv",
   },
   {
+    name: "robert_dyas_edge",
+    title: "Robert Dyas Edge CSV",
+    requires_file: true,
+    file_type: ".csv",
+  },
+  {
     name: "shop_direct",
     title: "Shop Direct TXT",
     requires_file: true,
