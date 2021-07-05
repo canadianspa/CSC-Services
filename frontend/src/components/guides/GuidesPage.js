@@ -6,7 +6,7 @@ import GuidesPageModal from "./GuidesPageModal";
 import Article from "./Article";
 import loadArticles from "./Articles";
 
-function HelpPage({ match, history }) {
+function GuidesPage({ match, history }) {
   const articles = loadArticles();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,6 @@ function HelpPage({ match, history }) {
 
   function toggle() {
     if (isOpen === true && match.params.article) {
-      alert("ere");
       history.push("/guides");
     }
 
@@ -53,4 +52,4 @@ function HelpPage({ match, history }) {
   );
 }
 
-export default HelpPage;
+export default GuidesPage;
