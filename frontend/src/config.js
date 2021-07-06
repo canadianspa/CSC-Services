@@ -2,6 +2,7 @@ export const API_BASE_URL =
   process.env.NODE_ENV === "production" ? "/api" : "http://localhost:4000/api";
 
 export const UPDATE_VENDORS = [
+  { name: "home_bargains", title: "Home Bargains" },
   { name: "bandq", title: "B&Q" },
   { name: "homebase", title: "Homebase" },
   { name: "jtf", title: "JTF" },
@@ -14,6 +15,12 @@ export const UPDATE_VENDORS = [
 ];
 
 export const IMPORT_VENDORS = [
+  {
+    name: "home_bargains",
+    title: "Home Bargains CSV",
+    requires_file: true,
+    file_type: ".csv",
+  },
   {
     name: "bandq",
     title: "B&Q CSV",
