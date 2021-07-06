@@ -9,6 +9,7 @@ from ..vendors.shop_direct import shop_direct_csv_to_item
 from ..vendors.globus import globus_xml_to_items
 from ..vendors.hornbach import hornbach_pdf_to_items
 from ..vendors.robert_dyas_edge import robert_dyas_edge_csv_to_item
+from ..vendors.home_bargains import home_bargains_csv_to_item
 
 
 def item_strategy(vendor, data):
@@ -34,5 +35,7 @@ def item_strategy(vendor, data):
         return hornbach_pdf_to_items(data)
     elif vendor == "robert_dyas_edge":
         return robert_dyas_edge_csv_to_item(data)
+    elif vendor == "home_bargains":
+        return home_bargains_csv_to_item(data)
     else:
         raise ValueError(vendor)

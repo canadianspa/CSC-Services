@@ -7,6 +7,7 @@ from ..vendors.travisperkins import format_travisperkins_order
 from ..vendors.shop_direct import format_shop_direct_order
 from ..vendors.hornbach import format_hornbach_order
 from ..vendors.robert_dyas import format_robert_dyas_order
+from ..vendors.home_bargains import format_home_bargains_order
 
 
 def FormatOrderFactory(vendor, order):
@@ -28,5 +29,7 @@ def FormatOrderFactory(vendor, order):
         return format_hornbach_order(order)
     elif vendor == "robert_dyas":
         return format_robert_dyas_order(order)
+    elif vendor == "home_bargains":
+        return format_home_bargains_order(order)
     else:
         raise ValueError(vendor)
