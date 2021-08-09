@@ -29,7 +29,7 @@ class RangeService:
 
         params = {
             "start": 0,
-            "length": 100
+            "length": 200
         }
 
         stock_response = self.session.post(url, data=params)
