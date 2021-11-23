@@ -4,7 +4,6 @@ import traceback
 from common.api.veeqo import create_order
 from .handlers import (
     handle_limited_input,
-    handle_pdf_file,
     handle_xml_file,
     handle_range,
     handle_range_store,
@@ -43,8 +42,6 @@ def convert_request(vendor):
                 response = handle_limited_input(vendor, file, "|")
             elif file_type == "xml":
                 response = handle_xml_file(vendor, file)
-            elif file_type == "pdf":
-                response = handle_pdf_file(vendor, file)
 
         elif vendor == "range":
             response = handle_range(vendor)

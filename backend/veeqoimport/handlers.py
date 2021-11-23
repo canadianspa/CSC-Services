@@ -1,13 +1,12 @@
 import csv
 import io
-import json
 import xml.etree.ElementTree as ET
 
 from .strategies.customer_strategy import customer_strategy
 from .strategies.item_strategy import item_strategy
 from .strategies.order_strategy import order_strategy
 
-from common.utils import class_to_json, extract_pages
+from common.utils import class_to_json
 from .api.range_service import RangeService
 
 
@@ -34,6 +33,7 @@ def handle_limited_input(vendor, file, delimiter):
 
     return class_to_json(order_list)
 
+
 def valid_csv_row(row):
     if len(row) == 0 or all(text == '' for text in row):
         return False
@@ -47,18 +47,6 @@ def handle_xml_file(vendor, file):
     customer = customer_strategy(vendor, tree)
     items = item_strategy(vendor, tree)
     order = order_strategy(vendor, tree, customer, items)
-
-    orders = [order]
-
-    return class_to_json(orders)
-
-
-def handle_pdf_file(vendor, file):
-    pdf_pages = extract_pages(file.stream)
-
-    customer = customer_strategy(vendor, pdf_pages)
-    items = item_strategy(vendor, pdf_pages)
-    order = order_strategy(vendor, pdf_pages, customer, items)
 
     orders = [order]
 

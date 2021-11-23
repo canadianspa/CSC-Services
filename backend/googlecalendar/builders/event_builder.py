@@ -1,7 +1,7 @@
 from common.config import VEEQO_APP_URL
 
 
-def build_event(create_event, body, order, attachments):
+def build_event(create_event, body, order, attachments=None):
     calendar_id = body["calendar"]["id"]
 
     summary = body["title"]

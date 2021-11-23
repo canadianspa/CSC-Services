@@ -10,8 +10,8 @@ TEMP_FOLDER_PATH = f"{common_dir}\\temp"
 
 ############# GOOGLE ###########
 
-GOOGLE_CREDS = f"{common_dir}\\credentials\\google\\credentials.json"
-GOOGLE_TOKEN = f"{common_dir}\\credentials\\google\\token.pickle"
+GOOGLE_CREDS = f"{common_dir}/credentials/google/credentials.json"
+GOOGLE_TOKEN = f"{common_dir}/credentials/google/token.pickle"
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/calendar",

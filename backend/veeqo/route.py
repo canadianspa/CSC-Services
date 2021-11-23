@@ -12,7 +12,7 @@ def veeqo_request():
     url = request.args.get("url")
 
     try:
-        order_id = re.findall(r"\d{8}", url)[0]
+        order_id = re.findall(r"\d{8,9}", url)[0]
         order = get_order_details(order_id)
 
         return jsonify(order)

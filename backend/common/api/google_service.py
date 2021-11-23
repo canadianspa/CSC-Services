@@ -107,7 +107,7 @@ class GoogleService:
             start,
             end,
             attendees,
-            attachments,
+            attachments=None,
         ):
             # pylint: disable=maybe-no-member
             events = self.service.events()

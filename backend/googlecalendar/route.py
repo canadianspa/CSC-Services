@@ -27,6 +27,7 @@ def create():
 
     order = body["order"]
 
+    '''
     file_path = download_packing_slip(order["id"])
 
     file_name = f'{order["deliver_to"]["last_name"]} {order["number"]}'
@@ -46,12 +47,13 @@ def create():
             "title": uploaded_file["name"],
         }
     ]
+    '''
 
     event = build_event(
         google_service.calendar.create_event,
         body,
         order,
-        attachments,
+        # attachments,
     )
 
     note = f'Delivery Event Created: {event["htmlLink"]}'
