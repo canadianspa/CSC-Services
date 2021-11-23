@@ -12,6 +12,15 @@
   flex-direction: column;
 }
 
+.window > div > div:first-child {
+  min-height: 40px;
+  max-width: none;
+}
+
+.window > div:first-child > div:first-child {
+  overflow: visible;
+}
+
 .window > div:first-child {
   width: 35%;
   border-right: 1px solid #6c757d;
